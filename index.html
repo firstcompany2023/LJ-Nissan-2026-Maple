@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026 NISSAN </title>
+    <meta name="description" content="">
+    <link rel="icon" href="./assets/img/favicon/favicon.ico" sizes="any">
+    <link rel="shortcut icon" href="./assets/img/favicon/favicon.ico" type="image/x-icon">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="2026 NISSAN" />
+    <meta property="og:description" content="" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image" content="./assets/img/favicon/fb.jpg" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="./assets/img/icon/logo.svg">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="./assets/css/main.css" />
+    <script src="./assets/js/tailwindcss.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                screens: {
+                    'sm': '640px',
+                    'md': '768px',
+                    'lg': '1200px',
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <!-- content here -->
+    <style>
+        html, body {
+            width: 100%;
+            height: auto !important;
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+        }
+        #web-header {
+            display: flex;
+        }
+        #mobile-header {
+            display: none;
+        }
+
+        .mobile-menu-link {
+            cursor: pointer;
+        }
+
+        #side-btn {
+            top: 75%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out, width 0.3s ease-in-out;
+        }
+
+        #side-btn.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #side-btn .rounded-full {
+            background: linear-gradient(0deg, #C4703B 0%, #F1A77A 100%);
+            padding: 10px;
+        }
+
+
+        /* ==========================================================================
+        Popup Modal
+        ========================================================================== */
+
+        .popup-overlay {
+            background-image: url(./assets/img/tvc/bg_video-section.png);
+            background-size: cover;
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.1);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        visibility 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .popup-overlay.show {
+            opacity: 1;
+            visibility: visible;
+            animation: popupFadeIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .popup-overlay.hide {
+            opacity: 0;
+            visibility: hidden;
+            animation: popupFadeOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .popup-content {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            aspect-ratio: 16 / 9;
+            overflow: visible;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 65px;
+            height: 65px;
+            background: url('./assets/img/icon/popup_close_btn.svg');
+            background-size: cover;
+            background-position: center;
+            border: none;
+            cursor: pointer;
+            z-index: 10001;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .popup-close:hover {
+            filter: brightness(1.1);
+            transform: scale(1.05);
+        }
+
+        .popup-close svg {
+            display: none;
+        }
+
+        @keyframes popupFadeIn {
+            0%   { opacity: 0; transform: translate(0, 0) scale(0.8); }
+            100% { opacity: 1; transform: translate(0, 0) scale(1); }
+        }
+
+        @keyframes popupFadeOut {
+            0%   { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(0, 0) scale(0.8); }
+        }
+
+
+        /* ==========================================================================
+        基礎樣式
+        ========================================================================== */
+
+        #banner-section {
+            height: calc(100vw - 20px);
+            background-image: url(./assets/img/banner/banner01_d.svg);
+            background-size: 100% auto;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .tvc-info  {
+            display: flex;
+            margin: 200px 300px;
+            position: relative;
+            max-width: 1480px;
+        }
+
+        .tvc-maple {
+            position: absolute;
+            pointer-events: none; /* 避免阻擋按鈕或點擊事件 */
+            z-index: 15;
+            height: auto;
+        }
+
+        .maple-1 {
+            top: -3%;
+            left: -2%;
+            width: 8%;
+        }
+        .maple-2 {
+            top: 13%;
+            left: -8%;
+            width: 15%;
+        }
+        .maple-3 {
+            top: -6%;
+            right: -1%;
+            width: 15%;
+        }
+        .maple-4 {
+            bottom: -2%;
+            left: -5%;
+            width: 21%;
+            transform: rotateY(180deg);
+        }
+        .maple-5 {
+            bottom: 8%;
+            right: -1%;
+            width: 10%;
+        }
+        .maple-6 {
+            bottom: -5%;
+            right: -5%;
+            width: 24%;
+        }
+
+        .tvc-border-1 {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-image: url(./assets/img/tvc/border-1.svg);
+            background-size: 100% 100%;
+            transform: rotate(2deg);
+        }
+        .tvc-border-2 {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-image: url(./assets/img/tvc/border-2.svg);
+            background-size: 100% 100%;
+            transform: rotate(0deg);
+        }
+        .tvc-border-3 {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-image: url(./assets/img/tvc/border-3.svg);
+            background-size: 100% 100%;
+            transform: rotate(-2deg);
+        }
+        /* TVC 按鈕容器：置中且壓在相框底部邊界 */
+        .tvc-btn-group {
+            position: absolute;
+            bottom: 3%;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            z-index: 20;
+        }
+
+        /* 個別按鈕封裝：固定寬度並設定 hover 放大與平滑漸變 */
+        .tvc-btn {
+            position: relative;
+            display: inline-block;
+            width: 200px; /* 可依需求微調按鈕寬度 */
+            height: auto;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+
+        .tvc-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        /* 預設圖與 Hover 圖重疊定位 */
+        .tvc-btn img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .tvc-btn img.btn-hover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0; /* 預設隱藏 hover 圖 */
+        }
+
+        /* 滑鼠懸停時顯示 Hover 圖並隱藏預設圖 */
+        .tvc-btn:hover img.btn-default {
+            opacity: 0;
+        }
+
+        .tvc-btn:hover img.btn-hover {
+            opacity: 1;
+        }
+
+
+
+        /* ==========================================================================
+        Media Queries
+        ========================================================================== */
+
+        /* 橫屏裝置 (電腦 >= 1199px) */
+        @media (min-width: 1199px) {
+            #banner-section {
+                top: 0vh;;
+            }
+            #tvc-section {
+                top: -35vh;
+            }
+        }
+
+
+        /* 橫屏裝置 (電腦 >= 1400px) */
+        @media (min-width: 1400px) {
+            #banner-section {
+                top: -25vh;;
+            }
+            #tvc-section {
+                top: -70vh;
+            }
+        }
+
+        /* 行動裝置 (手機 <= 767px 與 平板 768px~1199px 直屏)*/
+        @media (max-width: 767px), (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
+            #web-header {
+                display: none !important;
+            }
+            #mobile-header {
+                display: flex !important;
+            }
+            #mobile-menu {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            #mobile-logo {
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+
+        /* 橫屏裝置 (平板 768px~1199px 橫屏) */
+        @media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) and (min-height: 500px) {
+        }
+        /* 直屏裝置 (平板 768px~1199px 直屏) */
+        @media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
+        }
+
+        /* 手機橫屏裝置 */
+        @media (max-width: 960px) and (orientation: landscape) and (max-height: 500px){
+
+
+
+        }
+        /* 手機直屏裝置 */
+        @media (max-width: 767px) {
+            /* 頂部 75% 區塊：寬度滿版 */
+            #banner-section {
+                height: 100vh;
+                width: 100%;
+                background-image: url(./assets/img/banner/banner01_m.svg);
+                background-size: auto 100%;
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
+        }
+        @media (max-width: 668px) {
+
+        }
+
+    </style>
+    
+    <header class="fixed top-0 left-0 w-full z-[100] bg-transparent transition-all duration-300">
+        <div id="web-header" class="relative mx-auto flex flex-row items-center justify-between px-12 py-6 gap-x-0">
+            <div id="web-logo" class="block">
+                <a href="#" class="w-[72px] block transition-transform duration-300 hover:scale-105">
+                    <img src="./assets/img/icon/logo.svg" alt="NISSAN LOGO" class="w-[72px] h-auto object-contain brightness-0 invert">
+                </a>
+            </div>
+            <nav id="web-menu" class="flex items-center gap-x-4 md:order-2">
+                <a href="#" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">KICKS</a>
+                <a href="#" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">SENTRA</a>
+                <a href="#" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">EXPLORE NISSAN</a>
+            </nav>
+        </div>
+        <div id="mobile-header" class="relative mx-auto flex flex-row items-center justify-start px-6 py-6 gap-x-4">
+            <button id="mobile-menu" type="button" class="flex items-center justify-center w-10 h-10 rounded-full border border-white/50 bg-black/80 transition-all duration-300 focus:outline-none" aria-label="Toggle Menu">
+                <img src="./assets/img/icon/menu-burger.svg" class="w-4 h-4 brightness-0 invert" alt="menu icon">
+            </button>
+            <div id="mobile-logo" class="block transition-transform duration-300 hover:scale-105">
+                <a href="#" class="w-[120px] block transition-transform duration-300 hover:scale-105">
+                    <img src="./assets/img/icon/logo_text.svg" alt="NISSAN LOGO" class="w-[120px] h-auto object-contain brightness-0 invert">
+                </a>
+            </div>
+            <div id="mobile-dropdown-menu" class="hidden absolute top-full left-6 bg-[#0A0A0A]/85 z-[150] px-6 py-8">
+                <nav class="flex flex-col gap-y-6">
+                    <a href="#" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">KICKS</a>
+                    <a href="#" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">SENTRA</a>
+                    <a href="#" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">EXPLORE NISSAN</a>
+                    <a href="https://new.nissan.com.tw/nissan/cars/x-trail" target="_blank" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">NISSAN 車型網</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section id="banner-section" class="w-full h-dvh xl:h-screen relative overflow-hidden">
+        <!-- 如果需要在 Banner 上放 Scroll Down 箭頭或文字標題，可直接放在這裡 -->
+    </section>
+
+    <section id="tvc-section" class="w-full h-dvh xl:h-screen relative overflow-hidden">
+        <div class="tvc-info">
+            <!-- 6 片裝飾楓葉 -->
+            <img src="./assets/img/maple/maple14.png" alt="Maple 1" class="tvc-maple maple-1">
+            <img src="./assets/img/maple/maple05.png" alt="Maple 2" class="tvc-maple maple-2">
+            <img src="./assets/img/maple/maple04.png" alt="Maple 3" class="tvc-maple maple-3">
+            <img src="./assets/img/maple/maple11.png" alt="Maple 4" class="tvc-maple maple-4">
+            <img src="./assets/img/maple/maple03.png" alt="Maple 5" class="tvc-maple maple-5">
+            <img src="./assets/img/maple/maple07.png" alt="Maple 6" class="tvc-maple maple-6">
+
+            <!-- 原有相框與主圖 -->
+            <div class="tvc-border-1"></div>
+            <div class="tvc-border-2"></div>
+            <div class="tvc-border-3"></div>
+            <img src="./assets/img/tvc/tvc1.jpg" alt="TVC Section" class="object-cover p-[20px]">
+
+            <!-- TVC 按鈕群組 -->
+            <div class="tvc-btn-group">
+                <a href="javascript:void(0);" class="tvc-btn" aria-label="觀看燦爛篇影片">
+                    <img src="./assets/img/tvc/tvc-btn1.png" alt="燦爛篇" class="btn-default">
+                    <img src="./assets/img/tvc/tvc-btn1-hover.png" alt="燦爛篇 Hover" class="btn-hover">
+                </a>
+                <a href="javascript:void(0);" class="tvc-btn" aria-label="觀看女生篇影片">
+                    <img src="./assets/img/tvc/tvc-btn2.png" alt="女生篇" class="btn-default">
+                    <img src="./assets/img/tvc/tvc-btn2-hover.png" alt="女生篇 Hover" class="btn-hover">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="usp-section" class="w-full h-dvh xl:h-screen relative overflow-hidden">
+        <div class="usp-kicks">
+
+        </div>
+        <div class="usp-sentra">
+
+        </div>
+    </section>
+
+    <section id="price-section" class="w-full h-dvh xl:h-screen  relative overflow-hidden">
+    </section>
+
+    <footer class="w-full text-center py-4 md:py-8 text-sm bg-[#B4A292] text-black">
+        © NISSAN TAIWAN.
+    </footer>
+
+    <div id="side-btn" class="fixed right-0 -translate-y-1/2 z-[120] flex flex-col gap-y-[10px] bg-[#1E1E1E99] p-[10px] group w-16 hover:w-[160px] transition-all duration-300 ease-in-out overflow-hidden rounded-s-lg">
+        <a href="https://service.nissan.com.tw/testdrive/?mod" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-white transition-colors duration-300 hover:text-[#BEA894]">
+            <div class="flex items-center gap-x-3 whitespace-nowrap font-light text-base tracking-[2px]">
+                <div class="rounded-full me-2">                    
+                    <img src="./assets/img/icon/car.svg" class="w-7 h-7 brightness-0 invert" alt="pdf icon">
+                </div>
+                <span>預約試乘</span>
+            </div>
+        </a>
+        <a href="https://new.nissan.com.tw/upload/brochures/421B8DH106F5/X-TRAIL_ikitsuki.pdf" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-white transition-colors duration-300 hover:text-[#BEA894]">
+            <div class="flex items-center gap-x-3 whitespace-nowrap font-light text-base tracking-[2px]">
+                <div class="rounded-full me-2">                    
+                    <img src="./assets/img/icon/coupon.svg" class="w-7 h-7 brightness-0 invert" alt="pdf icon">
+                </div>
+                <span>型錄下載</span>
+            </div>
+        </a>
+    </div>
+
+
+    <!-- Popup Modal -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content">
+            <button class="popup-close" id="popupClose"></button>
+            <iframe id="popupVideo" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+
+
+        // =====================================================
+        //  區塊 1：開關邏輯
+        // =====================================================
+        document.addEventListener('DOMContentLoaded', () => {
+
+
+            // =====================================================
+            // 影片靜音、自動播放與暫停
+            // =====================================================
+
+            // 確保所有影片靜音（部分瀏覽器須以 JS 設定才生效）
+            document.querySelectorAll('video').forEach(v => { v.muted = true; });
+            // 滾動時影片自動暫停與恢復播放
+            const allVideos = document.querySelectorAll('video');
+            if (allVideos.length > 0) {
+                const videoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const video = entry.target;
+                        if (entry.isIntersecting) {
+                            if (video.dataset.src && !video.src) {
+                                video.src = video.dataset.src;
+                                video.load();
+                            }
+                            if (document.visibilityState === 'visible') {
+                                video.play().catch(() => {});
+                            }
+                        } else {
+                            if (!video.paused) {
+                                video.pause();
+                            }
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                allVideos.forEach(video => videoObserver.observe(video));
+
+                // 頁面切換 / 離開視窗自動暫停與恢復
+                document.addEventListener('visibilitychange', () => {
+                    allVideos.forEach(video => {
+                        if (document.hidden) {
+                            if (!video.paused) video.pause();
+                        } else {
+                            const rect = video.getBoundingClientRect();
+                            const inView = rect.top < window.innerHeight && rect.bottom > 0 && rect.left < window.innerWidth && rect.right > 0;
+                            if (inView) {
+                                if (video.dataset.src && !video.src) {
+                                    video.src = video.dataset.src;
+                                    video.load();
+                                }
+                                video.play().catch(() => {});
+                            }
+                        }
+                    });
+                });
+
+                window.addEventListener('pagehide', () => {
+                    allVideos.forEach(video => { if (!video.paused) video.pause(); });
+                });
+            }
+
+
+            // =====================================================
+            // 手機選單開關
+            // =====================================================
+            const toggleBtn    = document.getElementById('mobile-menu');
+            const dropdownMenu = document.getElementById('mobile-dropdown-menu');
+           
+            const menuLinks    = document.querySelectorAll('.mobile-menu-link');
+
+            if (!toggleBtn || !dropdownMenu) return;
+
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('hidden');
+            });
+
+            menuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    dropdownMenu.classList.add('hidden');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                const isMenuOpen     = !dropdownMenu.classList.contains('hidden');
+                const clickedOutside = !toggleBtn.contains(e.target) && !dropdownMenu.contains(e.target);
+                if (isMenuOpen && clickedOutside) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+
+
+            // =====================================================
+            // 側邊按鈕滾動顯示/隱藏 (淡入淡出)
+            // =====================================================
+            const sideBtn = document.getElementById('side-btn');
+            const tvcSection = document.getElementById('tvc-section');
+
+            if (sideBtn && tvcSection) {
+                const toggleSideBtn = () => {
+                    const rect = tvcSection.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight * 0.8) {
+                        sideBtn.classList.add('show');
+                    } else {
+                        sideBtn.classList.remove('show');
+                    }
+                };
+
+                window.addEventListener('scroll', toggleSideBtn, { passive: true });
+                toggleSideBtn();
+            }
+
+        });
+
+
+    </script>
+</body>
+</html>
