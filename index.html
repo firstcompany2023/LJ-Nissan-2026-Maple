@@ -18,7 +18,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
+    <script src="./assets/js/swiper-bundle.min.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -40,9 +43,12 @@
             height: auto !important;
             overflow-x: hidden !important;
             overflow-y: auto !important;
+            cursor: url('./assets/img/maple/cursor.png') 16 16, auto;
+            position: relative;
         }
         #web-header {
             display: flex;
+            transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
         }
         #mobile-header {
             display: none;
@@ -52,7 +58,118 @@
             cursor: pointer;
         }
 
+        .layout-maple {
+            position: absolute;
+            pointer-events: none;
+            height: auto;
+        }
+
+        /* 飄落效果 */
+        #falling-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; 
+            z-index: 5;
+            display: block;
+        }
+
+        /* Cursor動畫 */
+        .click-ripple {
+            position: fixed;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 999999;
+            animation: rippleExpand 0.6s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+        }
+
+        @keyframes rippleExpand {
+            0% {
+                transform: translate(-50%, -50%) scale(0.1);
+                opacity: 0.85;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2.2);
+                opacity: 0;
+            }
+        }
+
+        /* Loading */
+        #autumn-reveal-overlay {
+            position: fixed;
+            top: -20vh;
+            left: -20vw;
+            width: 140vw;
+            height: 140vh;
+            z-index: 999999;
+            overflow: hidden;
+            pointer-events: all;
+            background-color: #ffffff;
+            transition: background-color 1s ease, opacity 1s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes floatBlob {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(18px, -15px) scale(1.04);
+            }
+        }
+
+        .reveal-blob {
+            position: absolute;
+            border-radius: 50%;
+            transform-origin: center center;
+            animation: floatBlob 7s ease-in-out infinite;
+            transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 2.0s ease;
+        }
+
+        #reveal-logo {
+            position: relative;
+            z-index: 10;
+            width: 180px;
+            max-width: 35vw;
+            height: auto;
+            transition: transform 2.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.8s ease;
+        }
+
+        /* --- Go To Top Button --- */
+        .go-to-top-btn {
+            padding: 12px;
+            background: #B8B8B8;
+            border-radius: 50%;
+            border: 3.85px solid #FFFFFF80;
+            position: fixed;
+            top: 60%;
+            right: 3px;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            pointer-events: none;
+        }
+
+        .go-to-top-btn.show {
+            opacity: 1;
+            pointer-events: auto;
+            visibility: visible;
+        }
+
+        .go-to-top-btn:hover {
+            filter: brightness(1.1);
+            transform: scale(1.05);
+        }
+
         #side-btn {
+            z-index: 1000;
             top: 75%;
             opacity: 0;
             pointer-events: none;
@@ -84,7 +201,7 @@
             right: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.1);
-            z-index: 10000;
+            z-index: 1000;
             align-items: center;
             justify-content: center;
             opacity: 0;
@@ -124,7 +241,7 @@
             background-position: center;
             border: none;
             cursor: pointer;
-            z-index: 10001;
+            z-index: 1001;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -153,7 +270,7 @@
 
 
         /* ==========================================================================
-        基礎樣式
+        banner 樣式
         ========================================================================== */
 
         #banner-section {
@@ -164,50 +281,100 @@
             background-repeat: no-repeat;
         }
 
+
+        /* ==========================================================================
+        tvc 樣式
+        ========================================================================== */
+
         .tvc-info  {
             display: flex;
-            margin: 200px 300px;
+            margin: -50vh 300px 200px 300px;
             position: relative;
             max-width: 1480px;
+            z-index: 6;
         }
-
-        .tvc-maple {
-            position: absolute;
-            pointer-events: none; /* 避免阻擋按鈕或點擊事件 */
-            z-index: 15;
-            height: auto;
+        .tvc-info .layout-maple{
+            z-index: 1;
         }
-
-        .maple-1 {
+        .tvc-info .maple-1 {
             top: -3%;
             left: -2%;
             width: 8%;
         }
-        .maple-2 {
+        .tvc-info .maple-2 {
             top: 13%;
             left: -8%;
             width: 15%;
         }
-        .maple-3 {
+        .tvc-info .maple-3 {
             top: -6%;
             right: -1%;
             width: 15%;
         }
-        .maple-4 {
+        .tvc-info .maple-4 {
             bottom: -2%;
             left: -5%;
             width: 21%;
             transform: rotateY(180deg);
         }
-        .maple-5 {
+        .tvc-info .maple-5 {
             bottom: 8%;
             right: -1%;
             width: 10%;
         }
-        .maple-6 {
+        .tvc-info .maple-6 {
             bottom: -5%;
             right: -5%;
             width: 24%;
+        }
+
+        /* 聲音開關按鈕樣式 (寬高 60px、位於 maple-3 下方、Hover 效果) */
+        .sound-on-btn, .sound-off-btn {
+            position: absolute;
+            top: 15%;
+            right: 5%;
+            width: 60px;
+            height: 60px;
+            z-index: 20;
+            cursor: pointer;
+        }
+
+        .sound-off-btn {
+            display: block;
+        }
+
+        .sound-on-btn.active {
+            display: block;
+        }
+
+        .sound-off-btn.active {
+            display: none;
+        }
+
+        .sound-on-btn:hover, .sound-off-btn:hover {
+            /* transform: scale(1.05); */
+        }
+
+        .sound-on-btn img, .sound-off-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .sound-on-btn img.hover-img, .sound-off-btn img.hover-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .sound-on-btn:hover img.default-img, .sound-off-btn:hover img.default-img {
+            opacity: 0;
+        }
+
+        .sound-on-btn:hover img.hover-img, .sound-off-btn:hover img.hover-img {
+            opacity: 1;
         }
 
         .tvc-border-1 {
@@ -250,7 +417,7 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
-            z-index: 20;
+            z-index: 1;
         }
 
         /* 個別按鈕封裝：固定寬度並設定 hover 放大與平滑漸變 */
@@ -292,6 +459,730 @@
         }
 
 
+        /* ==========================================================================
+        usp 樣式
+        ========================================================================== */
+
+        #usp-section {
+        }
+
+        .usp-kicks {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #FFF8F9;
+            padding-bottom: 80px;
+        }
+        .usp-sentra {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #FAFCFF;
+            padding-bottom: 80px;
+        }
+
+
+
+        .usp-bg {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }        
+
+        .usp-bg img {
+            position: relative;
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+        }
+
+
+        .usp-kicks .usp-skew-bg {
+            position: absolute;
+            top: -10%;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            background-color: #ffffff;
+            clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .usp-sentra .usp-skew-bg {
+            position: absolute;
+            top: -10%;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            background-color: #FFF8F9;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 60%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .usp-top-border {
+            position: absolute;
+            top: 5%;
+            left: 0;
+            width: 100%;
+            border-top: 4.15px solid #E09B90;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .usp-kicks .usp-header-title {
+            position: absolute;
+            bottom: 30%;
+            left: 10%;
+        }
+        .usp-sentra .usp-header-title {
+            position: absolute;
+            bottom: 30%;
+            right: 10%;
+        }
+
+        .usp-kicks .layout-maple,
+        .usp-sentra .layout-maple {
+            z-index: 0;
+        }
+        .usp-kicks .maple-1 {
+            top: -10%;
+            left: 10%;
+            width: 5%;
+            transform: rotateY(180deg);
+        }
+        .usp-kicks .maple-2 {
+            top: 16%;
+            left: -2%;
+            width: 9%;
+        }
+        .usp-kicks .maple-3 {
+            bottom: -20%;
+            left: 26%;
+            width: 15%;
+        }
+        .usp-kicks .maple-4 {
+            top: -10%;
+            right: 0%;
+            width: 11%;
+        }
+        .usp-kicks .maple-5 {
+            bottom: -14%;
+            right: 5%;
+            width: 13%;
+        }
+
+        .usp-sentra .maple-1 {
+            top: -15%;
+            left: 5%;
+            width: 8%;
+            transform: rotateY(180deg) rotate(0deg);
+        }
+        .usp-sentra .maple-2 {
+            top: 16%;
+                left: -2%;
+                width: 5.5%;
+        }
+        .usp-sentra .maple-3 {
+            bottom: -3%;
+            left: -9%;
+            width: 14.5%;
+        }
+        .usp-sentra .maple-4 {
+        top: -15%;
+            right: 5%;
+            width: 7.5%;
+        }
+        .usp-sentra .maple-5 {
+        bottom: -15%;
+            right: 5%;
+            width: 11%;
+        }
+
+        /* Tab 分頁標籤區 */
+
+        .tab-container {
+            z-index: 6;
+        }
+
+        .tab-nav {
+            position: relative;
+            z-index: 6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 40px auto;
+        }
+
+        .tab-btn {
+            position: relative;
+            padding: 10px 50px;
+            font-size: 1.125rem;
+            color: #8C7B70;
+            cursor: pointer;
+            border-bottom: 1px solid #BFA28C;
+        }
+
+        /* Tab Active 狀態 */
+        .tab-btn.active {
+            color: #3F2F27;
+            font-weight: 600;
+        }
+
+        /* 滑動底線與倒梯形漸層陰影指示器 */
+        .tab-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 1px; /* 基礎寬度由 JS transform 掌控 */
+            background-color: #3F2F27;
+            transform-origin: left center;
+            /* 改用 transform 動畫，搭配極致順暢的 Bezier 曲線 */
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+            z-index: 6;
+            will-change: transform;
+        }
+
+        .tab-indicator::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: linear-gradient(180deg, #BFA28C 0%, rgba(246, 228, 214, 0) 60%);
+            clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
+            pointer-events: none;
+        }
+
+        /* 幻燈片主容器 */
+        .slider-wrapper {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+            z-index: 6;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .slider-container {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .slider-track {
+            /* 由 Swiper 自動掌控容器佈局與動畫 */
+        }
+
+        /* 卡片單元 */
+        .slider-card {
+            height: auto;
+            box-sizing: border-box;
+            padding: 16px;
+            box-shadow: 0px 10px 27.6px -10px #0000000D;
+            backdrop-filter: blur(10px);
+        }
+
+        .slider-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            background: #FFFCF280;
+            padding: 12px;
+        }
+
+        .slider-card-content {
+            background: #FFFFFFCC;
+            padding: 12px 18px;
+        }
+
+        .slider-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1E1E1E;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .slider-card p {
+            font-size: 0.875rem;
+            color: #666666;
+            line-height: 1.6;
+            padding: auto;
+        }
+
+        /* 左右箭頭按鈕 */
+        .arrow-btn {
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .arrow-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        .arrow-left {
+            left: 0;
+        }
+
+        .arrow-right {
+            right: 0;
+        }
+
+        @media (max-width: 768px) {
+            .slider-card {
+                flex: 0 0 100%;
+            }
+        }
+
+
+        /* ==========================================================================
+        Price Section 專用樣式 (卡片寬度 350px 與等高對齊版)
+        ========================================================================== */
+        #price-section {
+            background: linear-gradient(194.97deg, #E0D3C7 4.64%, #FFFCF9 53.12%, #E8D4C2 92.79%);
+            padding: 100px 20px 120px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 頂部斜切區塊 */
+        .price-skew-bg {
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background-color: #FAFCFF;
+            clip-path: polygon(0 0, 100% 0, 100% 0%, 0 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .price-top-border{
+            position: absolute;
+            top: 5%;
+            left: 0;
+            width: 100%;
+            border-top: 4.15px solid #E09B90;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* 裝飾楓葉 */
+        #price-section .layout-maple {
+            z-index: 0;
+        }
+
+        #price-section .maple-1 {
+            top: 15%;
+            left: -40%;
+            width: 31%;
+            filter: blur(2px);
+        }
+        #price-section .maple-2 {
+            bottom: 10%;
+            left: -45%;
+            width: 40%;
+            filter: blur(5px);
+        }
+        #price-section .maple-3 {
+            top: -3%;
+            right: -35%;
+            width: 27%;
+            filter: blur(6px);
+        }
+        #price-section .maple-4 {
+            top: 30%;
+            right: -65%;
+            width: 37%;
+            filter: blur(3px);
+        }
+        #price-section .maple-5 {
+            bottom: 25%;
+            right: -45%;
+            width: 14.5%;
+            filter: blur(7px);
+        }
+        #price-section .maple-6 {
+            bottom: 10%;
+            right: -22%;
+            width: 21%;
+            filter: blur(2px);
+        }
+
+        /* 卡片總容器 */
+        .price-container {
+            position: relative;
+            z-index: 5;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .price-cards-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+            justify-content: center;
+            align-items: stretch; /* 強制子元素卡片等高 */
+            z-index: 6;
+        }
+
+        @media (min-width: 768px) {
+            .price-cards-wrapper {
+                flex-direction: row;
+            }
+        }
+
+        /* 價格單一卡片：限制最大寬度 350px、毛玻璃與精準陰影 */
+        .price-card {
+            flex: 1;
+            width: 100%;
+            max-width: 350px; /* 限制車型卡片最大寬度 350px */
+            margin: 0 auto;
+            background: transparent;
+            box-shadow: 0px 10px 27.6px -10px #FFFFFFCC;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .price-card-inner {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .price-card-header {
+            text-align: center;
+            background: #FFFCF280;
+        }
+
+        .price-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3F2F27;
+            letter-spacing: 2px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .price-car-img {
+            width: 80%;
+            max-width: 260px;
+            height: 140px;
+            object-fit: contain;
+            margin: 0 auto 15px auto;
+            display: block;
+        }
+
+        /* 車色選取區塊：背景色 #FFFCF280 */
+        .color-selector-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        /* ==========================================================================
+        Color Dot Tooltip 樣式
+        ========================================================================== */
+
+        /* 1. 將色塊設為相對定位，做為 Tooltip 的定位基準 */
+        .color-dot {
+            position: relative;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            transition: transform 0.2s ease;
+        }
+
+        .color-dot::after {
+            content: attr(data-tooltip); /* 自動讀取 HTML 上的 data-tooltip 屬性值 */
+            position: absolute;
+            top: calc(100% + 10px);      /* 放置在色塊下方 10px 處 */
+            left: calc(100% - 5px);
+            transform: translateX(-50%) translateY(-4px); /* 水平置中，並上移 4px 預備做向下滑動動畫 */
+            background-color: #1a1a1a;   /* 黑色背景 */
+            color: #ffffff;              /* 白色文字 */
+            font-size: 13px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 4px;
+            white-space: nowrap;         /* 避免文字換行 */
+            pointer-events: none;        /* 避免 Tooltip 遮擋滑鼠事件 */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 20;
+        }
+        .color-dot::before {
+            content: '';
+            position: absolute;
+            top: calc(100% + 5px);       /* 放置於色塊下方 4px 處，使其與文字框緊密重疊 */
+            left: 50%;
+            transform: translateX(-50%) translateY(-4px);
+            border-width: 0 6px 6px 6px;  /* 朝向上方的三角形 */
+            border-style: solid;
+            border-color: transparent transparent #1a1a1a transparent;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+            z-index: 21;                 /* 讓箭頭壓在文字框上緣，完全蓋住縫隙 */
+        }
+        .color-dot:hover::after,
+        .color-dot:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* 1. 雙色 1：黑 / 銀白 (切割角度 160deg) */
+        .color-dot-1 {
+            background: linear-gradient(160deg, #1A1A1A 35%, #E6E6E8 35%);
+        }
+
+        /* 2. 雙色 2：黑 / 灰藍 (切割角度 160deg) */
+        .color-dot-2 {
+            background: linear-gradient(160deg, #1A1A1A 35%, #74787C 35%);
+        }
+
+        /* 3. 單色 1：亮銀白 */
+        .color-dot-3 {
+            background: linear-gradient(162.01deg, #F1F1F1 25.1%, #E6E6E8 58.89%, #D1D1D1 92.68%);
+        }
+
+        /* 4. 單色 2：極黑 */
+        .color-dot-4 {
+            background: linear-gradient(0deg, #000000 0%, #303030 100%);
+        }
+
+        /* 5. 單色 3：灰藍鈦 */
+        .color-dot-5 {
+            background: linear-gradient(159.67deg, #8F99A3 23.31%, #74787C 57.41%, #81878F 91.52%);
+        }
+
+        /* 6. 單色 4：淺灰 */
+        .color-dot-6 {
+            background: linear-gradient(159.67deg, #D2D2D2 23.31%, #C7C7C7 57.41%, #B2B2B2 91.52%);
+        }
+
+
+        .color-dot:hover, .color-dot.active {
+            transform: scale(1.15);
+        }
+
+        /* 車型與價格列表：背景色 #FFFFFFCC，自動填滿垂直高度 */
+        .price-list {
+            background-color: #FFFFFFCC;
+            padding: 20px 60px;
+            flex: 1; /* 讓列表自動填滿高度 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* 均分垂直空間，維持一致高度 */
+            min-height: 220px; /* 設定統一的最小高度 */
+        }
+
+        /* 每列版本都有底線 #EEDDCE，除了最後一列 */
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 0.95rem;
+            color: #3F2F27;
+            flex: 1;
+        }
+
+        .price-item:not(:last-child) {
+            border-bottom: 1px solid #EEDDCE;
+        }
+        .usp-sentra .price-item:not(:last-child) {
+            border-bottom: 1px solid #EEDDCE;
+        }
+
+        /* 價格結構：上下兩列排版 */
+        .price-val-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .price-val-original {
+            text-decoration: line-through;
+            color: #616161;
+            font-size: 1rem;
+        }
+
+        .price-discount-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .price-tag-discount {
+            background: #F3E1B8;
+            color: #89610A;
+            font-size: 10px;
+            padding: 2px 6px;
+        }
+
+        .price-val {
+
+        }
+
+        .pdf-download-box {
+            background-color: #FFFFFFCC;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pdf-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            width: 100%;
+            padding: 8px 16px;
+            background: #DCCBBC;
+            color: #616161;
+            border: 1px solid #E8D4C2;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        /* 按鈕文字 */
+        .pdf-btn-text {
+            transition: text-decoration 0.3s ease;
+        }
+
+        /* 圓形 ICON 容器 */
+        .pdf-btn-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #3F2F27;
+            border: 3px solid #FFFFFFd4;
+            border-radius: 50%;
+            color: #FFFFFF;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* 內嵌 SVG 尺寸與顏色設定 */
+        .pdf-btn-icon svg {
+            width: 14px;
+            height: 14px;
+            fill: #FFFFFF;
+        }
+
+        /* Hover 懸停狀態 */
+        .pdf-btn:hover {
+            background: #D7C0AB;
+            color: #444444;
+            border: 1px solid #E8D4C2;
+            /* transform: scale(1.05); */
+        }
+        .pdf-btn:hover .pdf-btn-text {
+            text-decoration: underline;
+        }        
+        .pdf-btn:hover .pdf-btn-icon {
+            background: #3F2F27;
+            border: 3px solid #ffffffdb;
+            color: #FFFFFF;
+        }
+        .pdf-btn:hover .pdf-btn-icon svg{
+            fill: #fffffff3;
+        }
+
+
+        /* 底部 CTA 按鈕區 */
+        .price-cta-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        @media (min-width: 640px) {
+            .price-cta-group {
+                flex-direction: row;
+            }
+        }
+
+        .btn-cta-wrap {
+            position: relative;
+            display: inline-block;
+            width: 240px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-cta-wrap:hover {
+            /* transform: scale(1.05) translateY(-2px); */
+        }
+
+        .btn-cta-wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-cta-wrap img.hover-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .btn-cta-wrap:hover img.default-img { opacity: 0; }
+        .btn-cta-wrap:hover img.hover-img { opacity: 1; }
+
 
         /* ==========================================================================
         Media Queries
@@ -302,7 +1193,7 @@
             #banner-section {
                 top: 0vh;;
             }
-            #tvc-section {
+            #body-content {
                 top: -35vh;
             }
         }
@@ -313,7 +1204,7 @@
             #banner-section {
                 top: -25vh;;
             }
-            #tvc-section {
+            #body-content {
                 top: -70vh;
             }
         }
@@ -366,6 +1257,22 @@
         }
 
     </style>
+
+    <canvas id="falling-canvas"></canvas>
+    <div id="autumn-reveal-overlay">
+        <div id="reveal-logo">
+            <svg width="130" height="109" viewBox="0 0 130 109" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M75.698 58.6878C75.5954 58.7137 75.1823 58.7137 75.0018 58.7137H61.7026V61.8067H75.2343C75.3369 61.8067 76.1358 61.8067 76.2904 61.7807C79.0482 61.5235 80.3108 59.2294 80.3108 57.2186C80.3108 55.2077 78.9962 52.9397 76.4956 52.7085C76.0059 52.6565 75.5941 52.6565 75.4136 52.6565H66.5725C66.1854 52.6565 65.7477 52.6305 65.5931 52.5786C64.8968 52.398 64.6396 51.7797 64.6396 51.264C64.6396 50.8002 64.8968 50.1819 65.6191 49.9754C65.8256 49.9234 66.0568 49.8974 66.5466 49.8974H79.3041V46.8564H66.34C65.7983 46.8564 65.3866 46.8824 65.0514 46.9344C62.8353 47.2435 61.2882 49.0219 61.2882 51.2899C61.2882 53.1462 62.4482 55.3104 64.9995 55.6715C65.4632 55.7234 66.1075 55.7234 66.3907 55.7234H74.9992C75.1538 55.7234 75.5409 55.7234 75.6175 55.7494C76.597 55.878 76.9321 56.6003 76.9321 57.2446C76.9321 57.8889 76.545 58.5332 75.6954 58.6878H75.698Z" fill="#2D2D2D"/>
+            <path d="M50.491 58.6878C50.3884 58.7137 49.9753 58.7137 49.8207 58.7137H36.4956V61.8067H50.0273C50.1299 61.8067 50.9288 61.8067 51.0834 61.7807C53.8411 61.5235 55.1038 59.2294 55.1038 57.2186C55.1038 55.2077 53.7892 52.9397 51.2886 52.7085C50.7989 52.6565 50.3871 52.6565 50.2065 52.6565H41.3655C40.9784 52.6565 40.5407 52.6305 40.3861 52.5786C39.6898 52.398 39.4326 51.7797 39.4326 51.264C39.4326 50.8002 39.6898 50.1819 40.4121 49.9754C40.6186 49.9234 40.8498 49.8974 41.3395 49.8974H54.097V46.8564H41.133C40.5913 46.8564 40.1795 46.8824 39.8444 46.9344C37.6283 47.2435 36.0812 49.0219 36.0812 51.2899C36.0812 53.1462 37.2412 55.3104 39.7924 55.6715C40.2562 55.7234 40.9005 55.7234 41.1837 55.7234H49.7921C49.9467 55.7234 50.3338 55.7234 50.4105 55.7494C51.3899 55.878 51.7251 56.6003 51.7251 57.2446C51.7251 57.8889 51.3639 58.5332 50.4884 58.6878H50.491Z" fill="#2D2D2D"/>
+            <path d="M29.5627 46.7539H26.2125V61.8834H29.5627V46.7539Z" fill="#2D2D2D"/>
+            <path d="M18.8148 61.8834V46.7539H15.4646V58.0435L4.30489 46.7539H0V61.8834H3.35013V50.5431L14.5878 61.8834H18.8148Z" fill="#2D2D2D"/>
+            <path d="M126.576 46.7539V58.0435L115.416 46.7539H111.111V61.8834H114.462V50.5431L125.673 61.8834H129.9V46.7539H126.576Z" fill="#2D2D2D"/>
+            <path d="M93.662 46.7539L84.2286 61.8834H88.301L89.9767 59.1776H100.982L102.658 61.8834H106.704L97.2706 46.7539H93.662ZM99.2555 56.3159H91.7031L95.4923 50.2326L99.2555 56.3159Z" fill="#2D2D2D"/>
+            <path d="M18.6342 38.1712C25.3878 18.4536 43.996 5.2064 64.9762 5.2064C85.9564 5.2064 104.591 18.4536 111.318 38.1712L111.37 38.3258H126.138V36.5474L120.005 35.8252C116.215 35.3874 115.416 33.7117 114.386 31.5982L114.129 31.0825C105.261 12.2171 85.9564 0 64.9762 0C43.996 0 24.6915 12.2171 15.8258 31.1345L15.5686 31.6502C14.5372 33.7637 13.7383 35.4394 9.95042 35.8771L3.81653 36.5994V38.3777H18.5589L18.6368 38.1712H18.6342Z" fill="#2D2D2D"/>
+            <path d="M111.369 70.3365L111.317 70.4911C104.564 90.2087 85.955 103.43 64.9748 103.43C43.9946 103.43 25.3604 90.1827 18.6329 70.4651L18.5809 70.3105H3.83984V72.0889L9.97373 72.8111C13.7629 73.2489 14.5618 74.9246 15.5919 77.0381L15.8491 77.5538C24.7148 96.4725 44.0206 108.688 64.9995 108.688C85.9784 108.688 105.284 96.4712 114.15 77.5785L114.407 77.0628C115.438 74.9493 116.237 73.2736 120.025 72.8358L126.159 72.1136V70.3352H111.365L111.369 70.3365Z" fill="#2D2D2D"/>
+            </svg>
+        </div>
+    </div>
     
     <header class="fixed top-0 left-0 w-full z-[100] bg-transparent transition-all duration-300">
         <div id="web-header" class="relative mx-auto flex flex-row items-center justify-between px-12 py-6 gap-x-0">
@@ -403,16 +1310,15 @@
     <section id="banner-section" class="w-full h-dvh xl:h-screen relative overflow-hidden">
         <!-- 如果需要在 Banner 上放 Scroll Down 箭頭或文字標題，可直接放在這裡 -->
     </section>
-
-    <section id="tvc-section" class="w-full h-dvh xl:h-screen relative overflow-hidden">
+    <section id="tvc-section" class="w-full relative">
         <div class="tvc-info">
             <!-- 6 片裝飾楓葉 -->
-            <img src="./assets/img/maple/maple14.png" alt="Maple 1" class="tvc-maple maple-1">
-            <img src="./assets/img/maple/maple05.png" alt="Maple 2" class="tvc-maple maple-2">
-            <img src="./assets/img/maple/maple04.png" alt="Maple 3" class="tvc-maple maple-3">
-            <img src="./assets/img/maple/maple11.png" alt="Maple 4" class="tvc-maple maple-4">
-            <img src="./assets/img/maple/maple03.png" alt="Maple 5" class="tvc-maple maple-5">
-            <img src="./assets/img/maple/maple07.png" alt="Maple 6" class="tvc-maple maple-6">
+            <img src="./assets/img/maple/maple14.png" alt="Maple 1" class="layout-maple maple-1">
+            <img src="./assets/img/maple/maple05.png" alt="Maple 2" class="layout-maple maple-2">
+            <img src="./assets/img/maple/maple04.png" alt="Maple 3" class="layout-maple maple-3">
+            <img src="./assets/img/maple/maple11.png" alt="Maple 4" class="layout-maple maple-4">
+            <img src="./assets/img/maple/maple03.png" alt="Maple 5" class="layout-maple maple-5">
+            <img src="./assets/img/maple/maple07.png" alt="Maple 6" class="layout-maple maple-6">
 
             <!-- 原有相框與主圖 -->
             <div class="tvc-border-1"></div>
@@ -420,13 +1326,21 @@
             <div class="tvc-border-3"></div>
             <img src="./assets/img/tvc/tvc1.jpg" alt="TVC Section" class="object-cover p-[20px]">
 
-            <!-- TVC 按鈕群組 -->
+
+            <a href="javascript:void(0);" class="sound-on-btn" aria-label="聲音開關">
+                <img src="./assets/img/tvc/sound_on.png" alt="聲音開關" class="default-img">
+                <img src="./assets/img/tvc/sound_on_hover.png" alt="聲音開關" class="hover-img">
+            </a>
+            <a href="javascript:void(0);" class="sound-off-btn" aria-label="聲音開關">
+                <img src="./assets/img/tvc/sound_off.png" alt="聲音開關" class="default-img">
+                <img src="./assets/img/tvc/sound_off_hover.png" alt="聲音開關" class="hover-img">
+            </a>
             <div class="tvc-btn-group">
-                <a href="javascript:void(0);" class="tvc-btn" aria-label="觀看燦爛篇影片">
+                <a href="javascript:void(0);" class="tvc-btn" aria-label="觀看燦爛篇影片" data-video_url="https://www.youtube.com/embed/fu7wIkQ95_M?autoplay=1&mute=1">
                     <img src="./assets/img/tvc/tvc-btn1.png" alt="燦爛篇" class="btn-default">
                     <img src="./assets/img/tvc/tvc-btn1-hover.png" alt="燦爛篇 Hover" class="btn-hover">
                 </a>
-                <a href="javascript:void(0);" class="tvc-btn" aria-label="觀看女生篇影片">
+                <a href="javascript:void(0);" class="tvc-btn" aria-label="觀看女生篇影片" data-video_url="https://www.youtube.com/embed/fu7wIkQ95_M?autoplay=1&mute=1">
                     <img src="./assets/img/tvc/tvc-btn2.png" alt="女生篇" class="btn-default">
                     <img src="./assets/img/tvc/tvc-btn2-hover.png" alt="女生篇 Hover" class="btn-hover">
                 </a>
@@ -434,27 +1348,371 @@
         </div>
     </section>
 
-    <section id="usp-section" class="w-full h-dvh xl:h-screen relative overflow-hidden">
+    <section id="usp-section" class="w-full relative">
         <div class="usp-kicks">
-
+            <div class="usp-bg">
+                <img src="./assets/img/usp/USP_bg02 3.png" alt="KICKS 背景圖" class="w-full h-full object-cover">
+                <div class="usp-skew-bg"></div>
+                <div class="usp-top-border"></div>
+                <div class="usp-header-title">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800 tracking-wider">KICKS MOMIJI</h2>
+                </div>
+            </div>
+            <div class="tab-container relative">
+                <div id="kicks-tab-nav" class="tab-nav">
+                    <div class="tab-btn active" data-tab="tab-1">燦の智驅</div>
+                    <div class="tab-btn" data-tab="tab-2">燦の信頼</div>
+                    <div class="tab-btn" data-tab="tab-3">燦の心技</div>
+                    <div class="tab-indicator"></div>
+                </div>
+                <div id="kicks-slider-wrapper" class="slider-wrapper">
+                    <img src="./assets/img/maple/maple06.png" alt="Maple 1" class="layout-maple maple-1">
+                    <img src="./assets/img/maple/maple03.png" alt="Maple 2" class="layout-maple maple-2">
+                    <img src="./assets/img/maple/maple08.png" alt="Maple 3" class="layout-maple maple-3">
+                    <img src="./assets/img/maple/maple11.png" alt="Maple 4" class="layout-maple maple-4">
+                    <img src="./assets/img/maple/maple12.png" alt="Maple 5" class="layout-maple maple-5">
+                    <!-- 左右按鈕 -->
+                    <button class="arrow-btn arrow-left" id="kicksPrevBtn">
+                        <img src="./assets/img/icon/angle-left.svg" alt="Previous" class="w-4 h-4">
+                    </button>
+                    <button class="arrow-btn arrow-right" id="kicksNextBtn">
+                        <img src="./assets/img/icon/angle-right.svg" alt="Next" class="w-4 h-4">
+                    </button>
+                    <div class="tab-content active" id="kicks-tab-1">
+                        <div class="slider-container swiper">
+                            <div class="slider-track swiper-wrapper">
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS02.png" alt="GT-R超跑基因">
+                                    <div class="slider-card-content">
+                                        <h4>GT-R超跑基因</h4>
+                                        <p>1.6L HR16DE 鋁合金引擎，為長衝程設計帶來充沛中低轉速扭力，兼顧市區行駛、爬坡動力與穩定輸出。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS01.png" alt="V-Platform底盤">
+                                    <div class="slider-card-content">
+                                        <h4>V-Platform底盤</h4>
+                                        <p>強固 2,620mm 穩定軸距與 5.1m 靈活迴轉半徑，穿梭城市、狹窄巷弄與停車更從容。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS01.png" alt="3A主動全時防護系統">
+                                    <div class="slider-card-content">
+                                        <h4>3A主動全時防護系統</h4>
+                                        <p>ATC 主動循跡控制、ARC 主動車身抑震、AEB 主動引擎煞車，全面提升駕馭平順性與安全性。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS01.png" alt="3A主動全時防護系統">
+                                    <div class="slider-card-content">
+                                        <h4>3A主動全時防護系統</h4>
+                                        <p>ATC 主動循跡控制、ARC 主動車身抑震、AEB 主動引擎煞車，全面提升駕馭平順性與安全性。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS01.png" alt="3A主動全時防護系統">
+                                    <div class="slider-card-content">
+                                        <h4>3A主動全時防護系統</h4>
+                                        <p>ATC 主動循跡控制、ARC 主動車身抑震、AEB 主動引擎煞車，全面提升駕馭平順性與安全性。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="kicks-tab-2">
+                        <div class="slider-container swiper">
+                            <div class="slider-track swiper-wrapper">
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>智能鋼骨車體</h4>
+                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>智能鋼骨車體</h4>
+                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>智能鋼骨車體</h4>
+                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>智能鋼骨車體</h4>
+                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>智能鋼骨車體</h4>
+                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="kicks-tab-3">
+                        <div class="slider-container swiper">
+                            <div class="slider-track swiper-wrapper">
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の心技 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>人體工學座椅</h4>
+                                        <p>紓壓座椅設計降低長途駕駛疲勞，提供絕佳支撐性。</p>                           
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>智能鋼骨車體</h4>
+                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>智能鋼骨車體</h4>
+                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>智能鋼骨車體</h4>
+                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>智能鋼骨車體</h4>
+                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>智能鋼骨車體</h4>
+                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="usp-sentra">
-
+            <div class="usp-bg">
+                <img src="./assets/img/usp/USP_bg03 1.png" alt="SENTRA 背景圖" class="w-full h-full object-cover">
+                <div class="usp-skew-bg"></div>
+                <div class="usp-top-border"></div>
+                <div class="usp-header-title">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800 tracking-wider">SENTRA MOMIJI</h2>
+                </div>
+            </div>
+            <div class="tab-container relative">
+                <div id="sentra-tab-nav" class="tab-nav">
+                    <div class="tab-btn active" data-tab="tab-1">燦の智驅</div>
+                    <div class="tab-btn" data-tab="tab-2">燦の信頼</div>
+                    <div class="tab-btn" data-tab="tab-3">燦の心技</div>
+                    <div class="tab-indicator"></div>
+                </div>
+                <div id="sentra-slider-wrapper" class="slider-wrapper">
+                    <img src="./assets/img/maple/maple17.png" alt="Maple 1" class="layout-maple maple-1">
+                    <img src="./assets/img/maple/maple08.png" alt="Maple 2" class="layout-maple maple-2">
+                    <img src="./assets/img/maple/maple11.png" alt="Maple 3" class="layout-maple maple-3">
+                    <img src="./assets/img/maple/maple18.png" alt="Maple 4" class="layout-maple maple-4">
+                    <img src="./assets/img/maple/maple13.png" alt="Maple 5" class="layout-maple maple-5">
+                    <!-- 左右按鈕 -->
+                    <button class="arrow-btn arrow-left" id="sentraPrevBtn">
+                        <img src="./assets/img/icon/angle-left.svg" alt="Previous" class="w-4 h-4">
+                    </button>
+                    <button class="arrow-btn arrow-right" id="sentraNextBtn">
+                        <img src="./assets/img/icon/angle-right.svg" alt="Next" class="w-4 h-4">
+                    </button>
+                    <div class="tab-content active" id="sentra-tab-1">
+                        <div class="slider-container swiper">
+                            <div class="slider-track swiper-wrapper">
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS02.png" alt="新世代引擎">
+                                    <div class="slider-card-content">
+                                        <h4>新世代節能引擎</h4>
+                                        <p>提供優異動力表現與低油耗，享受馳騁樂趣與經濟效益兼具的駕馭風格。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="sentra-tab-2">
+                        <div class="slider-container swiper">
+                            <div class="slider-track swiper-wrapper">
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>高剛性車體結構</h4>
+                                        <p>採用高張力鋼材防護，為全車乘客提供更完善的安全保障。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="sentra-tab-3">
+                        <div class="slider-container swiper">
+                            <div class="slider-track swiper-wrapper">
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の心技 特色 1">
+                                    <div class="slider-card-content">             
+                                        <h4>3D超體感紓壓座椅</h4>
+                                        <p>符合人體工學設計，有效降低長途行駛時的乘坐疲勞感受。</p>                          
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+    <section id="price-section" class="w-full relative">
+        <div class="price-skew-bg"></div>
+        <div class="price-top-border"></div>
+        <div class="price-container relative">
+            <img src="./assets/img/maple/maple03.png" alt="Maple" class="layout-maple maple-1">
+            <img src="./assets/img/maple/maple08.png" alt="Maple" class="layout-maple maple-2">
+            <img src="./assets/img/maple/maple04.png" alt="Maple" class="layout-maple maple-3">
+            <img src="./assets/img/maple/maple12.png" alt="Maple" class="layout-maple maple-4">
+            <img src="./assets/img/maple/maple16.png" alt="Maple" class="layout-maple maple-5">
+            <img src="./assets/img/maple/maple06.png" alt="Maple" class="layout-maple maple-6">
+            <div class="price-cards-wrapper">                
+                <!-- KICKS 卡片 -->
+                <div class="price-card">
+                    <div class="price-card-inner">
+                        <div class="price-card-header">
+                            <h3 class="price-card-title">KICKS</h3>
+                            <img src="./assets/img/price/KICKS.png" alt="KICKS" class="price-car-img">
+                            <div class="color-selector-wrapper">
+                                <span class="color-dot color-dot-1" data-tooltip="黑頂對白" title="黑/銀白雙色"></span>
+                                <span class="color-dot color-dot-2" data-tooltip="黑頂灰藍" title="黑/灰藍雙色"></span>
+                                <span class="color-dot color-dot-3" data-tooltip="亮銀白" title="亮銀白"></span>
+                                <span class="color-dot color-dot-4" data-tooltip="極黑" title="極黑"></span>
+                                <span class="color-dot color-dot-5" data-tooltip="灰藍鈦" title="灰藍鈦"></span>
+                                <span class="color-dot color-dot-6" data-tooltip="淺灰" title="淺灰"></span>
+                            </div>
+                        </div>
 
-    <section id="price-section" class="w-full h-dvh xl:h-screen  relative overflow-hidden">
+                        <!-- 車型與價格列表 (#FFFFFFCC) -->
+                        <div class="price-list">
+                            <div class="price-item">
+                                <span>初楓版</span>
+                                <div class="price-val-group">
+                                    <span class="price-val-original">74.9 萬元</span>
+                                    <div class="price-discount-row">
+                                        <span class="price-tag-discount">限時優惠</span>
+                                        <span class="price-val" style="color: #C65B22;">69.9 萬元</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="price-item">
+                                <span>盛楓版</span>
+                                <span class="price-val">81.9 萬元</span>
+                            </div>
+                            <div class="price-item">
+                                <span>盛楓版</span>
+                                <span class="price-val">81.9 萬元</span>
+                            </div>
+                            <div class="price-item">
+                                <span>極楓版</span>
+                                <span class="price-val">85.5 萬元</span>
+                            </div>
+                        </div>
+                        <div class="pdf-download-box">
+                            <a href="./assets/files/KICKS型錄(網頁版).pdf" target="_blank" class="pdf-btn" aria-label="型錄下載">
+                                <span class="pdf-btn-text">型錄下載</span>
+                                <div class="pdf-btn-icon">
+                                    <img src="./assets/img/icon/file.svg" alt="PDF Icon" class="w-3.5 h-3.5 brightness-0 invert">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- SENTRA 卡片 -->
+                <div class="price-card">
+                    <div class="price-card-inner">
+                        <div class="price-card-header">
+                            <h3 class="price-card-title">SENTRA</h3>
+                            <img src="./assets/img/price/SENTRA.png" alt="SENTRA" class="price-car-img">
+                            <div class="color-selector-wrapper">
+                                <span class="color-dot color-dot-1" data-tooltip="黑頂對白" title="黑/銀白雙色"></span>
+                                <span class="color-dot color-dot-2" data-tooltip="黑頂灰藍" title="黑/灰藍雙色"></span>
+                                <span class="color-dot color-dot-3" data-tooltip="亮銀白" title="亮銀白"></span>
+                                <span class="color-dot color-dot-4" data-tooltip="極黑" title="極黑"></span>
+                                <span class="color-dot color-dot-5" data-tooltip="灰藍鈦" title="灰藍鈦"></span>
+                                <span class="color-dot color-dot-6" data-tooltip="淺灰" title="淺灰"></span>
+                            </div>
+                        </div>
+                        <div class="price-list">
+                            <div class="price-item">
+                                <span>初楓版</span>
+                                <span class="price-val">78.5 萬元</span>
+                            </div>
+                            <div class="price-item">
+                                <span>盛楓版</span>
+                                <span class="price-val">83.9 萬元</span>
+                            </div>
+                            <div class="price-item">
+                                <span>極楓版</span>
+                                <span class="price-val">88.9 萬元</span>
+                            </div>
+                            <div style="flex: 1.5;"> </div>
+                        </div>
+                        <div class="pdf-download-box">
+                            <a href="./assets/files/KICKS型錄(網頁版).pdf" target="_blank" class="pdf-btn" aria-label="型錄下載">
+                                <span class="pdf-btn-text">型錄下載</span>
+                                <div class="pdf-btn-icon">
+                                    <img src="./assets/img/icon/file.svg" alt="PDF Icon" class="w-3.5 h-3.5 brightness-0 invert">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="price-cta-group">
+                <a href="https://service.nissan.com.tw/testdrive/?mod" target="_blank" class="btn-cta-wrap" aria-label="預約試乘">
+                    <img src="./assets/img/price/testdrive-btn.png" alt="預約試乘" class="default-img">
+                    <img src="./assets/img/price/testdrive-btn-hove.png" alt="預約試乘 Hover" class="hover-img">
+                </a>
+                <a href="javascript:void(0);" class="btn-cta-wrap" aria-label="購車優惠">
+                    <img src="./assets/img/price/buy-btn.png" alt="購車優惠" class="default-img">
+                    <img src="./assets/img/price/buy-btn-hover.png" alt="購車優惠 Hover" class="hover-img">
+                </a>
+            </div>
+        </div>
     </section>
 
     <footer class="w-full text-center py-4 md:py-8 text-sm bg-[#B4A292] text-black">
         © NISSAN TAIWAN.
     </footer>
 
+
+    <a id="top-btn" class="go-to-top-btn">
+        <img src="./assets/img/icon/arrow-small-up.svg" class="w-7 h-7 brightness-0 invert" alt="go to top">
+    </a>
+
     <div id="side-btn" class="fixed right-0 -translate-y-1/2 z-[120] flex flex-col gap-y-[10px] bg-[#1E1E1E99] p-[10px] group w-16 hover:w-[160px] transition-all duration-300 ease-in-out overflow-hidden rounded-s-lg">
         <a href="https://service.nissan.com.tw/testdrive/?mod" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-white transition-colors duration-300 hover:text-[#BEA894]">
             <div class="flex items-center gap-x-3 whitespace-nowrap font-light text-base tracking-[2px]">
                 <div class="rounded-full me-2">                    
-                    <img src="./assets/img/icon/car.svg" class="w-7 h-7 brightness-0 invert" alt="pdf icon">
+                    <img src="./assets/img/icon/car.svg" class="w-7 h-7 brightness-0 invert" alt="testdrive">
                 </div>
                 <span>預約試乘</span>
             </div>
@@ -462,7 +1720,7 @@
         <a href="https://new.nissan.com.tw/upload/brochures/421B8DH106F5/X-TRAIL_ikitsuki.pdf" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-white transition-colors duration-300 hover:text-[#BEA894]">
             <div class="flex items-center gap-x-3 whitespace-nowrap font-light text-base tracking-[2px]">
                 <div class="rounded-full me-2">                    
-                    <img src="./assets/img/icon/coupon.svg" class="w-7 h-7 brightness-0 invert" alt="pdf icon">
+                    <img src="./assets/img/icon/coupon.svg" class="w-7 h-7 brightness-0 invert" alt="pdf download">
                 </div>
                 <span>型錄下載</span>
             </div>
@@ -479,6 +1737,260 @@
     </div>
 
     <script>
+
+
+const canvas = document.getElementById('falling-canvas');
+const ctx = canvas.getContext('2d');
+
+let width, height, dpr;
+let petals = [];      
+const petalCount = 9;
+const imageUrls = [
+    './assets/img/maple/maple01.png', './assets/img/maple/maple02.png', './assets/img/maple/maple03.png', './assets/img/maple/maple04.png', './assets/img/maple/maple05.png',
+    './assets/img/maple/maple06.png', './assets/img/maple/maple07.png', './assets/img/maple/maple08.png', './assets/img/maple/maple09.png', './assets/img/maple/maple10.png',
+    './assets/img/maple/maple11.png', './assets/img/maple/maple12.png', './assets/img/maple/maple13.png', './assets/img/maple/maple14.png', './assets/img/maple/maple15.png',
+    './assets/img/maple/maple16.png', './assets/img/maple/maple17.png', './assets/img/maple/maple18.png', './assets/img/maple/maple19.png', './assets/img/maple/maple20.png'
+];
+
+const petalImages = imageUrls.map(src => {
+    const img = new Image();
+    img.src = src;
+    return img;
+});
+
+// 擴充滑鼠物件以追蹤移動速度與方向向量
+const mouse = { x: -1000, y: -1000, lastX: -1000, lastY: -1000, vx: 0, vy: 0, speed: 0 };
+
+class Petal {
+    constructor() {
+        this.init(true);
+    }
+
+    init(isInitial = false) {
+        this.x = Math.random() * (width * 1.3) - (width * 0.15);
+        this.y = isInitial ? Math.random() * height : -Math.random() * 300 - 80;
+        
+        this.img = petalImages[Math.floor(Math.random() * petalImages.length)];
+        
+        // 楓葉大小重新計算（因應滿版 550% 高度不拉伸）：巨型 40-60px，標準 18-33px
+        const isGiant = Math.random() < 0.3; 
+        if (isGiant) {
+            this.size = Math.random() * 20 + 40; 
+            this.blur = Math.random() * 3 + 2;   
+            this.baseVy = Math.random() * 0.5 + 0.4; 
+        } else {
+            this.size = Math.random() * 15 + 18;  
+            this.blur = Math.random() * 1.2 + 0.3;   
+            this.baseVy = Math.random() * 0.8 + 0.6; 
+        }
+        
+        this.vy = this.baseVy;
+        this.opacity = Math.random() * 0.15 + 0.8; 
+        this.rotation = Math.random() * Math.PI * 2;
+        this.spin = (Math.random() - 0.5) * 0.02; 
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.offset = Math.random() * Math.PI * 2; 
+    }
+
+    update() {
+        this.offset += 0.008;
+        
+        let targetVx = this.vx + Math.sin(this.offset) * 0.8;
+        this.x += targetVx;
+        this.y += this.vy;
+
+        // 滑鼠劃過時：順著方向推開，並限制最大推力避免飛太快
+        const dx = this.x - mouse.x;
+        const dy = this.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 250 && mouse.speed > 0.5) {
+            const force = (250 - dist) / 250;
+            // 限制風力上限 (max: ±1.2)，確保滑鼠揮動再快也只有輕柔的風吹效果
+            const windVx = Math.max(-1.2, Math.min(1.2, mouse.vx * 0.03));
+            const windVy = Math.max(-1.2, Math.min(1.2, mouse.vy * 0.03));
+            
+            this.vx += windVx * force;
+            this.vy += windVy * force;
+        }
+
+        // 速度阻尼：讓被風吹開的楓葉順暢滑行後，慢慢恢復原本的下落狀態
+        this.vx *= 0.95;
+        this.vy = this.vy * 0.95 + this.baseVy * 0.05;
+
+        // 邊界檢查（寬高 +30%）
+        const boundX = width * 0.15;
+        if (this.y > height * 1.3 || this.x < -boundX || this.x > width + boundX) {
+            this.init(false);
+        }
+        
+        this.rotation += this.spin;
+    }
+
+    draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        
+        ctx.globalAlpha = this.opacity;
+        ctx.filter = `blur(${this.blur}px)`;
+
+        if (this.img.complete && this.img.naturalWidth !== 0) {
+            ctx.drawImage(this.img, -this.size/2, -this.size/2, this.size, this.size);
+        } else {
+            ctx.beginPath();
+            ctx.ellipse(0, 0, this.size/2, this.size/2.5, 0, 0, Math.PI * 2);
+            ctx.fillStyle = '#D35400';
+            ctx.fill();
+        }
+        ctx.restore();
+    }
+}
+
+// 螢幕尺寸與 DPR 初始化
+function resize() {
+    dpr = window.devicePixelRatio || 1;
+    width = window.innerWidth;
+    height = document.body.scrollHeight || canvas.clientHeight || window.innerHeight;
+
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.scale(dpr, dpr);
+
+    // 初始化楓葉實例
+    petals = [];
+    for (let i = 0; i < petalCount; i++) {
+        petals.push(new Petal());
+    }
+}
+
+window.addEventListener('resize', resize);
+window.addEventListener('orientationchange', resize);
+resize();
+
+// 監聽滑鼠移動，即時計算移動速度 (Velocity)
+window.addEventListener('mousemove', (e) => {
+    mouse.lastX = mouse.x;
+    mouse.lastY = mouse.y;
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    
+    // 計算滑鼠移動的向量與速度
+    mouse.vx = mouse.x - mouse.lastX;
+    mouse.vy = mouse.y - mouse.lastY;
+    mouse.speed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
+});
+
+// 動畫主循環
+function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    // 每一幀讓滑鼠速度自然遞減衰減，確保滑鼠停下時風力消失
+    mouse.speed *= 0.92;
+
+    petals.forEach(p => {
+        p.update();
+        p.draw();
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+
+
+// Loading 動畫
+document.addEventListener("DOMContentLoaded", () => {
+    const overlay = document.getElementById('autumn-reveal-overlay');
+    const colors = ['#FFFFFF', '#F2F4F7', '#E5E9F0', '#D0D6DC', '#A3ACB9'];
+
+    const baseSize = Math.max(window.innerWidth, window.innerHeight) * 0.7;
+    // 配合擴大的容器計算網格
+    const cols = Math.ceil((window.innerWidth * 1.4) / (baseSize * 0.4)) + 1;
+    const rows = Math.ceil((window.innerHeight * 1.4) / (baseSize * 0.4)) + 1;
+    const blobs = [];
+
+    for (let i = -1; i < rows; i++) {
+        for (let j = -1; j < cols; j++) {
+            const blob = document.createElement('div');
+            blob.className = 'reveal-blob';
+
+            const size = baseSize * (0.8 + Math.random() * 0.6);
+            // 配合容器位移 (-20vw/-20vh) 補正座標
+            const x = j * (baseSize * 0.4) - (size * 0.2) + (Math.random() * baseSize * 0.2);
+            const y = i * (baseSize * 0.4) - (size * 0.2) + (Math.random() * baseSize * 0.2);
+            
+            const color = colors[Math.floor(Math.random() * colors.length)];
+
+            blob.style.width = `${size}px`;
+            blob.style.height = `${size}px`;
+            blob.style.left = `${x}px`;
+            blob.style.top = `${y}px`;
+            
+            blob.style.background = `radial-gradient(circle, ${color} 15%, ${color}00 75%)`;
+
+            // 讓每個色塊的漂浮速度與起步時間不同，畫面更自然
+            blob.style.animationDuration = `${6 + Math.random() * 4}s`;
+            blob.style.animationDelay = `${Math.random() * -6}s`;
+
+            overlay.appendChild(blob);
+            blobs.push(blob);
+        }
+    }
+
+    window.addEventListener('load', () => {
+        overlay.style.backgroundColor = 'transparent';
+        overlay.style.pointerEvents = 'none';
+
+        // 頁面載入完成時，讓 Logo 與色塊「同時」開始慢慢淡出與微幅放大
+        const logo = document.getElementById('reveal-logo');
+        if (logo) {
+            logo.style.transform = 'scale(1.12)'; 
+            logo.style.opacity = '0';
+        }
+
+        blobs.sort(() => Math.random() - 0.5);
+
+        // 移除過大的隨機亂數延遲，改用固定且緊湊的均勻間隔，避免少數色塊嚴重落後
+        blobs.forEach((blob, idx) => {
+            setTimeout(() => {
+                blob.style.animation = 'none'; // 停止浮動動畫
+                blob.style.transform = `scale(0)`; // 執行縮小淡出
+                blob.style.opacity = '0';
+            }, idx * 30); // 每個色塊接續淡出的時間差
+        });
+
+        // 總等待時間對應（ CSS 2.5s 動畫）
+        const totalTime = blobs.length * 40 + 1500;
+        setTimeout(() => {
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.remove(), 500);
+        }, totalTime);
+    });
+});
+
+
+
+// Cursor動畫
+document.addEventListener('click', (e) => {
+    const ripple = document.createElement('div');
+    ripple.className = 'click-ripple';
+    
+    const size = 60;
+    ripple.style.width = `${size}px`;
+    ripple.style.height = `${size}px`;
+    ripple.style.left = `${e.clientX}px`;
+    ripple.style.top = `${e.clientY}px`;
+    
+    ripple.style.background = 'radial-gradient(circle, #D97245 0%, #C25F35 45%, rgba(181, 118, 51, 0) 75%)';
+
+    document.body.appendChild(ripple);
+
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
+});
 
 
         // =====================================================
@@ -541,6 +2053,36 @@
                 });
             }
 
+            // =====================================================
+            // 手機選單開關
+            // =====================================================
+
+            const popupOverlay = document.getElementById('popupOverlay');
+            const popupClose = document.getElementById('popupClose');
+            const popupVideo = document.getElementById('popupVideo');
+            const tvcPlayButtons = document.querySelectorAll('.tvc-btn');
+            tvcPlayButtons.forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const videoUrl = btn.dataset.video_url || 'https://www.youtube.com/embed/fu7wIkQ95_M?autoplay=1&mute=1';
+                popupVideo.src = videoUrl;
+                popupOverlay.classList.add('show');
+                popupOverlay.classList.remove('hide');
+                });
+            });
+
+            const closePopup = () => {
+                popupOverlay.classList.remove('show');
+                popupOverlay.classList.add('hide');
+                setTimeout(() => { popupVideo.src = ''; }, 600);
+            };
+
+            popupClose.addEventListener('click', closePopup);
+            popupOverlay.addEventListener('click', (e) => {
+                if (e.target === popupOverlay) closePopup();
+            });
+
 
             // =====================================================
             // 手機選單開關
@@ -573,10 +2115,47 @@
 
 
             // =====================================================
+            // TVC 聲音按鈕切換
+            // =====================================================
+            const soundOnBtn = document.querySelector('.sound-on-btn');
+            const soundOffBtn = document.querySelector('.sound-off-btn');
+
+            if (soundOnBtn && soundOffBtn) {
+                const toggleSound = () => {
+                    soundOnBtn.classList.toggle('active');
+                    soundOffBtn.classList.toggle('active');
+                };
+
+                soundOnBtn.addEventListener('click', toggleSound);
+                soundOffBtn.addEventListener('click', toggleSound);
+            }
+
+
+            // =====================================================
             // 側邊按鈕滾動顯示/隱藏 (淡入淡出)
             // =====================================================
+            const webHeader = document.getElementById('web-header');
+            const topBtn = document.getElementById('top-btn');
             const sideBtn = document.getElementById('side-btn');
             const tvcSection = document.getElementById('tvc-section');
+
+            if (webHeader && tvcSection) {
+                const toggleHeader = () => {
+                    const rect = tvcSection.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight * 0.8) {
+                        webHeader.style.transform = 'translateY(-100%)';
+                        webHeader.style.opacity = '0';
+                        webHeader.style.pointerEvents = 'none';
+                    } else {
+                        webHeader.style.transform = 'translateY(0)';
+                        webHeader.style.opacity = '1';
+                        webHeader.style.pointerEvents = 'auto';
+                    }
+                };
+
+                window.addEventListener('scroll', toggleHeader, { passive: true });
+                toggleHeader();
+            }
 
             if (sideBtn && tvcSection) {
                 const toggleSideBtn = () => {
@@ -591,8 +2170,155 @@
                 window.addEventListener('scroll', toggleSideBtn, { passive: true });
                 toggleSideBtn();
             }
+            if (topBtn && tvcSection) {
+                const toggleTopBtn = () => {
+                    const rect = tvcSection.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight * 0.8) {
+                        topBtn.classList.add('show');
+                    } else {
+                        topBtn.classList.remove('show');
+                    }
+                };
 
-        });
+                topBtn.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+
+                window.addEventListener('scroll', toggleTopBtn, { passive: true });
+                toggleTopBtn();
+            }
+
+            // =====================================================
+            // KICKS USP TAB 分頁切換 & Swiper 初始化
+            // =====================================================
+            const kicksSwipers = {};
+            const sentraSwipers = {};
+
+            const initSwipers = (wrapperSelector, prevBtnId, nextBtnId, targetObj) => {
+                document.querySelectorAll(`${wrapperSelector} .tab-content`).forEach(tab => {
+                    const container = tab.querySelector('.slider-container');
+                    if (!container) return;
+
+                    const swiperInstance = new Swiper(container, {
+                        slidesPerView: 1,
+                        spaceBetween: 24,
+                        slidesPerGroup: 1,
+                        observer: true,
+                        observeParents: true,
+                        breakpoints: {
+                            768: {
+                                slidesPerView: 3,
+                                spaceBetween: 24
+                            }
+                        },
+                        navigation: {
+                            nextEl: nextBtnId,
+                            prevEl: prevBtnId,
+                        }
+                    });
+                    targetObj[tab.id] = swiperInstance;
+                });
+            };
+
+            initSwipers('#kicks-slider-wrapper', '#kicksPrevBtn', '#kicksNextBtn', kicksSwipers);
+            initSwipers('#sentra-slider-wrapper', '#sentraPrevBtn', '#sentraNextBtn', sentraSwipers);
+
+            const kicksTabNav = document.getElementById('kicks-tab-nav');
+            if (kicksTabNav) {
+                const tabBtns = kicksTabNav.querySelectorAll('.tab-btn');
+                const tabContents = document.querySelectorAll('#kicks-slider-wrapper .tab-content');
+                const indicator = kicksTabNav.querySelector('.tab-indicator');
+
+                const updateIndicator = (activeBtn) => {
+                    if (!indicator || !activeBtn) return;
+                    const xPos = activeBtn.offsetLeft;
+                    const width = activeBtn.offsetWidth;
+                    indicator.style.transform = `translateX(${xPos}px) scaleX(${width})`;
+                };
+
+                const initialActive = kicksTabNav.querySelector('.tab-btn.active');
+                updateIndicator(initialActive);
+
+                window.addEventListener('resize', () => {
+                    const currentActive = kicksTabNav.querySelector('.tab-btn.active');
+                    updateIndicator(currentActive);
+                });
+
+                tabBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const targetTabId = btn.getAttribute('data-tab');
+
+                        tabBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+
+                        updateIndicator(btn);
+
+                        tabContents.forEach(content => {
+                            const fullTabId = `kicks-${targetTabId}`;
+                            if (content.id === fullTabId) {
+                                content.classList.add('active');
+                                if (kicksSwipers[fullTabId]) {
+                                    kicksSwipers[fullTabId].update();
+                                    kicksSwipers[fullTabId].navigation.update();
+                                }
+                            } else {
+                                content.classList.remove('active');
+                            }
+                        });
+                    });
+                });
+            }
+
+            // =====================================================
+            // SENTRA USP TAB 分頁切換
+            // =====================================================
+            const sentraTabNav = document.getElementById('sentra-tab-nav');
+            if (sentraTabNav) {
+                const tabBtns = sentraTabNav.querySelectorAll('.tab-btn');
+                const tabContents = document.querySelectorAll('#sentra-slider-wrapper .tab-content');
+                const indicator = sentraTabNav.querySelector('.tab-indicator');
+
+                const updateIndicator = (activeBtn) => {
+                    if (!indicator || !activeBtn) return;
+                    const xPos = activeBtn.offsetLeft;
+                    const width = activeBtn.offsetWidth;
+                    indicator.style.transform = `translateX(${xPos}px) scaleX(${width})`;
+                };
+
+                const initialActive = sentraTabNav.querySelector('.tab-btn.active');
+                updateIndicator(initialActive);
+
+                window.addEventListener('resize', () => {
+                    const currentActive = sentraTabNav.querySelector('.tab-btn.active');
+                    updateIndicator(currentActive);
+                });
+
+                tabBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const targetTabId = btn.getAttribute('data-tab');
+
+                        tabBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+
+                        updateIndicator(btn);
+
+                        tabContents.forEach(content => {
+                            const fullTabId = `sentra-${targetTabId}`;
+                            if (content.id === fullTabId) {
+                                content.classList.add('active');
+                                if (sentraSwipers[fullTabId]) {
+                                    sentraSwipers[fullTabId].update();
+                                    sentraSwipers[fullTabId].navigation.update();
+                                }
+                            } else {
+                                content.classList.remove('active');
+                            }
+                        });
+                    });
+                });
+            }
+
+    });
 
 
     </script>
