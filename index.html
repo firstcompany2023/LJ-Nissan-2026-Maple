@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>AAAAAAAAAAAA</version> -->
+    <!-- <version>BBBBB</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -267,10 +267,31 @@
            3. Banner 區塊
            ========================================================================== */
         #banner-section {
-            height: calc(100vw - 20px);
-            background: url(./assets/img/banner/banner01_d.svg) center center / 100% auto no-repeat;
+            position: relative;
+            width: 100%;
+            height: calc(100vh + 35vh); /* 影片後方背景佔比如需調整 改後面的值 */
+            overflow: hidden;
         }
 
+        .banner_d {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%; /* 背景圖比例 */
+            background-image: url(./assets/img/banner/banner_d.jpg);
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            background-position: center top;
+        }
+
+        .banner-mask-bg {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(35, 11, 9, 0) 35%, rgba(138, 52, 32, 0.8) 50%, rgba(35, 11, 9, 0.4) 100%);
+        }
         .banner-skew-bg {
             position: absolute;
             bottom: -1px;
@@ -293,20 +314,70 @@
             pointer-events: none;
         }
 
-        .car-name-btn {
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        .banner-title {
+            position: absolute;
+            top: 9%;
+            right: 27%;
+            width: 15%;
+            height: auto;
         }
 
-        .car-name-btn:hover {
-            transform: scale(1.05) translateY(-2px);
+        .textGroup_sentra {
+            position: absolute;
+            width: 41.2%;
+            height: auto;
+            left: 9.4%;
+            top: 20.4%;
+            cursor: pointer;
+        }
+        .textGroup_kicks {
+            position: absolute;
+            width: 41.2%;
+            height: auto;
+            left: 43.1%;
+            top: 15.4%;
+            cursor: pointer;
+        }
+        .textGroup_sentra .outline-bg,
+        .textGroup_kicks .outline-bg {
+            width: 100%;
+            opacity: 0;
+            transition: 0.3s linear;
+        }
+        .textGroup_sentra:hover .outline-bg,
+        .textGroup_kicks:hover .outline-bg {
+            opacity: 1;
+        }
+        .textGroup_sentra .text {
+            width: auto;
+            height: 1.5vw;
+            position: absolute;
+            bottom: 0%;
+            margin: auto;
+            left: 0;
+            right: 0;
+            transition: 0.3s linear;
+        }
+        .textGroup_kicks .text {
+            width: auto;
+            height: 1.5vw;
+            position: absolute;
+            bottom: 0%;
+            margin: auto;
+            left: 0;
+            right: 0;
+            transition: 0.3s linear;
+        }
+        .textGroup_sentra:hover .text,
+        .textGroup_kicks:hover .text {
+            transform: scale(1.05);
         }
 
         /* ==========================================================================
            4. TVC 區塊
            ========================================================================== */
         #tvc-section {
-            height: 90vh;
+            height: 50vh;
         }
 
         .tvc-mask-bg, .tvc-skew-bg {
@@ -319,9 +390,11 @@
             display: flex;
             width: 836px;
             height: 468px;
-            margin: -10vh auto 0 auto;
+            margin: auto;
+            top: -20vh;
             z-index: 6;
-            max-width: 95vw; /* 防止極端狀況下超出螢幕寬度 */
+            max-width: 85%;
+            max-height: calc(80vw * 0.6);
         }
 
         /* 1280px 螢幕 (可視高度 550px -> 寬度 982px) */
@@ -730,47 +803,38 @@
             .usp-header-title h2::after { display: none; }
         }
 
+        @media (max-width: 1199px) {
+            #banner-section{
+                height: 0;
+                padding-bottom: 60%;
+            }
+        }
+
         /* 桌面大螢幕尺寸微調 */
         @media (min-width: 1199px) {
-            #banner-section { top: -15vw; }
-            #tvc-section { height: 40vw; }
-            .tvc-info { top: -15vw; }
-            #tvc-section .scroll-down-btn { bottom: 20%; }
+
         }
 
         @media (min-width: 1300px) {
-            #banner-section { top: -15vw; }
-            #tvc-section { height: 30vw; }
-            .tvc-info { top: -15vw; }
-            #banner-section .scroll-down-btn { bottom: 25%; }
-            #tvc-section .scroll-down-btn { bottom: 33%; }
         }
 
         @media (min-width: 1400px) {
-            #banner-section { top: -18vw; }
-            #tvc-section { height: 35vw; }
-            .tvc-info { top: -18vw; }
+            #tvc-section { height: 60vh; }
         }
 
         @media (min-width: 1500px) {
-            #banner-section { top: -25vw; }
-            #tvc-section { height: 20vw; }
-            .tvc-info { top: -25vw; }
-            #tvc-section .scroll-down-btn { bottom: 22vw; }
         }
 
         @media (min-width: 1600px) {
-            #banner-section { top: -25vw; }
-            #tvc-section { height: 8vw; }
-            .tvc-info { top: -33vw; }
-            #tvc-section .scroll-down-btn { bottom: 25vw; }
+            #tvc-section { height: 70vh; }
         }
 
-        @media (min-width: 1900px) {
-            #banner-section { top: -30vw; }
-            #tvc-section { height: 0vw; }
-            .tvc-info { top: -40vw; }
-            #tvc-section .scroll-down-btn { bottom: 30vw; }
+        @media (min-width: 1800px) {
+            #tvc-section { height: 85vh; }
+        }
+
+        @media (min-width: 2000px) {
+            #tvc-section { height: 100vh; }
         }
 
         /* 平板區域與橫屏/直屏切換 */
@@ -799,31 +863,31 @@
             #usp-section .maple-3, #usp-section .maple-4, #usp-section .maple-5, #price-section .price-skew-bg, #price-section .price-top-border { display: none; }
         }
 
+        /* 平板橫屏裝置 */
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) and (min-height: 500px) {
-            #banner-section { top: -10vh; }
             #tvc-section { height: 80vh; }
             .tvc-info { top: -15vh;}
             .usp-kicks, .usp-sentra { height: 100vh; }
         }
-
+        /* 平板直屏裝置 */
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
-            #banner-section .car-name-btn { bottom: 25%; }
-            #tvc-section { height: 50vh; }
-            .tvc-info { top: -5vh;}
+            #tvc-section { height: 60vh; }
+            #tvc-info { top: -5vh; }
+            .usp-header-title h2, .usp-tab-header-title h2 { font-size: 2.5rem; }
             #banner-section .scroll-down-btn { display: none; }
         }
-
+        /* 手機、平板直屏裝置 */
         @media (max-width: 767px), (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
             #web-header { display: none !important; }
             #mobile-header { display: flex !important; }
             #mobile-menu, #mobile-logo { opacity: 1; pointer-events: auto; }
+            .svg-mask--logo-text { background-color: #FFFFFF !important; }
         }
 
         /* 手機橫屏裝置 */
         @media (max-width: 960px) and (orientation: landscape) and (max-height: 500px) {
-            #banner-section { top: -70vh; }
-            #tvc-section { height: 75vh; }
-            .tvc-info { top: -75vh; width: 660px; height: 370px;}
+            #tvc-section { height: 100vh; }
+            .tvc-info { width: 660px; height: 370px;}
             #side-btn { top: 70%; }
         }
 
@@ -840,7 +904,7 @@
             .banner-top-border, #banner-section .scroll-down-btn, #tvc-section .scroll-down-btn,
             #usp-section .layout-maple, #price-section .layout-maple { display: none; }
 
-            .tvc-info { width: 350px; height: 196px; margin: auto; }
+            .tvc-info { width: 350px; height: 196px; margin: auto; top: 0;}
             #tvc-section { height: 50vh; display: flex; align-items: center; justify-content: center; position: relative; }
             .tvc-mask-bg { display: block; position: absolute; top: -1px; left: 0; width: 100%; height: 60%; background: #8A3420; z-index: 1; }
             .tvc-skew-bg {
@@ -868,6 +932,44 @@
             #tvc-section { height: 60vh; }
             #side-btn { top: 85%; }
         }
+        /* SE手機橫屏裝置 */
+        @media (max-width: 667px) and (orientation: landscape) and (max-height: 375px) {
+            .banner_d { display: block !important; }
+            .banner-btn-group { display: none !important; }
+            .banner-mob-title { display: none !important; }
+            #tvc-section { height: 100vh; }
+            .tvc-info {  top: -10%;}
+        }
+        /* ==========================================================================
+           8. SVG Mask Utilities
+           ========================================================================== */
+        /* Added: SVG mask utilities to render logo SVGs in #3F2F27 */
+        .svg-mask {
+            display: inline-block;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+        }
+
+        /* specific sizes for the two logos */
+        .svg-mask--logo {
+            width: 96px;
+            height: 96px;
+            background-color: #3F2F27; /* target color */
+            -webkit-mask-image: url('./assets/img/icon/logo.svg');
+            mask-image: url('./assets/img/icon/logo.svg');
+        }
+
+        .svg-mask--logo-text {
+            width: 120px;
+            height: 15px;
+            background-color: #3F2F27; /* target color */
+            -webkit-mask-image: url('./assets/img/icon/logo_text.svg');
+            mask-image: url('./assets/img/icon/logo_text.svg');
+        }
     </style>
 
     <canvas id="falling-canvas"></canvas>
@@ -892,8 +994,8 @@
     <header class="fixed top-0 left-0 w-full z-[100] bg-transparent transition-all duration-300">
         <div id="web-header" class="absolute w-full mx-auto flex flex-row items-center justify-between px-12 py-6 gap-x-0">
             <div id="web-logo" class="block">
-                <a href="#" class="w-[96px] block transition-transform duration-300 hover:scale-105">
-                    <img src="./assets/img/icon/logo.svg" alt="NISSAN LOGO" class="w-[96px] h-auto object-contain brightness-0 invert">
+                <a href="#" class="w-[96px] block transition-transform duration-300 hover:scale-105" aria-label="NISSAN LOGO">
+                    <span class="svg-mask svg-mask--logo" role="img" aria-label="NISSAN LOGO"></span>
                 </a>
             </div>
             <nav id="web-menu" class="flex items-center gap-x-4 md:order-2">
@@ -907,8 +1009,8 @@
                 <img src="./assets/img/icon/menu-burger.svg" class="w-4 h-4 brightness-0 invert" alt="menu icon">
             </button>
             <div id="mobile-logo" class="block transition-transform duration-300 hover:scale-105">
-                <a href="#" class="w-[120px] block transition-transform duration-300 hover:scale-105">
-                    <img src="./assets/img/icon/logo_text.svg" alt="NISSAN LOGO" class="w-[120px] h-auto object-contain brightness-0 invert">
+                <a href="#" class="w-[120px] block transition-transform duration-300 hover:scale-105" aria-label="NISSAN LOGO">
+                    <span class="svg-mask svg-mask--logo-text" role="img" aria-label="NISSAN LOGO"></span>
                 </a>
             </div>
             <div id="mobile-dropdown-menu" class="hidden absolute top-full left-6 bg-[#0A0A0A]/85 z-[150] px-6 py-8">
@@ -923,26 +1025,34 @@
     </header>
 
     <!-- Banner Section -->
-    <section id="banner-section" class="w-full h-dvh xl:h-screen relative overflow-hidden">
-        <div class="banner-title absolute top-1/4 left-1/2 md:left-3/4 md:top-1/3 transform -translate-x-1/2">
-            <img src="./assets/img/banner/title.svg" alt="banner title">
+    <section id="banner-section" class="">
+        <!-- web -->
+        <div class="banner_d hidden md:block">
+            <div class="banner-mask-bg"></div>
+            <a href="#usp-kicks" class="textGroup_sentra">
+                <img src="./assets/img/banner/outline_s.png" class="outline-bg">
+                <img src="./assets/img/banner/sentra_name_m.svg" class="text">
+            </a>
+            <a href="#usp-sentra" class="textGroup_kicks">
+                <img src="./assets/img/banner/outline_k.png" class="outline-bg">
+                <img src="./assets/img/banner/kicks_name_m.svg" class="text">
+            </a>
+            <img src="./assets/img/banner/title.svg" alt="banner title" class="banner-title">
+            <a class="scroll-down-btn absolute inline-block top-[45%] left-1/2 transform -translate-x-1/2 text-white" href="#tvc-info" aria-label="Scroll Down">
+                <div class="flex flex-col justify-center items-center text-xs">
+                    Scroll Down
+                    <svg class="animate-bounce w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </a>
         </div>
+        <!-- mobile -->
         <div class="banner-skew-bg"></div>
         <div class="banner-top-border"></div>
-        <a class="scroll-down-btn absolute inline-block bottom-[30vh] left-1/2 transform -translate-x-1/2 text-white" href="#tvc-info" aria-label="Scroll Down">
-            <div class="flex flex-col justify-center items-center text-xs">
-                Scroll Down
-                <svg class="animate-bounce w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </div>
-        </a>
-        <a href="#usp-kicks" class="car-name-btn hidden md:block absolute bottom-[30%] left-[20%]" aria-label="kicks">
-            <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks">
-        </a>
-        <a href="#usp-sentra" class="car-name-btn hidden md:block absolute bottom-[30%] right-[15%]" aria-label="sentra">
-            <img src="./assets/img/banner/sentra_name_m.svg" alt="sentra">
-        </a>
+        <div class="banner-mob-title md:hidden absolute top-1/4 left-1/2 transform -translate-x-1/2">
+            <img src="./assets/img/banner/title.svg" alt="banner title">
+        </div>
         <div class="banner-btn-group flex md:hidden absolute bottom-[10vh] left-1/2 transform -translate-x-1/2 gap-4 flex-col">
             <a href="#usp-kicks" class="flex" aria-label="kicks">
                 <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks">
@@ -960,16 +1070,7 @@
         <div class="tvc-mask-bg"></div>
         <div class="tvc-skew-bg"></div>
         <div id="tvc-info" class="tvc-info">
-            <img src="./assets/img/maple/maple14.png" alt="Maple 1" class="layout-maple maple-1">
-            <img src="./assets/img/maple/maple05.png" alt="Maple 2" class="layout-maple maple-2">
-            <img src="./assets/img/maple/maple04.png" alt="Maple 3" class="layout-maple maple-3">
-            <img src="./assets/img/maple/maple11.png" alt="Maple 4" class="layout-maple maple-4">
-            <img src="./assets/img/maple/maple03.png" alt="Maple 5" class="layout-maple maple-5">
-            <img src="./assets/img/maple/maple07.png" alt="Maple 6" class="layout-maple maple-6">
-            <div class="tvc-border-1"></div>
-            <div class="tvc-border-2"></div>
-            <div class="tvc-border-3"></div>
-            <video id="tvc-video" class="absolute top-0 left-0 w-full h-full object-cover p-[20px]" muted loop playsinline preload="none">
+            <video id="tvc-video" class="absolute top-0 left-0 w-full h-full object-cover p-[20px] z-[1]" muted loop playsinline preload="none">
                 <source src="./assets/video/07 心和_v2.mp4" type="video/mp4">
             </video>
             <a href="javascript:void(0);" class="sound-on-btn" aria-label="聲音開關">
@@ -990,6 +1091,15 @@
                     <img src="./assets/img/tvc/tvc-btn2-hover.png" alt="女生篇 Hover" class="btn-hover">
                 </a>
             </div>
+            <img src="./assets/img/maple/maple14.png" alt="Maple 1" class="layout-maple maple-1">
+            <img src="./assets/img/maple/maple05.png" alt="Maple 2" class="layout-maple maple-2">
+            <img src="./assets/img/maple/maple04.png" alt="Maple 3" class="layout-maple maple-3">
+            <img src="./assets/img/maple/maple11.png" alt="Maple 4" class="layout-maple maple-4">
+            <img src="./assets/img/maple/maple03.png" alt="Maple 5" class="layout-maple maple-5">
+            <img src="./assets/img/maple/maple07.png" alt="Maple 6" class="layout-maple maple-6">
+            <div class="tvc-border-1"></div>
+            <div class="tvc-border-2"></div>
+            <div class="tvc-border-3"></div>
         </div>
     </section>
 
@@ -1366,8 +1476,6 @@
         © NISSAN TAIWAN.
     </footer>
 
-
-
     <!-- Side Menu Button -->
     <div id="side-btn" class="fixed right-0 -translate-y-1/2 z-[120] ">      
         <!-- Go To Top Button -->  
@@ -1490,7 +1598,7 @@
                     // 預設邊界為畫布高度 (此高度已設定為 #usp-section 的頂部距離)
                     const bottomLimit = height;
                     
-                    // 設定提前淡出的緩衝距離 (單位：像素)，確保葉子在到底部前 120px 就開始淡出
+                    // 設定提前淡出的緩衝距離 (單位：像素)，確保葉子在到底部 120px 就開始淡出
                     const fadeBuffer = 120; 
 
                     // 當葉子超過 X 軸左右邊界，或是 Y 軸座標進入距離底部 120px 的區域時觸發淡出
@@ -1886,17 +1994,15 @@
            3. 錨點平滑捲動與觀測器 (IIFE)
            ========================================================================== */
         (function() {
-            function getHeaderHeight() {
-                const web = document.getElementById('web-header');
-                const mob = document.getElementById('mobile-header');
-                const el = (web && window.getComputedStyle(web).display !== 'none') ? web : (mob || web);
-                return el ? el.offsetHeight : 0;
-            }
 
             function scrollToElementWithOffset(el) {
                 if (!el) return;
-                const headerH = (el === document.getElementById('tvc-info')) ? getHeaderHeight() : 0;
-                const top = el.getBoundingClientRect().top + window.pageYOffset - headerH;
+                let marginH = 0
+                if(el.id === 'tvc-info') {
+                    marginH = (window.innerHeight - el.getBoundingClientRect().height) / 2;
+                }
+
+                const top = el.getBoundingClientRect().top + window.pageYOffset - marginH;
                 window.scrollTo({ top, behavior: 'smooth' });
             }
 
