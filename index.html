@@ -16,13 +16,12 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="./assets/img/icon/logo.svg">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
+    <meta name="apple-mobile-web-app-capable" content="yes">    
     <link rel="stylesheet" href="./assets/css/main.css" />
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-
+    <version>AAAAAAAAAAAA</version>
     <script>
         tailwind.config = {
             theme: {
@@ -154,27 +153,20 @@
             transition: transform 2.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.8s ease;
         }
 
-        /* 常駐固定按鈕 (Go To Top & Side Menu) */
         .go-to-top-btn {
-            padding: 12px;
+            position: relative;
+            right: 8px;
+            display: block;
+            width: 48px;
+            height: 48px;
+            padding: 7px;
             background: #B8B8B8;
             border-radius: 50%;
             border: 3.85px solid #FFFFFF80;
-            position: fixed;
-            top: 60%;
-            right: 3px;
+            margin-left: auto;
+            margin-bottom: 20px;
             cursor: pointer;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
             transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-            pointer-events: none;
-        }
-
-        .go-to-top-btn.show {
-            opacity: 1;
-            pointer-events: auto;
-            visibility: visible;
         }
 
         .go-to-top-btn:hover {
@@ -196,8 +188,9 @@
         }
 
         #side-btn .rounded-full {
-            background: linear-gradient(0deg, #C4703B 0%, #F1A77A 100%);
+            background: linear-gradient(0deg, #C17147 0%, #EFAA85 100%);
             padding: 10px;
+            line-height: 1;
         }
 
         /* ==========================================================================
@@ -320,69 +313,70 @@
             display: none;
         }
 
-/* 預設基礎尺寸 (小於 1280px 時) */
+        /* 預設基礎尺寸 */
         .tvc-info {
             position: relative;
             display: flex;
-            width: 550px;
-            height: 308px;
+            width: 836px;
+            height: 468px;
             margin: -10vh auto 0 auto;
             z-index: 6;
+            max-width: 95vw; /* 防止極端狀況下超出螢幕寬度 */
         }
 
-        /* 1280px 螢幕 (可視 550px x 308px) */
+        /* 1280px 螢幕 (可視高度 550px -> 寬度 982px) */
         @media (min-width: 1280px) {
             .tvc-info {
-                width: 550px;
-                height: 308px;
+                width: 982px;
+                height: 550px;
             }
         }
 
-        /* 1366px 螢幕 (可視 590px x 330px) */
+        /* 1366px 螢幕 (可視高度 590px -> 寬度 1054px) */
         @media (min-width: 1366px) {
             .tvc-info {
-                width: 590px;
-                height: 330px;
+                width: 1054px;
+                height: 590px;
             }
         }
 
-        /* 1440px 螢幕 (可視 700px x 392px) */
+        /* 1440px 螢幕 (可視高度 700px -> 寬度 1250px) */
         @media (min-width: 1440px) {
-            .tvc-info {
-                width: 700px;
-                height: 392px;
-            }
-        }
-
-        /* 1536px 螢幕 (可視 680px x 381px) */
-        @media (min-width: 1536px) {
-            .tvc-info {
-                width: 680px;
-                height: 381px;
-            }
-        }
-
-        /* 1600px 螢幕 (可視 730px x 409px) */
-        @media (min-width: 1600px) {
-            .tvc-info {
-                width: 730px;
-                height: 409px;
-            }
-        }
-
-        /* 1920px 螢幕 (可視 880px x 493px) */
-        @media (min-width: 1920px) {
-            .tvc-info {
-                width: 880px;
-                height: 493px;
-            }
-        }
-
-        /* 2560px 螢幕 (可視 1250px x 700px) */
-        @media (min-width: 2560px) {
             .tvc-info {
                 width: 1250px;
                 height: 700px;
+            }
+        }
+
+        /* 1536px 螢幕 (可視高度 680px -> 寬度 1215px) */
+        @media (min-width: 1536px) {
+            .tvc-info {
+                width: 1215px;
+                height: 680px;
+            }
+        }
+
+        /* 1600px 螢幕 (可視高度 730px -> 寬度 1304px) */
+        @media (min-width: 1600px) {
+            .tvc-info {
+                width: 1304px;
+                height: 730px;
+            }
+        }
+
+        /* 1920px 螢幕 (可視高度 880px -> 寬度 1572px) */
+        @media (min-width: 1920px) {
+            .tvc-info {
+                width: 1572px;
+                height: 880px;
+            }
+        }
+
+        /* 2560px 螢幕 (可視高度 1250px -> 寬度 2233px) */
+        @media (min-width: 2560px) {
+            .tvc-info {
+                width: 2233px;
+                height: 1250px;
             }
         }
 
@@ -537,10 +531,10 @@
         .tab-btn.active { color: #3F2F27; }
 
         .tab-indicator {
-            position: absolute; bottom: 0; left: 0; height: 3px; width: 1px;
+            position: absolute; bottom: 0; left: 0; height: 3px; width: 0px;
             background-color: #3F2F27; transform-origin: left center;
-            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-            pointer-events: none; z-index: 6; will-change: transform;
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), width 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none; z-index: 6; will-change: transform, width;
         }
 
         .tab-indicator::before {
@@ -567,7 +561,7 @@
 
         .slider-card img {
             width: 100%; height: 200px; object-fit: cover;
-            border-radius: 4px; background: #FFFCF280; padding: 12px;
+            background: #FFFCF280;
         }
 
         .slider-card-content { background: #FFFFFFCC; padding: 12px 18px; }
@@ -738,14 +732,14 @@
 
         /* 桌面大螢幕尺寸微調 */
         @media (min-width: 1199px) {
-            #banner-section { top: -7vw; }
+            #banner-section { top: -15vw; }
             #tvc-section { height: 40vw; }
             .tvc-info { top: -15vw; }
             #tvc-section .scroll-down-btn { bottom: 20%; }
         }
 
         @media (min-width: 1300px) {
-            #banner-section { top: -7vw; }
+            #banner-section { top: -15vw; }
             #tvc-section { height: 30vw; }
             .tvc-info { top: -15vw; }
             #banner-section .scroll-down-btn { bottom: 25%; }
@@ -753,13 +747,13 @@
         }
 
         @media (min-width: 1400px) {
-            #banner-section { top: -15vw; }
+            #banner-section { top: -18vw; }
             #tvc-section { height: 35vw; }
             .tvc-info { top: -18vw; }
         }
 
         @media (min-width: 1500px) {
-            #banner-section { top: -20vw; }
+            #banner-section { top: -25vw; }
             #tvc-section { height: 20vw; }
             .tvc-info { top: -25vw; }
             #tvc-section .scroll-down-btn { bottom: 22vw; }
@@ -809,7 +803,6 @@
             #banner-section { top: -10vh; }
             #tvc-section { height: 80vh; }
             .tvc-info { top: -15vh;}
-            .go-to-top-btn { top: 55%; }
             .usp-kicks, .usp-sentra { height: 100vh; }
         }
 
@@ -830,7 +823,8 @@
         @media (max-width: 960px) and (orientation: landscape) and (max-height: 500px) {
             #banner-section { top: -70vh; }
             #tvc-section { height: 75vh; }
-            .tvc-info { top: -75vh; max-width: 660px; }
+            .tvc-info { top: -75vh; width: 660px; height: 370px;}
+            #side-btn { top: 70%; }
         }
 
         /* 手機直屏裝置 (<= 767px) */
@@ -866,14 +860,12 @@
             .price-skew-bg { clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%); height: 3%; top: -1%; }
             .price-top-border { top: 1%; }
             .price-cta-group { gap: 0px; }
-            .go-to-top-btn { top: 70%; }
             #side-btn { top: 85%; }
         }
 
         @media (max-width: 375px) {
             #banner-section { background-size: 100% auto; }
             #tvc-section { height: 60vh; }
-            .go-to-top-btn { top: 65%; }
             #side-btn { top: 85%; }
         }
     </style>
@@ -900,14 +892,14 @@
     <header class="fixed top-0 left-0 w-full z-[100] bg-transparent transition-all duration-300">
         <div id="web-header" class="absolute w-full mx-auto flex flex-row items-center justify-between px-12 py-6 gap-x-0">
             <div id="web-logo" class="block">
-                <a href="#" class="w-[72px] block transition-transform duration-300 hover:scale-105">
-                    <img src="./assets/img/icon/logo.svg" alt="NISSAN LOGO" class="w-[72px] h-auto object-contain brightness-0 invert">
+                <a href="#" class="w-[96px] block transition-transform duration-300 hover:scale-105">
+                    <img src="./assets/img/icon/logo.svg" alt="NISSAN LOGO" class="w-[96px] h-auto object-contain brightness-0 invert">
                 </a>
             </div>
             <nav id="web-menu" class="flex items-center gap-x-4 md:order-2">
-                <a href="#usp-kicks" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">KICKS</a>
-                <a href="#usp-sentra" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">SENTRA</a>
-                <a href="#price-section" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">EXPLORE NISSAN</a>
+                <a href="#usp-kicks" class="px-[2.5rem] py-2 text-base font-normal text-white bg-[#2F1F1526] hover:bg-[#2F1F1580] border border-white rounded-full transition-all duration-300 brightness-125 shadow-[0px_0px_20px_0px_#FFFFFF]">KICKS</a>
+                <a href="#usp-sentra" class="px-[2.5rem] py-2 text-base font-normal text-white bg-[#2F1F1526] hover:bg-[#2F1F1580] border border-white rounded-full transition-all duration-300 brightness-125 shadow-[0px_0px_20px_0px_#FFFFFF]">SENTRA</a>
+                <a href="#price-section" class="px-[2.5rem] py-2 text-base font-normal text-white bg-[#2F1F1526] hover:bg-[#2F1F1580] border border-white rounded-full transition-all duration-300 brightness-125 shadow-[0px_0px_20px_0px_#FFFFFF]">EXPLORE NISSAN</a>
             </nav>
         </div>
         <div id="mobile-header" class="absolute w-full mx-auto flex flex-row items-center justify-start px-6 py-6 gap-x-4">
@@ -1374,29 +1366,32 @@
         © NISSAN TAIWAN.
     </footer>
 
-    <!-- Go To Top Button -->
-    <a id="top-btn" class="go-to-top-btn" aria-label="Go to Top">
-        <img src="./assets/img/icon/arrow-small-up.svg" class="w-7 h-7 brightness-0 invert" alt="go to top">
-    </a>
+
 
     <!-- Side Menu Button -->
-    <div id="side-btn" class="fixed right-0 -translate-y-1/2 z-[120] flex flex-col gap-y-[10px] bg-[#1E1E1E99] p-[10px] group w-16 hover:w-[160px] transition-all duration-300 ease-in-out overflow-hidden rounded-s-lg">
-        <a href="https://service.nissan.com.tw/testdrive/?mod" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-white transition-colors duration-300 hover:text-[#BEA894]">
-            <div class="flex items-center gap-x-3 whitespace-nowrap font-light text-base tracking-[2px]">
-                <div class="rounded-full me-2">                    
-                    <img src="./assets/img/icon/car.svg" class="w-7 h-7 brightness-0 invert" alt="testdrive">
-                </div>
-                <span>預約試乘</span>
-            </div>
+    <div id="side-btn" class="fixed right-0 -translate-y-1/2 z-[120] ">      
+        <!-- Go To Top Button -->  
+        <a id="top-btn" class="go-to-top-btn" aria-label="Go to Top">
+            <img src="./assets/img/icon/arrow-small-up.svg" class="w-7 h-7 brightness-0 invert" alt="go to top">
         </a>
-        <a href="https://new.nissan.com.tw/upload/brochures/421B8DH106F5/X-TRAIL_ikitsuki.pdf" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-white transition-colors duration-300 hover:text-[#BEA894]">
-            <div class="flex items-center gap-x-3 whitespace-nowrap font-light text-base tracking-[2px]">
-                <div class="rounded-full me-2">                    
-                    <img src="./assets/img/icon/coupon.svg" class="w-7 h-7 brightness-0 invert" alt="pdf download">
+        <div id="side-btn-group" class="flex flex-col gap-y-[10px] bg-[#1E1E1E99] p-[10px] group w-16 hover:w-[160px] transition-all duration-300 ease-in-out overflow-hidden rounded-s-lg">
+            <a href="https://service.nissan.com.tw/testdrive/?mod" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-white transition-colors duration-300 hover:text-[#BEA894]">
+                <div class="flex items-center gap-x-3 whitespace-nowrap font-light text-base tracking-[2px]">
+                    <div class="rounded-full me-2">                    
+                        <span role="img" aria-label="testdrive" class="w-7 h-7 inline-block" style="background-color:#6A4839; display:inline-block; -webkit-mask-image: url('./assets/img/icon/car.svg'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('./assets/img/icon/car.svg'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;"></span>
+                    </div>
+                    <span>預約試乘</span>
                 </div>
-                <span>購車優惠</span>
-            </div>
-        </a>
+            </a>
+            <a href="https://new.nissan.com.tw/upload/brochures/421B8DH106F5/X-TRAIL_ikitsuki.pdf" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-[#6A4839] transition-colors duration-300 hover:text-[#BEA894]">
+                <div class="flex items-center gap-x-3 whitespace-nowrap font-light text-base tracking-[2px]">
+                    <div class="rounded-full me-2">                    
+                        <span role="img" aria-label="coupon" class="w-7 h-7 inline-block" style="background-color:#6A4839; display:inline-block; -webkit-mask-image: url('./assets/img/icon/coupon.svg'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('./assets/img/icon/coupon.svg'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;"></span>
+                    </div>
+                    <span>購車優惠</span>
+                </div>
+            </a>
+        </div>
     </div>
 
     <!-- Popup Modal -->
@@ -1474,6 +1469,7 @@
                     this.x += this.vx + Math.sin(this.offset) * 0.8;
                     this.y += this.vy;
 
+                    // 滑鼠風力互動邏輯
                     const dx = this.x - mouse.x;
                     const dy = this.y - mouse.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
@@ -1490,29 +1486,38 @@
                     this.vy = this.vy * 0.95 + this.baseVy * 0.05;
 
                     const boundX = width * 0.15;
-                    const uspEl = document.getElementById('usp-section');
-                    const uspTop = uspEl ? (uspEl.getBoundingClientRect().top + window.pageYOffset) : null;
-                    const bottomLimit = (uspTop !== null) ? uspTop : (height * 1.3);
+                    
+                    // 預設邊界為畫布高度 (此高度已設定為 #usp-section 的頂部距離)
+                    const bottomLimit = height;
+                    
+                    // 設定提前淡出的緩衝距離 (單位：像素)，確保葉子在到底部前 120px 就開始淡出
+                    const fadeBuffer = 120; 
 
-                    if ((this.y > bottomLimit || this.x < -boundX || this.x > width + boundX) && !this.fading) {
-                        // begin fading instead of immediate re-init
+                    // 當葉子超過 X 軸左右邊界，或是 Y 軸座標進入距離底部 120px 的區域時觸發淡出
+                    if ((this.y > (bottomLimit - fadeBuffer) || this.x < -boundX || this.x > width + boundX) && !this.fading) {
                         this.fading = true;
                         this._fadeStart = performance.now();
-                        // reduce motion for fade
-                        this.vx *= 0.2;
-                        this.vy *= 0.2;
+                        
+                        // 微幅減速，讓淡出時的運動感更自然
+                        this.vx *= 0.5;
+                        this.vy *= 0.8;
                     }
 
-                    // handle fading progress and re-init at end
+                    // 處理淡出動畫過程
                     if (this.fading) {
                         const elapsed = performance.now() - this._fadeStart;
                         const t = Math.min(1, elapsed / this._fadeDuration);
-                        // linear fade-out
+                        
+                        // 計算遞減透明度 (從初始透明度平滑線性降至 0)
                         this.opacity = (1 - t) * (Math.random() * 0.15 + 0.8);
-                        // gradually rotate down
                         this.spin *= 0.96;
-                        if (t >= 1) this.init(false);
+                        
+                        // 當淡出時間結束 (t >= 1) 或高度完全超過底界時，重新初始化葉子
+                        if (t >= 1 || this.y >= bottomLimit) {
+                            this.init(false);
+                        }
                     }
+                    
                     this.rotation += this.spin;
                 }
 
@@ -1538,12 +1543,23 @@
             function resize() {
                 dpr = window.devicePixelRatio || 1;
                 width = window.innerWidth;
-                height = document.body.scrollHeight || canvas.clientHeight || window.innerHeight;
+                
+                // 抓取 #usp-section 區塊
+                const uspEl = document.getElementById('usp-section');
+                
+                // 若存在 #usp-section，高度即為該區塊距離頁首的高度 (offsetTop)；若不存在則回傳視窗高度
+                const targetHeight = uspEl ? uspEl.offsetTop : window.innerHeight;
+                
+                width = window.innerWidth;
+                height = targetHeight;
 
+                // 設定 Canvas 邏輯像素與實際渲染解析度
+                canvas.style.height = `${height}px`; // 限制 CSS 顯示高度
                 canvas.width = width * dpr;
                 canvas.height = height * dpr;
                 ctx.scale(dpr, dpr);
 
+                // 重新初始化楓葉粒子
                 petals = Array.from({ length: petalCount }, () => new Petal());
             }
 
@@ -1784,7 +1800,6 @@
                 }
 
                 if (sideBtn) sideBtn.classList.toggle('show', isPassed);
-                if (topBtn) topBtn.classList.toggle('show', isPassed);
             };
 
             window.addEventListener('scroll', handleScrollToggles, { passive: true });
@@ -1835,7 +1850,9 @@
 
                 const updateIndicator = (activeBtn) => {
                     if (!indicator || !activeBtn) return;
-                    indicator.style.transform = `translateX(${activeBtn.offsetLeft}px) scaleX(${activeBtn.offsetWidth})`;
+                    // set indicator width in pixels and move via translateX only
+                    indicator.style.width = `${activeBtn.offsetWidth}px`;
+                    indicator.style.transform = `translateX(${activeBtn.offsetLeft}px)`;
                 };
 
                 updateIndicator(tabNav.querySelector('.tab-btn.active'));
