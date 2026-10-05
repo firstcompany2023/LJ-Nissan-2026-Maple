@@ -320,13 +320,70 @@
             display: none;
         }
 
+/* 預設基礎尺寸 (小於 1280px 時) */
         .tvc-info {
             position: relative;
             display: flex;
-            width: 836px;
+            width: 550px;
+            height: 308px;
             margin: -10vh auto 0 auto;
-            max-width: 1480px;
             z-index: 6;
+        }
+
+        /* 1280px 螢幕 (可視 550px x 308px) */
+        @media (min-width: 1280px) {
+            .tvc-info {
+                width: 550px;
+                height: 308px;
+            }
+        }
+
+        /* 1366px 螢幕 (可視 590px x 330px) */
+        @media (min-width: 1366px) {
+            .tvc-info {
+                width: 590px;
+                height: 330px;
+            }
+        }
+
+        /* 1440px 螢幕 (可視 700px x 392px) */
+        @media (min-width: 1440px) {
+            .tvc-info {
+                width: 700px;
+                height: 392px;
+            }
+        }
+
+        /* 1536px 螢幕 (可視 680px x 381px) */
+        @media (min-width: 1536px) {
+            .tvc-info {
+                width: 680px;
+                height: 381px;
+            }
+        }
+
+        /* 1600px 螢幕 (可視 730px x 409px) */
+        @media (min-width: 1600px) {
+            .tvc-info {
+                width: 730px;
+                height: 409px;
+            }
+        }
+
+        /* 1920px 螢幕 (可視 880px x 493px) */
+        @media (min-width: 1920px) {
+            .tvc-info {
+                width: 880px;
+                height: 493px;
+            }
+        }
+
+        /* 2560px 螢幕 (可視 1250px x 700px) */
+        @media (min-width: 2560px) {
+            .tvc-info {
+                width: 1250px;
+                height: 700px;
+            }
         }
 
         .tvc-info .layout-maple { z-index: 1; }
@@ -751,7 +808,7 @@
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) and (min-height: 500px) {
             #banner-section { top: -10vh; }
             #tvc-section { height: 80vh; }
-            .tvc-info { width: 836px; top: -15vh; max-width: 960px; }
+            .tvc-info { top: -15vh;}
             .go-to-top-btn { top: 55%; }
             .usp-kicks, .usp-sentra { height: 100vh; }
         }
@@ -759,7 +816,7 @@
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
             #banner-section .car-name-btn { bottom: 25%; }
             #tvc-section { height: 50vh; }
-            .tvc-info { top: -5vh; width: 80%; max-width: 836px; }
+            .tvc-info { top: -5vh;}
             #banner-section .scroll-down-btn { display: none; }
         }
 
@@ -789,7 +846,7 @@
             .banner-top-border, #banner-section .scroll-down-btn, #tvc-section .scroll-down-btn,
             #usp-section .layout-maple, #price-section .layout-maple { display: none; }
 
-            .tvc-info { width: 350px; margin: auto; }
+            .tvc-info { width: 350px; height: 196px; margin: auto; }
             #tvc-section { height: 50vh; display: flex; align-items: center; justify-content: center; position: relative; }
             .tvc-mask-bg { display: block; position: absolute; top: -1px; left: 0; width: 100%; height: 60%; background: #8A3420; z-index: 1; }
             .tvc-skew-bg {
@@ -917,11 +974,9 @@
             <img src="./assets/img/maple/maple11.png" alt="Maple 4" class="layout-maple maple-4">
             <img src="./assets/img/maple/maple03.png" alt="Maple 5" class="layout-maple maple-5">
             <img src="./assets/img/maple/maple07.png" alt="Maple 6" class="layout-maple maple-6">
-
             <div class="tvc-border-1"></div>
             <div class="tvc-border-2"></div>
             <div class="tvc-border-3"></div>
-            <img src="./assets/img/tvc/tvc1.jpg" alt="TVC Section" class="object-cover p-[20px]">
             <video id="tvc-video" class="absolute top-0 left-0 w-full h-full object-cover p-[20px]" muted loop playsinline preload="none">
                 <source src="./assets/video/07 心和_v2.mp4" type="video/mp4">
             </video>
