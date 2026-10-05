@@ -46,12 +46,13 @@
             cursor: url('./assets/img/maple/cursor.png') 16 16, auto;
             position: relative;
         }
+        /* Native smooth scrolling for supported browsers */
+        html {
+            scroll-behavior: smooth;
+        }
         #web-header {
             display: flex;
             transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
-        }
-        #mobile-header {
-            display: none;
         }
 
         .mobile-menu-link {
@@ -62,6 +63,23 @@
             position: absolute;
             pointer-events: none;
             height: auto;
+        }
+        /* layout-maple entrance animation: use CSS variables so each element can have randomized motion */
+        .layout-maple {
+            --maple-translate-x: 0px;
+            --maple-translate-y: 12px;
+            --maple-rotate: 0deg;
+            --maple-duration: 600ms;
+            --maple-delay: 0ms;
+            opacity: 0;
+            transform: translate(var(--maple-translate-x), var(--maple-translate-y)) rotate(var(--maple-rotate));
+            transition: transform var(--maple-duration) cubic-bezier(0.22, 1, 0.36, 1), opacity calc(var(--maple-duration) * 1) ease;
+            will-change: transform, opacity;
+        }
+        .layout-maple.in-view {
+            opacity: 1;
+            transform: translate(0px, 0px) rotate(0deg);
+            transition-delay: var(--maple-delay);
         }
 
         /* 飄落效果 */
@@ -300,6 +318,14 @@
             pointer-events: none;
         }
 
+        .car-name-btn{
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .car-name-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+        }
 
         /* ==========================================================================
         tvc 樣式
@@ -1034,7 +1060,10 @@
             z-index: 21;                 /* 讓箭頭壓在文字框上緣，完全蓋住縫隙 */
         }
         .color-dot:hover::after,
-        .color-dot:hover::before {
+        .color-dot:hover::before,
+        /* also show tooltip when the dot is programmatically activated */
+        .color-dot.active::after,
+        .color-dot.active::before {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
@@ -1328,7 +1357,7 @@
                 top: -25vw;
             }
             #tvc-section .scroll-down-btn {
-                bottom: 25vw;
+                bottom: 22vw;
             }
         }
 
@@ -1343,6 +1372,9 @@
 
             .tvc-info {
                 top: -33vw;
+            }
+            #tvc-section .scroll-down-btn {
+                bottom: 25vw;
             }
         }
 
@@ -1507,6 +1539,9 @@
                 max-width: 836px;
             }
 
+            #banner-section .scroll-down-btn{
+                display: none;
+            }
         }
 
 
@@ -1680,7 +1715,7 @@
     </div>
     
     <header class="fixed top-0 left-0 w-full z-[100] bg-transparent transition-all duration-300">
-        <div id="web-header" class="relative mx-auto flex flex-row items-center justify-between px-12 py-6 gap-x-0">
+        <div id="web-header" class="absolute w-full mx-auto flex flex-row items-center justify-between px-12 py-6 gap-x-0">
             <div id="web-logo" class="block">
                 <a href="#" class="w-[72px] block transition-transform duration-300 hover:scale-105">
                     <img src="./assets/img/icon/logo.svg" alt="NISSAN LOGO" class="w-[72px] h-auto object-contain brightness-0 invert">
@@ -1692,7 +1727,7 @@
                 <a href="#price-section" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">EXPLORE NISSAN</a>
             </nav>
         </div>
-        <div id="mobile-header" class="relative mx-auto flex flex-row items-center justify-start px-6 py-6 gap-x-4">
+        <div id="mobile-header" class="absolute w-full mx-auto flex flex-row items-center justify-start px-6 py-6 gap-x-4">
             <button id="mobile-menu" type="button" class="flex items-center justify-center w-10 h-10 rounded-full border border-white/50 bg-black/80 transition-all duration-300 focus:outline-none" aria-label="Toggle Menu">
                 <img src="./assets/img/icon/menu-burger.svg" class="w-4 h-4 brightness-0 invert" alt="menu icon">
             </button>
@@ -1726,6 +1761,12 @@
                 </svg>
             </div>
         </a>
+            <a href="#usp-kicks" class="car-name-btn hidden md:block absolute bottom-[30%] left-[20%]" aria-label="kicks">
+                <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks" class="">
+            </a>
+            <a href="#usp-sentra" class="car-name-btn hidden md:block absolute bottom-[30%] right-[15%]" aria-label="sentra">
+                <img src="./assets/img/banner/sentra_name_m.svg" alt="sentra" class="">
+            </a>
         <div class="banner-btn-group flex md:hidden absolute bottom-[10vh] left-1/2 transform -translate-x-1/2 gap-4 flex-col">
             <a href="#usp-kicks" class="flex" aria-label="kicks">
                 <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks" class="">
@@ -2188,7 +2229,7 @@
 
         let width, height, dpr;
         let petals = [];      
-        const petalCount = 9;
+        const petalCount = 8;
         const imageUrls = [
             './assets/img/maple/maple01.png', './assets/img/maple/maple02.png', './assets/img/maple/maple03.png', './assets/img/maple/maple04.png', './assets/img/maple/maple05.png',
             './assets/img/maple/maple06.png', './assets/img/maple/maple07.png', './assets/img/maple/maple08.png', './assets/img/maple/maple09.png', './assets/img/maple/maple10.png',
@@ -2212,7 +2253,30 @@
 
             init(isInitial = false) {
                 this.x = Math.random() * (width * 1.3) - (width * 0.15);
-                this.y = isInitial ? Math.random() * height : -Math.random() * 300 - 80;
+                // Determine USP section top (page coordinate). If not found, fall back to full-height behavior.
+                const uspEl = document.getElementById('usp-section');
+                const uspTop = uspEl ? (uspEl.getBoundingClientRect().top + window.pageYOffset) : null;
+
+                if (isInitial) {
+                    if (uspTop !== null) {
+                        // Spawn petals anywhere between the very top of the page (0) and the uspTop
+                        // so the visible falling area covers the page header down to the USP section top.
+                        const minY = 0;
+                        const maxY = Math.max(0, uspTop);
+                        this.y = minY + Math.random() * (maxY - minY);
+                    } else {
+                        this.y = Math.random() * height;
+                    }
+                } else {
+                    if (uspTop !== null) {
+                        // Respawn somewhere above the viewport up to uspTop so leaves fall into that band
+                        const minY = -300;
+                        const maxY = Math.max(0, uspTop);
+                        this.y = minY + Math.random() * (maxY - minY);
+                    } else {
+                        this.y = -Math.random() * 300 - 80;
+                    }
+                }
                 
                 this.img = petalImages[Math.floor(Math.random() * petalImages.length)];
                 
@@ -2262,9 +2326,13 @@
                 this.vx *= 0.95;
                 this.vy = this.vy * 0.95 + this.baseVy * 0.05;
 
-                // 邊界檢查（寬高 +30%）
+                // 邊界檢查：改為以 usp-section 的頂部為下界，避免落葉掉到整個頁面底部
                 const boundX = width * 0.15;
-                if (this.y > height * 1.3 || this.x < -boundX || this.x > width + boundX) {
+                const uspEl = document.getElementById('usp-section');
+                const uspTop = uspEl ? (uspEl.getBoundingClientRect().top + window.pageYOffset) : null;
+                // 若 uspTop 可用，限制落葉最下界為 uspTop；否則保留舊有的高度判斷
+                const bottomLimit = (uspTop !== null) ? uspTop : (height * 1.3);
+                if (this.y > bottomLimit || this.x < -boundX || this.x > width + boundX) {
                     this.init(false);
                 }
                 
@@ -2340,7 +2408,7 @@
             requestAnimationFrame(animate);
         }
 
-        //animate();
+        animate();
 
         document.addEventListener("DOMContentLoaded", () => {
             const overlay = document.getElementById('autumn-reveal-overlay');
@@ -2558,15 +2626,46 @@
             // =====================================================
             const soundOnBtn = document.querySelector('.sound-on-btn');
             const soundOffBtn = document.querySelector('.sound-off-btn');
+            const tvcVideo = document.getElementById('tvc-video');
 
             if (soundOnBtn && soundOffBtn) {
-                const toggleSound = () => {
-                    soundOnBtn.classList.toggle('active');
-                    soundOffBtn.classList.toggle('active');
+                const updateButtons = () => {
+                    if (tvcVideo && !tvcVideo.muted) {
+                        soundOnBtn.classList.add('active');
+                        soundOffBtn.classList.remove('active');
+                    } else {
+                        soundOnBtn.classList.remove('active');
+                        soundOffBtn.classList.add('active');
+                    }
+                };
+
+                const toggleSound = (e) => {
+                    // prefer controlling the actual video element
+                    if (tvcVideo) {
+                        const willMute = tvcVideo.muted; // current muted (true means currently muted)
+                        // toggle: if currently muted -> unmute (false), else mute (true)
+                        tvcVideo.muted = !willMute;
+
+                        // If unmuting, try to play (user interaction allows play with sound)
+                        if (!tvcVideo.muted) {
+                            const p = tvcVideo.play();
+                            if (p && p.catch) p.catch(() => {});
+                        }
+                        updateButtons();
+                    } else {
+                        // fallback: just toggle classes
+                        soundOnBtn.classList.toggle('active');
+                        soundOffBtn.classList.toggle('active');
+                    }
+                    // prevent default anchor behavior
+                    if (e && e.preventDefault) e.preventDefault();
                 };
 
                 soundOnBtn.addEventListener('click', toggleSound);
                 soundOffBtn.addEventListener('click', toggleSound);
+
+                // initialize buttons according to video state
+                updateButtons();
             }
 
 
@@ -2574,6 +2673,7 @@
             // 側邊按鈕滾動顯示/隱藏 (淡入淡出)
             // =====================================================
             const webHeader = document.getElementById('web-header');
+            const mobileHeader = document.getElementById('mobile-header');
             const topBtn = document.getElementById('top-btn');
             const sideBtn = document.getElementById('side-btn');
             const tvcSection = document.getElementById('tvc-section');
@@ -2592,10 +2692,20 @@
                         webHeader.style.transform = 'translateY(-100%)';
                         webHeader.style.opacity = '0';
                         webHeader.style.pointerEvents = 'none';
+                        if (mobileHeader && !isMobilePortrait()) {
+                            mobileHeader.style.transform = 'translateY(0)';
+                            mobileHeader.style.opacity = '1';
+                            mobileHeader.style.pointerEvents = 'auto';
+                        }
                     } else {
                         webHeader.style.transform = 'translateY(0)';
                         webHeader.style.opacity = '1';
                         webHeader.style.pointerEvents = 'auto';
+                        if (mobileHeader && !isMobilePortrait()) {
+                            mobileHeader.style.transform = 'translateY(-100%)';
+                            mobileHeader.style.opacity = '0';
+                            mobileHeader.style.pointerEvents = 'none';
+                        }
                     }
                 };
 
@@ -2775,6 +2885,159 @@
 
     });
 
+    // Smooth-scroll interception for internal anchors with header offset
+    (function(){
+        function getHeaderHeight(){
+            const web = document.getElementById('web-header');
+            const mob = document.getElementById('mobile-header');
+            const el = (web && window.getComputedStyle(web).display !== 'none') ? web : (mob || web);
+            return el ? el.offsetHeight : 0;
+        }
+
+        function scrollToElementWithOffset(el){
+            if(!el) return;
+            console.log('Scrolling to element:', el);
+            const headerH = (el == document.getElementById('tvc-info')) ? getHeaderHeight() : 0;
+            const top = el.getBoundingClientRect().top + window.pageYOffset - headerH;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+
+        // Intercept clicks on same-page anchors
+        document.addEventListener('click', function(e){
+            const a = e.target.closest && e.target.closest('a[href^="#"]');
+            if(!a) return;
+            const href = a.getAttribute('href');
+            if(!href || href === '#') return;
+            // only handle same-document hashes
+            if(href.indexOf('#') === 0){
+                const id = href.slice(1);
+                const target = document.getElementById(id);
+                if(target){
+                    e.preventDefault();
+                    scrollToElementWithOffset(target);
+                    // update history without jumping
+                    if(history.pushState) history.pushState(null, '', href);
+                    else location.hash = href;
+                }
+            }
+        }, { passive: false });
+
+        // Handle initial load with a hash
+        window.addEventListener('load', function(){
+            if(location.hash){
+                const id = location.hash.slice(1);
+                const target = document.getElementById(id);
+                if(target) setTimeout(function(){ scrollToElementWithOffset(target); }, 60);
+            }
+        });
+        
+        // Entrance animation for layout-maple elements: observe and add .in-view once
+        const maples = document.querySelectorAll('.layout-maple');
+        if (maples.length > 0 && 'IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.08 });
+            maples.forEach(el => {
+                // randomize per-element variables: x -8..8, y 6..20, rotate -8..8, duration 420..900ms, delay 0..300ms
+                const rand = (min, max) => (min + Math.random() * (max - min));
+                const tx = Math.round(rand(-8, 8));
+                const ty = Math.round(rand(6, 20));
+                const rot = Math.round(rand(-8, 8));
+                const dur = Math.round(rand(420, 900));
+                const delay = Math.round(rand(0, 300));
+                el.style.setProperty('--maple-translate-x', tx + 'px');
+                el.style.setProperty('--maple-translate-y', ty + 'px');
+                el.style.setProperty('--maple-rotate', rot + 'deg');
+                el.style.setProperty('--maple-duration', dur + 'ms');
+                el.style.setProperty('--maple-delay', delay + 'ms');
+                io.observe(el);
+            });
+        } else {
+            // Fallback: reveal all after small delay
+            setTimeout(() => document.querySelectorAll('.layout-maple').forEach(el => el.classList.add('in-view')), 300);
+        }
+    })();
+
+    // =====================================================
+    // Mobile: auto-hover first color-dot when price-card comes into view
+    // =====================================================
+    (function(){
+        let io = null;
+        let observed = false;
+
+        const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
+
+        function handleIntersect(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const card = entry.target;
+                // only trigger once per card per page load
+                if (card.dataset.dotPlayed === 'true') {
+                    observer.unobserve(card);
+                    return;
+                }
+
+                const dot = card.querySelector('.color-dot');
+                if (dot) {
+                    dot.classList.add('active');
+                    setTimeout(() => {
+                        dot.classList.remove('active');
+                    }, 2000);
+                }
+                card.dataset.dotPlayed = 'true';
+                observer.unobserve(card);
+            });
+        }
+
+        function startObserving() {
+            if (observed) return;
+            const cards = document.querySelectorAll('.price-card');
+            if (!cards || cards.length === 0) return;
+
+            io = new IntersectionObserver(handleIntersect, {
+                root: null,
+                rootMargin: '0px 0px -20% 0px',
+                threshold: 0.45
+            });
+
+            cards.forEach(card => {
+                // skip cards that already played
+                if (card.dataset.dotPlayed !== 'true') io.observe(card);
+            });
+            observed = true;
+        }
+
+        function stopObserving() {
+            if (!io) return;
+            io.disconnect();
+            io = null;
+            observed = false;
+        }
+
+        function evaluate() {
+            if (isMobile()) startObserving();
+            else stopObserving();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', evaluate);
+        } else {
+            evaluate();
+        }
+
+        // Re-evaluate on resize/orientationchange
+        window.addEventListener('resize', () => {
+            // small debounce
+            clearTimeout(window._priceCardHoverTimeout);
+            window._priceCardHoverTimeout = setTimeout(evaluate, 180);
+        });
+        window.addEventListener('orientationchange', () => setTimeout(evaluate, 160));
+    })();
 
     </script>
 </body>
