@@ -438,7 +438,7 @@
         .usp-kicks .usp-header-title { position: absolute; bottom: 30%; left: 10%; }
         .usp-sentra .usp-header-title { position: absolute; bottom: 30%; right: 10%; }
 
-        .usp-header-title { position: relative; pointer-events: none; }
+        .usp-header-title { position: relative; pointer-events: none; color: #191919}
         .usp-tab-header-title { position: relative; pointer-events: none; display: none; }
 
         .usp-header-title h2, .usp-tab-header-title h2 { position: relative; display: inline-block; }
@@ -474,10 +474,10 @@
 
         .tab-btn {
             position: relative; text-align: center; width: 100%;
-            padding: 10px 0; font-size: 1.125rem; color: #8C7B70; cursor: pointer;
+            padding: 10px 0; font-size: 1.25rem; color: #B7B0AC; cursor: pointer;
         }
 
-        .tab-btn.active { color: #3F2F27; font-weight: 600; }
+        .tab-btn.active { color: #3F2F27; }
 
         .tab-indicator {
             position: absolute; bottom: 0; left: 0; height: 3px; width: 1px;
@@ -514,8 +514,8 @@
         }
 
         .slider-card-content { background: #FFFFFFCC; padding: 12px 18px; }
-        .slider-card h4 { font-size: 1.1rem; font-weight: 700; color: #1E1E1E; margin-bottom: 8px; text-align: center; }
-        .slider-card p { font-size: 0.875rem; color: #666666; line-height: 1.6; }
+        .slider-card h4 { font-size: 0.875rem; font-weight: 700; color: #191919; margin-bottom: 8px; text-align: center; }
+        .slider-card p { font-size: 0.75rem; color: #616161; line-height: 1.6; }
 
         .arrow-btn {
             position: absolute; top: 50%; width: 40px; height: 40px;
@@ -573,7 +573,7 @@
 
         .price-card-inner { display: flex; flex-direction: column; flex: 1; }
         .price-card-header { text-align: center; background: #FFFCF280; }
-        .price-card-title { font-size: 1.5rem; font-weight: 700; color: #3F2F27; letter-spacing: 2px; margin: 15px 0; }
+        .price-card-title { font-size: 1.5rem; color: #373737; letter-spacing: 2px; margin: 15px 0; }
         .price-car-img { width: 80%; max-width: 260px; height: 140px; object-fit: contain; margin: 0 auto 15px auto; display: block; }
 
         .color-selector-wrapper { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 20px; }
@@ -626,11 +626,12 @@
 
         .price-item {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 0; font-size: 0.95rem; color: #3F2F27; flex: 1;
+            padding: 10px 0; font-size: 18px; color: #616161; flex: 1;
+            font-weight: 700;
         }
 
         .price-item:not(:last-child) { border-bottom: 1px solid #EEDDCE; }
-
+        .price-val { font-size: 1rem; font-weight: 400; }
         .price-val-group { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
         .price-val-original { text-decoration: line-through; color: #616161; font-size: 1rem; }
         .price-discount-row { display: flex; align-items: center; gap: 6px; }
@@ -641,7 +642,7 @@
             display: inline-flex; align-items: center; justify-content: center; gap: 2px;
             width: 100%; padding: 8px 16px; background: #DCCBBC; color: #616161;
             border: 1px solid #E8D4C2; border-radius: 8px; text-decoration: none;
-            font-size: 0.95rem; font-weight: 500; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; line-height: 1;
+            font-size: 0.875rem; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; line-height: 1;
         }
 
         .pdf-btn-text { transition: text-decoration 0.3s ease; }
@@ -943,14 +944,6 @@
                 </a>
             </div>
         </div>
-        <a class="scroll-down-btn relative inline-block bottom-5 left-1/2 transform -translate-x-1/2" href="#usp-section" aria-label="Scroll Down">
-            <div class="flex flex-col justify-center items-center mb-10 text-xs">
-                Scroll Down
-                <svg class="animate-bounce w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </div>
-        </a>
     </section>
 
     <!-- USP Section -->
@@ -961,12 +954,12 @@
                 <div class="usp-skew-bg"></div>
                 <div class="usp-top-border"></div>
                 <div class="usp-header-title">
-                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800 tracking-wider" data-reflect="KICKS MOMIJI">KICKS MOMIJI</h2>
+                    <h2 class="text-3xl md:text-5xl tracking-wider" data-reflect="KICKS MOMIJI">KICKS MOMIJI</h2>
                 </div>
             </div>
             <div class="tab-container relative">
                 <div class="usp-tab-header-title">
-                    <h2 class="text-3xl font-bold text-stone-800 tracking-wider" data-reflect="KICKS MOMIJI">KICKS MOMIJI</h2>
+                    <h2 class="text-3xl md:text-5xl tracking-wider" data-reflect="KICKS MOMIJI">KICKS MOMIJI</h2>
                 </div>
                 <div id="kicks-tab-nav" class="tab-nav">
                     <div class="tab-btn active" data-tab="tab-1">燦の智驅</div>
@@ -1049,12 +1042,12 @@
                 <div class="usp-skew-bg"></div>
                 <div class="usp-top-border"></div>
                 <div class="usp-header-title">
-                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800 tracking-wider" data-reflect="SENTRA MOMIJI">SENTRA MOMIJI</h2>
+                    <h2 class="text-3xl md:text-5xl tracking-wider" data-reflect="SENTRA MOMIJI">SENTRA MOMIJI</h2>
                 </div>
             </div>
             <div class="tab-container relative">
                 <div class="usp-tab-header-title">
-                    <h2 class="text-3xl font-bold text-stone-800 tracking-wider" data-reflect="SENTRA MOMIJI">SENTRA MOMIJI</h2>
+                    <h2 class="text-3xl md:text-5xl tracking-wider" data-reflect="SENTRA MOMIJI">SENTRA MOMIJI</h2>
                 </div>
                 <div id="sentra-tab-nav" class="tab-nav">
                     <div class="tab-btn active" data-tab="tab-1">燦の智驅</div>
@@ -1138,12 +1131,12 @@
                             <h3 class="price-card-title">KICKS</h3>
                             <img src="./assets/img/price/KICKS.png" alt="KICKS" class="price-car-img">
                             <div class="color-selector-wrapper">
-                                <span class="color-dot color-dot-1" data-tooltip="黑頂對白" title="黑/銀白雙色"></span>
-                                <span class="color-dot color-dot-2" data-tooltip="黑頂灰藍" title="黑/灰藍雙色"></span>
-                                <span class="color-dot color-dot-3" data-tooltip="亮銀白" title="亮銀白"></span>
-                                <span class="color-dot color-dot-4" data-tooltip="極黑" title="極黑"></span>
-                                <span class="color-dot color-dot-5" data-tooltip="灰藍鈦" title="灰藍鈦"></span>
-                                <span class="color-dot color-dot-6" data-tooltip="淺灰" title="淺灰"></span>
+                                <span class="color-dot color-dot-1" data-tooltip="黑頂對白" title="黑頂對白"></span>
+                                <span class="color-dot color-dot-2" data-tooltip="黑頂放黑" title="黑頂放黑"></span>
+                                <span class="color-dot color-dot-3" data-tooltip="不留白" title="不留白"></span>
+                                <span class="color-dot color-dot-4" data-tooltip="不怕黑 [接訂生產]" title="不怕黑 [接訂生產]"></span>
+                                <span class="color-dot color-dot-5" data-tooltip="放風灰" title="放風灰"></span>
+                                <span class="color-dot color-dot-6" data-tooltip="很想銀" title="很想銀"></span>
                             </div>
                         </div>
 
@@ -1189,12 +1182,12 @@
                             <h3 class="price-card-title">SENTRA</h3>
                             <img src="./assets/img/price/SENTRA.png" alt="SENTRA" class="price-car-img">
                             <div class="color-selector-wrapper">
-                                <span class="color-dot color-dot-1" data-tooltip="黑頂對白" title="黑/銀白雙色"></span>
-                                <span class="color-dot color-dot-2" data-tooltip="黑頂灰藍" title="黑/灰藍雙色"></span>
-                                <span class="color-dot color-dot-3" data-tooltip="亮銀白" title="亮銀白"></span>
-                                <span class="color-dot color-dot-4" data-tooltip="極黑" title="極黑"></span>
-                                <span class="color-dot color-dot-5" data-tooltip="灰藍鈦" title="灰藍鈦"></span>
-                                <span class="color-dot color-dot-6" data-tooltip="淺灰" title="淺灰"></span>
+                                <span class="color-dot color-dot-1" data-tooltip="冷傲白X黯夜黑頂" title="冷傲白X黯夜黑頂"></span>
+                                <span class="color-dot color-dot-2" data-tooltip="鉑耀灰X黯夜黑頂" title="鉑耀灰X黯夜黑頂"></span>
+                                <span class="color-dot color-dot-3" data-tooltip="冷傲白" title="冷傲白"></span>
+                                <span class="color-dot color-dot-4" data-tooltip="黯夜黑" title="黯夜黑"></span>
+                                <span class="color-dot color-dot-5" data-tooltip="鉑耀灰" title="鉑耀灰"></span>
+                                <span class="color-dot color-dot-6" data-tooltip="雪冽銀" title="雪冽銀"></span>
                             </div>
                         </div>
                         <div class="price-list">
@@ -1489,8 +1482,8 @@
 
                     setTimeout(() => {
                         overlay.style.opacity = '0';
-                        setTimeout(() => overlay.remove(), 500);
-                    }, blobs.length * 40 + 1500);
+                        setTimeout(() => overlay.remove(), 300);
+                    }, blobs.length * 40 + 1000);
                 });
             }
 
