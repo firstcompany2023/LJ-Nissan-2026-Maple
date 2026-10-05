@@ -100,10 +100,8 @@
         /* Loading */
         #autumn-reveal-overlay {
             position: fixed;
-            top: -20vh;
-            left: -20vw;
-            width: 140vw;
-            height: 140vh;
+            width: 100vw;
+            height: 100vh;
             z-index: 999999;
             overflow: hidden;
             pointer-events: all;
@@ -134,7 +132,6 @@
         #reveal-logo {
             position: relative;
             z-index: 10;
-            width: 180px;
             max-width: 35vw;
             height: auto;
             transition: transform 2.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.8s ease;
@@ -282,17 +279,48 @@
         }
 
 
+        .banner-skew-bg {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 5%;
+            background-color: #ffffff;
+            clip-path: polygon(0 100%, 100% 100%, 100% 89%, 0 0);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .banner-top-border {
+            position: absolute;
+            bottom: 3%;
+            left: 0;
+            width: 100%;
+            border-top: 4.15px solid #E09B90;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+
         /* ==========================================================================
         tvc 樣式
         ========================================================================== */
 
-        .tvc-info  {
-            display: flex;
-            margin: -50vh 300px 200px 300px;
+        #tvc-section {
+            height: 90vh;
+        }
+        .tvc-mask-bg,
+        .tvc-skew-bg {
+            display: none;
+        }
+        .tvc-info {
             position: relative;
+            display: flex;
+            width: 836px;
+            margin: -10vh auto 0 auto;
             max-width: 1480px;
             z-index: 6;
         }
+
         .tvc-info .layout-maple{
             z-index: 1;
         }
@@ -496,7 +524,6 @@
             mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
         }
 
-
         .usp-kicks .usp-skew-bg {
             position: absolute;
             top: -10%;
@@ -540,6 +567,47 @@
             position: absolute;
             bottom: 30%;
             right: 10%;
+        }
+
+        .usp-header-title {
+            position: relative;
+            pointer-events: none;
+        }
+        .usp-tab-header-title{
+            position: relative;
+            pointer-events: none;
+            display: none;
+        }
+
+
+        .usp-header-title h2,
+        .usp-tab-header-title h2 {
+            position: relative;
+            display: inline-block;
+        }
+        .usp-header-title h2::after,
+        .usp-tab-header-title h2::after {
+            content: attr(data-reflect);
+            position: absolute;
+            left: 0;
+            top: calc(200% - 12px);
+            transform: scaleY(-1);
+            transform-origin: top left;
+            opacity: 0.18;
+            pointer-events: none;
+            white-space: nowrap;
+            -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 0.6) 45%, black 82%, transparent);
+            mask-image: linear-gradient(rgb(0 0 0 / 20%) 45%, black 82%, transparent);
+            color: inherit;
+            font: inherit;
+        }
+
+        /* Hide reflection on small screens for clarity */
+        @media (max-width: 767px) {
+            .usp-header-title h2{
+                -webkit-box-reflect: none;
+            }
+            .usp-header-title h2::after { display: none; }
         }
 
         .usp-kicks .layout-maple,
@@ -608,20 +676,24 @@
 
         .tab-nav {
             position: relative;
+            width: 600px;            
+            max-width: 100%;
             z-index: 6;
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 0 auto 40px auto;
+            border-bottom: 1px solid #BFA28C;
         }
 
         .tab-btn {
             position: relative;
-            padding: 10px 50px;
+            text-align: center;
+            width: 100%;
+            padding: 10px 0;
             font-size: 1.125rem;
             color: #8C7B70;
             cursor: pointer;
-            border-bottom: 1px solid #BFA28C;
         }
 
         /* Tab Active 狀態 */
@@ -1188,13 +1260,44 @@
         Media Queries
         ========================================================================== */
 
+
+
+
         /* 橫屏裝置 (電腦 >= 1199px) */
         @media (min-width: 1199px) {
             #banner-section {
-                top: 0vh;;
+                top: -7vw;
             }
-            #body-content {
-                top: -35vh;
+            #tvc-section {
+                height: 40vw;
+            }
+
+            .tvc-info {
+                top: -15vw;
+            }
+
+            #tvc-section .scroll-down-btn {
+                bottom: 20%;
+            }
+        }
+
+        /* 橫屏裝置 (電腦 >= 1300px) */
+        @media (min-width: 1300px) {
+            #banner-section {
+                top: -7vw;
+            }
+            #tvc-section {
+                height: 30vw;
+            }
+
+            .tvc-info {
+                top: -15vw;
+            }
+            #banner-section .scroll-down-btn {
+                bottom: 25%;
+            }
+            #tvc-section .scroll-down-btn {
+                bottom: 30%;
             }
         }
 
@@ -1202,10 +1305,61 @@
         /* 橫屏裝置 (電腦 >= 1400px) */
         @media (min-width: 1400px) {
             #banner-section {
-                top: -25vh;;
+                top: -15vw;;
             }
-            #body-content {
-                top: -70vh;
+            #tvc-section {
+                height: 35vw;
+            }
+
+            .tvc-info {
+                top: -18vw;
+            }
+        }
+        /* 橫屏裝置 (電腦 >= 1500px) */
+        @media (min-width: 1500px) {
+            #banner-section {
+                top: -20vw;;
+            }
+            #tvc-section {
+                height: 20vw;
+            }
+
+            .tvc-info {
+                top: -25vw;
+            }
+            #tvc-section .scroll-down-btn {
+                bottom: 25vw;
+            }
+        }
+
+        /* 橫屏裝置 (電腦 >= 1600px) */
+        @media (min-width: 1600px) {
+            #banner-section {
+                top: -25vw;;
+            }
+            #tvc-section {
+                height: 8vw;
+            }
+
+            .tvc-info {
+                top: -33vw;
+            }
+        }
+
+        /* 橫屏裝置 (電腦 >= 1900px) */
+        @media (min-width: 1900px) {
+            #banner-section {
+                top: -30vw;;
+            }
+            #tvc-section {
+                height: 0vw;
+            }
+
+            .tvc-info {
+                top: -40vw;
+            }
+            #tvc-section .scroll-down-btn {
+                bottom: 30vw;
             }
         }
 
@@ -1227,21 +1381,153 @@
             }
         }
 
+
+        @media (min-width: 768px) and (max-width: 1199px) {
+
+            .banner-skew-bg {
+                clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 100%)
+            }
+
+            .banner-top-border {
+                display: none;
+            }
+
+
+            /* ==========================================================================
+            usp 樣式
+            ========================================================================== */
+
+            #usp-section{
+                background: #FFFCF9;
+            }
+
+
+            .usp-kicks,
+            .usp-sentra {
+                display: flex;
+                min-height: unset;
+                padding-bottom: 40px;
+                background-color: #FFFCF9;
+            }
+
+            #usp-section .tab-container,
+            #usp-section .usp-bg{
+                width: 50%;
+            }
+
+            .usp-kicks .tab-container {
+                order: 1;
+            }
+            .usp-kicks .usp-bg{
+                order: 2;
+            }
+
+            .usp-header-title {
+                display: none;
+            }
+            .usp-tab-header-title{
+                display: block;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            .slider-wrapper {
+                background: #FCF4E8;
+                margin: 0 10%;
+                border: 1px solid #E6CEBF;
+                padding: 1px 25px;
+                position: relative;
+                min-height: 70%;
+            }
+            .slider-wrapper::after {
+                width: calc(100% + 10px);
+                height: calc(100% + 10px);
+                top: -5px;
+                left: -5px;
+                content: '';
+                position: absolute;
+                border: 2px solid #F0EAE5;
+                pointer-events: none;
+                box-sizing: border-box;
+            }
+
+
+            #price-section {
+                background: linear-gradient(174.51deg, #FEFFF2 6.2%, #F3E7D8 54.62%, #E8D4C2 94.23%);
+            }
+
+            #usp-section .usp-skew-bg,
+            #usp-section .usp-top-border,
+            #usp-section .maple-1,
+            #usp-section .maple-2,
+            #usp-section .maple-3,
+            #usp-section .maple-4,
+            #usp-section .maple-5,
+            #price-section .price-skew-bg,
+            #price-section .price-top-border{
+                display: none;
+            }
+
+        }
         /* 橫屏裝置 (平板 768px~1199px 橫屏) */
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) and (min-height: 500px) {
+
+            #banner-section {
+                top: -10vh;
+            }
+
+            #tvc-section {
+                height: 80vh;
+            }
+
+            .tvc-info {
+                width: 836px;
+                top: -15vh;
+                max-width: 960px;
+            }
+
+            .go-to-top-btn {
+                top: 55%;
+            }
+
+            .usp-kicks,
+            .usp-sentra {
+                height: 100vh;
+            }
         }
         /* 直屏裝置 (平板 768px~1199px 直屏) */
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
+            #tvc-section {
+                height: 50vh;
+            }
+
+            .tvc-info {
+                top: -5vh;
+                width: 85%;
+                max-width: 836px;
+            }
+
         }
+
 
         /* 手機橫屏裝置 */
         @media (max-width: 960px) and (orientation: landscape) and (max-height: 500px){
 
-
-
+            #banner-section {
+                top: -70vh;
+            }
+            #tvc-section {
+                height: 75vh;
+            }
+            .tvc-info {
+                top: -75vh;
+                max-width: 660px;
+            }
         }
-        /* 手機直屏裝置 */
+
+        /* 手機直屏裝置 767px*/
         @media (max-width: 767px) {
+
             /* 頂部 75% 區塊：寬度滿版 */
             #banner-section {
                 height: 100vh;
@@ -1251,10 +1537,129 @@
                 background-position: center center;
                 background-repeat: no-repeat;
             }
+            .banner-skew-bg {
+                z-index: 0;
+                clip-path: none;
+                height: 100%;
+                background: linear-gradient(180deg, rgba(35, 11, 9, 0) 50%, rgba(138, 52, 32, 0.8) 82.69%, #8A3420 100%);
+            }
+
+            .banner-top-border,
+            #banner-section .scroll-down-btn,
+            #tvc-section .scroll-down-btn,
+            #usp-section .layout-maple,
+            #price-section .layout-maple{
+                display: none;
+            }
+
+            .tvc-info {
+                width: 350px;
+                margin: auto;
+            }
+
+            #tvc-section {
+                height: 50vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+            .tvc-mask-bg {
+                display: block;
+                position: absolute;
+                top: -1px;
+                left: 0;
+                width: 100%;
+                height: 60%;
+                background: #8A3420;
+                z-index: 1;
+            }
+            .tvc-skew-bg {
+                display: block;
+                position: absolute;
+                top: 30%;
+                left: 0;
+                width: 100%;
+                height: 30%;
+                background-color: #ffffff;
+                clip-path: polygon(0% 100%, 100% 100%, 150% 0%, 0% 85%);
+                z-index: 1;
+                pointer-events: none;
+            }
+
+
+            .tvc-btn-group {
+                width: 100vw;
+                bottom: -30%;
+                gap: 0;
+            }
+
+            .tvc-btn{
+                width: 50%;
+            }
+
+            .usp-kicks .usp-skew-bg{
+                top: -13%;
+                height: 25%;
+            }
+
+            .usp-kicks .usp-bg img {
+                height: 275px;
+                object-position: right center;
+            }
+            .usp-sentra .usp-bg img {
+                height: 275px;
+                object-position: left center;
+            }
+            .usp-header-title {
+                display: none;
+            }
+            .usp-tab-header-title{
+                display: block;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            .price-skew-bg {
+                clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%);
+                height: 3%;
+                top: -1%;
+            }
+            .price-top-border {
+                top: 1%;
+            }
+            .price-cta-group {
+                gap: 0px;
+            }
+
+            .go-to-top-btn
+            {
+                top: 70%;
+            }
+            #side-btn {
+                top: 85%;
+            }
         }
-        @media (max-width: 668px) {
+
+        /* 手機直屏裝置 375px*/
+        @media (max-width: 375px) {
+            #banner-section {
+                background-size: 100% auto;
+            }
+            
+            #tvc-section {
+                height: 60vh;
+            }
+            .go-to-top-btn
+            {
+                top: 65%;
+            }
+            #side-btn {
+                top: 85%;
+            }
 
         }
+
 
     </style>
 
@@ -1282,9 +1687,9 @@
                 </a>
             </div>
             <nav id="web-menu" class="flex items-center gap-x-4 md:order-2">
-                <a href="#" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">KICKS</a>
-                <a href="#" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">SENTRA</a>
-                <a href="#" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">EXPLORE NISSAN</a>
+                <a href="#usp-kicks"  class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">KICKS</a>
+                <a href="#usp-sentra"  class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">SENTRA</a>
+                <a href="#price-section" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">EXPLORE NISSAN</a>
             </nav>
         </div>
         <div id="mobile-header" class="relative mx-auto flex flex-row items-center justify-start px-6 py-6 gap-x-4">
@@ -1298,9 +1703,9 @@
             </div>
             <div id="mobile-dropdown-menu" class="hidden absolute top-full left-6 bg-[#0A0A0A]/85 z-[150] px-6 py-8">
                 <nav class="flex flex-col gap-y-6">
-                    <a href="#" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">KICKS</a>
-                    <a href="#" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">SENTRA</a>
-                    <a href="#" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">EXPLORE NISSAN</a>
+                    <a href="#usp-kicks" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">KICKS</a>
+                    <a href="#usp-sentra" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">SENTRA</a>
+                    <a href="#price-section" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">EXPLORE NISSAN</a>
                     <a href="https://new.nissan.com.tw/nissan/cars/x-trail" target="_blank" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">NISSAN 車型網</a>
                 </nav>
             </div>
@@ -1308,10 +1713,34 @@
     </header>
 
     <section id="banner-section" class="w-full h-dvh xl:h-screen relative overflow-hidden">
-        <!-- 如果需要在 Banner 上放 Scroll Down 箭頭或文字標題，可直接放在這裡 -->
+        <div class="banner-title absolute top-1/4 left-1/2 md:left-3/4 md:top-1/3  transform -translate-x-1/2">
+            <img src="./assets/img/banner/title.svg" alt="banner title" class="">
+        </div>
+        <div class="banner-skew-bg"></div>
+        <div class="banner-top-border"></div>
+        <a class="scroll-down-btn absolute inline-block bottom-[30vh] left-1/2 transform -translate-x-1/2 text-white" href="#tvc-info" aria-label="Scroll Down">
+            <div class="flex flex-col justify-center items-center text-xs">
+                Scroll Down
+                <svg class="animate-bounce w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+        </a>
+        <div class="banner-btn-group flex md:hidden absolute bottom-[10vh] left-1/2 transform -translate-x-1/2 gap-4 flex-col">
+            <a href="#usp-kicks" class="flex" aria-label="kicks">
+                <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks" class="">
+                <img src="./assets/img/banner/arrow_right.svg" alt="arrow right" class="">
+            </a>
+            <a href="#usp-sentra" class="flex" aria-label="sentra">
+                <img src="./assets/img/banner/sentra_name_m.svg" alt="sentra" class="">
+                <img src="./assets/img/banner/arrow_right.svg" alt="arrow right" class="">
+            </a>
+        </div>
     </section>
     <section id="tvc-section" class="w-full relative">
-        <div class="tvc-info">
+        <div class="tvc-mask-bg"></div>
+        <div class="tvc-skew-bg"></div>
+        <div id="tvc-info" class="tvc-info">
             <!-- 6 片裝飾楓葉 -->
             <img src="./assets/img/maple/maple14.png" alt="Maple 1" class="layout-maple maple-1">
             <img src="./assets/img/maple/maple05.png" alt="Maple 2" class="layout-maple maple-2">
@@ -1325,8 +1754,9 @@
             <div class="tvc-border-2"></div>
             <div class="tvc-border-3"></div>
             <img src="./assets/img/tvc/tvc1.jpg" alt="TVC Section" class="object-cover p-[20px]">
-
-
+            <video id="tvc-video" class="absolute top-0 left-0 w-full h-full object-cover p-[20px]" muted loop playsinline preload="none">
+                <source src="./assets/video/07 心和_v2.mp4" type="video/mp4">
+            </video>
             <a href="javascript:void(0);" class="sound-on-btn" aria-label="聲音開關">
                 <img src="./assets/img/tvc/sound_on.png" alt="聲音開關" class="default-img">
                 <img src="./assets/img/tvc/sound_on_hover.png" alt="聲音開關" class="hover-img">
@@ -1346,19 +1776,30 @@
                 </a>
             </div>
         </div>
+        <a class="scroll-down-btn relative inline-block bottom-5 left-1/2 transform -translate-x-1/2" href="#usp-section" aria-label="Scroll Down">
+            <div class="flex flex-col justify-center items-center mb-10 text-xs">
+                Scroll Down
+                <svg class="animate-bounce w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+        </a>
     </section>
 
     <section id="usp-section" class="w-full relative">
-        <div class="usp-kicks">
+        <div id="usp-kicks" class="usp-kicks">
             <div class="usp-bg">
                 <img src="./assets/img/usp/USP_bg02 3.png" alt="KICKS 背景圖" class="w-full h-full object-cover">
                 <div class="usp-skew-bg"></div>
                 <div class="usp-top-border"></div>
                 <div class="usp-header-title">
-                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800 tracking-wider">KICKS MOMIJI</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800 tracking-wider" data-reflect="KICKS MOMIJI">KICKS MOMIJI</h2>
                 </div>
             </div>
             <div class="tab-container relative">
+                <div class="usp-tab-header-title">
+                    <h2 class="text-3xl font-bold text-stone-800 tracking-wider" data-reflect="KICKS MOMIJI">KICKS MOMIJI</h2>
+                </div>
                 <div id="kicks-tab-nav" class="tab-nav">
                     <div class="tab-btn active" data-tab="tab-1">燦の智驅</div>
                     <div class="tab-btn" data-tab="tab-2">燦の信頼</div>
@@ -1511,16 +1952,19 @@
                 </div>
             </div>
         </div>
-        <div class="usp-sentra">
+        <div id="usp-sentra" class="usp-sentra">
             <div class="usp-bg">
                 <img src="./assets/img/usp/USP_bg03 1.png" alt="SENTRA 背景圖" class="w-full h-full object-cover">
                 <div class="usp-skew-bg"></div>
                 <div class="usp-top-border"></div>
                 <div class="usp-header-title">
-                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800 tracking-wider">SENTRA MOMIJI</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800 tracking-wider" data-reflect="SENTRA MOMIJI">SENTRA MOMIJI</h2>
                 </div>
             </div>
             <div class="tab-container relative">
+                <div class="usp-tab-header-title">
+                    <h2 class="text-3xl font-bold text-stone-800 tracking-wider" data-reflect="SENTRA MOMIJI">SENTRA MOMIJI</h2>
+                </div>
                 <div id="sentra-tab-nav" class="tab-nav">
                     <div class="tab-btn active" data-tab="tab-1">燦の智驅</div>
                     <div class="tab-btn" data-tab="tab-2">燦の信頼</div>
@@ -1739,258 +2183,253 @@
     <script>
 
 
-const canvas = document.getElementById('falling-canvas');
-const ctx = canvas.getContext('2d');
+        const canvas = document.getElementById('falling-canvas');
+        const ctx = canvas.getContext('2d');
 
-let width, height, dpr;
-let petals = [];      
-const petalCount = 9;
-const imageUrls = [
-    './assets/img/maple/maple01.png', './assets/img/maple/maple02.png', './assets/img/maple/maple03.png', './assets/img/maple/maple04.png', './assets/img/maple/maple05.png',
-    './assets/img/maple/maple06.png', './assets/img/maple/maple07.png', './assets/img/maple/maple08.png', './assets/img/maple/maple09.png', './assets/img/maple/maple10.png',
-    './assets/img/maple/maple11.png', './assets/img/maple/maple12.png', './assets/img/maple/maple13.png', './assets/img/maple/maple14.png', './assets/img/maple/maple15.png',
-    './assets/img/maple/maple16.png', './assets/img/maple/maple17.png', './assets/img/maple/maple18.png', './assets/img/maple/maple19.png', './assets/img/maple/maple20.png'
-];
+        let width, height, dpr;
+        let petals = [];      
+        const petalCount = 9;
+        const imageUrls = [
+            './assets/img/maple/maple01.png', './assets/img/maple/maple02.png', './assets/img/maple/maple03.png', './assets/img/maple/maple04.png', './assets/img/maple/maple05.png',
+            './assets/img/maple/maple06.png', './assets/img/maple/maple07.png', './assets/img/maple/maple08.png', './assets/img/maple/maple09.png', './assets/img/maple/maple10.png',
+            './assets/img/maple/maple11.png', './assets/img/maple/maple12.png', './assets/img/maple/maple13.png', './assets/img/maple/maple14.png', './assets/img/maple/maple15.png',
+            './assets/img/maple/maple16.png', './assets/img/maple/maple17.png', './assets/img/maple/maple18.png', './assets/img/maple/maple19.png', './assets/img/maple/maple20.png'
+        ];
 
-const petalImages = imageUrls.map(src => {
-    const img = new Image();
-    img.src = src;
-    return img;
-});
-
-// 擴充滑鼠物件以追蹤移動速度與方向向量
-const mouse = { x: -1000, y: -1000, lastX: -1000, lastY: -1000, vx: 0, vy: 0, speed: 0 };
-
-class Petal {
-    constructor() {
-        this.init(true);
-    }
-
-    init(isInitial = false) {
-        this.x = Math.random() * (width * 1.3) - (width * 0.15);
-        this.y = isInitial ? Math.random() * height : -Math.random() * 300 - 80;
-        
-        this.img = petalImages[Math.floor(Math.random() * petalImages.length)];
-        
-        // 楓葉大小重新計算（因應滿版 550% 高度不拉伸）：巨型 40-60px，標準 18-33px
-        const isGiant = Math.random() < 0.3; 
-        if (isGiant) {
-            this.size = Math.random() * 20 + 40; 
-            this.blur = Math.random() * 3 + 2;   
-            this.baseVy = Math.random() * 0.5 + 0.4; 
-        } else {
-            this.size = Math.random() * 15 + 18;  
-            this.blur = Math.random() * 1.2 + 0.3;   
-            this.baseVy = Math.random() * 0.8 + 0.6; 
-        }
-        
-        this.vy = this.baseVy;
-        this.opacity = Math.random() * 0.15 + 0.8; 
-        this.rotation = Math.random() * Math.PI * 2;
-        this.spin = (Math.random() - 0.5) * 0.02; 
-        this.vx = (Math.random() - 0.5) * 0.3;
-        this.offset = Math.random() * Math.PI * 2; 
-    }
-
-    update() {
-        this.offset += 0.008;
-        
-        let targetVx = this.vx + Math.sin(this.offset) * 0.8;
-        this.x += targetVx;
-        this.y += this.vy;
-
-        // 滑鼠劃過時：順著方向推開，並限制最大推力避免飛太快
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        
-        if (dist < 250 && mouse.speed > 0.5) {
-            const force = (250 - dist) / 250;
-            // 限制風力上限 (max: ±1.2)，確保滑鼠揮動再快也只有輕柔的風吹效果
-            const windVx = Math.max(-1.2, Math.min(1.2, mouse.vx * 0.03));
-            const windVy = Math.max(-1.2, Math.min(1.2, mouse.vy * 0.03));
-            
-            this.vx += windVx * force;
-            this.vy += windVy * force;
-        }
-
-        // 速度阻尼：讓被風吹開的楓葉順暢滑行後，慢慢恢復原本的下落狀態
-        this.vx *= 0.95;
-        this.vy = this.vy * 0.95 + this.baseVy * 0.05;
-
-        // 邊界檢查（寬高 +30%）
-        const boundX = width * 0.15;
-        if (this.y > height * 1.3 || this.x < -boundX || this.x > width + boundX) {
-            this.init(false);
-        }
-        
-        this.rotation += this.spin;
-    }
-
-    draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.rotation);
-        
-        ctx.globalAlpha = this.opacity;
-        ctx.filter = `blur(${this.blur}px)`;
-
-        if (this.img.complete && this.img.naturalWidth !== 0) {
-            ctx.drawImage(this.img, -this.size/2, -this.size/2, this.size, this.size);
-        } else {
-            ctx.beginPath();
-            ctx.ellipse(0, 0, this.size/2, this.size/2.5, 0, 0, Math.PI * 2);
-            ctx.fillStyle = '#D35400';
-            ctx.fill();
-        }
-        ctx.restore();
-    }
-}
-
-// 螢幕尺寸與 DPR 初始化
-function resize() {
-    dpr = window.devicePixelRatio || 1;
-    width = window.innerWidth;
-    height = document.body.scrollHeight || canvas.clientHeight || window.innerHeight;
-
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    ctx.scale(dpr, dpr);
-
-    // 初始化楓葉實例
-    petals = [];
-    for (let i = 0; i < petalCount; i++) {
-        petals.push(new Petal());
-    }
-}
-
-window.addEventListener('resize', resize);
-window.addEventListener('orientationchange', resize);
-resize();
-
-// 監聽滑鼠移動，即時計算移動速度 (Velocity)
-window.addEventListener('mousemove', (e) => {
-    mouse.lastX = mouse.x;
-    mouse.lastY = mouse.y;
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-    
-    // 計算滑鼠移動的向量與速度
-    mouse.vx = mouse.x - mouse.lastX;
-    mouse.vy = mouse.y - mouse.lastY;
-    mouse.speed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
-});
-
-// 動畫主循環
-function animate() {
-    ctx.clearRect(0, 0, width, height);
-
-    // 每一幀讓滑鼠速度自然遞減衰減，確保滑鼠停下時風力消失
-    mouse.speed *= 0.92;
-
-    petals.forEach(p => {
-        p.update();
-        p.draw();
-    });
-
-    requestAnimationFrame(animate);
-}
-
-animate();
-
-
-
-// Loading 動畫
-document.addEventListener("DOMContentLoaded", () => {
-    const overlay = document.getElementById('autumn-reveal-overlay');
-    const colors = ['#FFFFFF', '#F2F4F7', '#E5E9F0', '#D0D6DC', '#A3ACB9'];
-
-    const baseSize = Math.max(window.innerWidth, window.innerHeight) * 0.7;
-    // 配合擴大的容器計算網格
-    const cols = Math.ceil((window.innerWidth * 1.4) / (baseSize * 0.4)) + 1;
-    const rows = Math.ceil((window.innerHeight * 1.4) / (baseSize * 0.4)) + 1;
-    const blobs = [];
-
-    for (let i = -1; i < rows; i++) {
-        for (let j = -1; j < cols; j++) {
-            const blob = document.createElement('div');
-            blob.className = 'reveal-blob';
-
-            const size = baseSize * (0.8 + Math.random() * 0.6);
-            // 配合容器位移 (-20vw/-20vh) 補正座標
-            const x = j * (baseSize * 0.4) - (size * 0.2) + (Math.random() * baseSize * 0.2);
-            const y = i * (baseSize * 0.4) - (size * 0.2) + (Math.random() * baseSize * 0.2);
-            
-            const color = colors[Math.floor(Math.random() * colors.length)];
-
-            blob.style.width = `${size}px`;
-            blob.style.height = `${size}px`;
-            blob.style.left = `${x}px`;
-            blob.style.top = `${y}px`;
-            
-            blob.style.background = `radial-gradient(circle, ${color} 15%, ${color}00 75%)`;
-
-            // 讓每個色塊的漂浮速度與起步時間不同，畫面更自然
-            blob.style.animationDuration = `${6 + Math.random() * 4}s`;
-            blob.style.animationDelay = `${Math.random() * -6}s`;
-
-            overlay.appendChild(blob);
-            blobs.push(blob);
-        }
-    }
-
-    window.addEventListener('load', () => {
-        overlay.style.backgroundColor = 'transparent';
-        overlay.style.pointerEvents = 'none';
-
-        // 頁面載入完成時，讓 Logo 與色塊「同時」開始慢慢淡出與微幅放大
-        const logo = document.getElementById('reveal-logo');
-        if (logo) {
-            logo.style.transform = 'scale(1.12)'; 
-            logo.style.opacity = '0';
-        }
-
-        blobs.sort(() => Math.random() - 0.5);
-
-        // 移除過大的隨機亂數延遲，改用固定且緊湊的均勻間隔，避免少數色塊嚴重落後
-        blobs.forEach((blob, idx) => {
-            setTimeout(() => {
-                blob.style.animation = 'none'; // 停止浮動動畫
-                blob.style.transform = `scale(0)`; // 執行縮小淡出
-                blob.style.opacity = '0';
-            }, idx * 30); // 每個色塊接續淡出的時間差
+        const petalImages = imageUrls.map(src => {
+            const img = new Image();
+            img.src = src;
+            return img;
         });
 
-        // 總等待時間對應（ CSS 2.5s 動畫）
-        const totalTime = blobs.length * 40 + 1500;
-        setTimeout(() => {
-            overlay.style.opacity = '0';
-            setTimeout(() => overlay.remove(), 500);
-        }, totalTime);
-    });
-});
+        // 擴充滑鼠物件以追蹤移動速度與方向向量
+        const mouse = { x: -1000, y: -1000, lastX: -1000, lastY: -1000, vx: 0, vy: 0, speed: 0 };
 
+        class Petal {
+            constructor() {
+                this.init(true);
+            }
 
+            init(isInitial = false) {
+                this.x = Math.random() * (width * 1.3) - (width * 0.15);
+                this.y = isInitial ? Math.random() * height : -Math.random() * 300 - 80;
+                
+                this.img = petalImages[Math.floor(Math.random() * petalImages.length)];
+                
+                // 楓葉大小重新計算（因應滿版 550% 高度不拉伸）：巨型 40-60px，標準 18-33px
+                const isGiant = Math.random() < 0.3; 
+                if (isGiant) {
+                    this.size = Math.random() * 20 + 40; 
+                    this.blur = Math.random() * 3 + 2;   
+                    this.baseVy = Math.random() * 0.5 + 0.4; 
+                } else {
+                    this.size = Math.random() * 15 + 18;  
+                    this.blur = Math.random() * 1.2 + 0.3;   
+                    this.baseVy = Math.random() * 0.8 + 0.6; 
+                }
+                
+                this.vy = this.baseVy;
+                this.opacity = Math.random() * 0.15 + 0.8; 
+                this.rotation = Math.random() * Math.PI * 2;
+                this.spin = (Math.random() - 0.5) * 0.02; 
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.offset = Math.random() * Math.PI * 2; 
+            }
 
-// Cursor動畫
-document.addEventListener('click', (e) => {
-    const ripple = document.createElement('div');
-    ripple.className = 'click-ripple';
-    
-    const size = 60;
-    ripple.style.width = `${size}px`;
-    ripple.style.height = `${size}px`;
-    ripple.style.left = `${e.clientX}px`;
-    ripple.style.top = `${e.clientY}px`;
-    
-    ripple.style.background = 'radial-gradient(circle, #D97245 0%, #C25F35 45%, rgba(181, 118, 51, 0) 75%)';
+            update() {
+                this.offset += 0.008;
+                
+                let targetVx = this.vx + Math.sin(this.offset) * 0.8;
+                this.x += targetVx;
+                this.y += this.vy;
 
-    document.body.appendChild(ripple);
+                // 滑鼠劃過時：順著方向推開，並限制最大推力避免飛太快
+                const dx = this.x - mouse.x;
+                const dy = this.y - mouse.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                
+                if (dist < 250 && mouse.speed > 0.5) {
+                    const force = (250 - dist) / 250;
+                    // 限制風力上限 (max: ±1.2)，確保滑鼠揮動再快也只有輕柔的風吹效果
+                    const windVx = Math.max(-1.2, Math.min(1.2, mouse.vx * 0.03));
+                    const windVy = Math.max(-1.2, Math.min(1.2, mouse.vy * 0.03));
+                    
+                    this.vx += windVx * force;
+                    this.vy += windVy * force;
+                }
 
-    setTimeout(() => {
-        ripple.remove();
-    }, 600);
-});
+                // 速度阻尼：讓被風吹開的楓葉順暢滑行後，慢慢恢復原本的下落狀態
+                this.vx *= 0.95;
+                this.vy = this.vy * 0.95 + this.baseVy * 0.05;
+
+                // 邊界檢查（寬高 +30%）
+                const boundX = width * 0.15;
+                if (this.y > height * 1.3 || this.x < -boundX || this.x > width + boundX) {
+                    this.init(false);
+                }
+                
+                this.rotation += this.spin;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                
+                ctx.globalAlpha = this.opacity;
+                ctx.filter = `blur(${this.blur}px)`;
+
+                if (this.img.complete && this.img.naturalWidth !== 0) {
+                    ctx.drawImage(this.img, -this.size/2, -this.size/2, this.size, this.size);
+                } else {
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, this.size/2, this.size/2.5, 0, 0, Math.PI * 2);
+                    ctx.fillStyle = '#D35400';
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        // 螢幕尺寸與 DPR 初始化
+        function resize() {
+            dpr = window.devicePixelRatio || 1;
+            width = window.innerWidth;
+            height = document.body.scrollHeight || canvas.clientHeight || window.innerHeight;
+
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
+
+            // 初始化楓葉實例
+            petals = [];
+            for (let i = 0; i < petalCount; i++) {
+                petals.push(new Petal());
+            }
+        }
+
+        window.addEventListener('resize', resize);
+        window.addEventListener('orientationchange', resize);
+        resize();
+
+        // 監聽滑鼠移動，即時計算移動速度 (Velocity)
+        window.addEventListener('mousemove', (e) => {
+            mouse.lastX = mouse.x;
+            mouse.lastY = mouse.y;
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            
+            // 計算滑鼠移動的向量與速度
+            mouse.vx = mouse.x - mouse.lastX;
+            mouse.vy = mouse.y - mouse.lastY;
+            mouse.speed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
+        });
+
+        // 動畫主循環
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // 每一幀讓滑鼠速度自然遞減衰減，確保滑鼠停下時風力消失
+            mouse.speed *= 0.92;
+
+            petals.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        //animate();
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const overlay = document.getElementById('autumn-reveal-overlay');
+            const colors = ['#FFFFFF', '#F2F4F7', '#E5E9F0', '#D0D6DC', '#A3ACB9'];
+
+            const baseSize = Math.max(window.innerWidth, window.innerHeight) * 0.7;
+            // 配合擴大的容器計算網格
+            const cols = Math.ceil((window.innerWidth * 1.4) / (baseSize * 0.4)) + 1;
+            const rows = Math.ceil((window.innerHeight * 1.4) / (baseSize * 0.4)) + 1;
+            const blobs = [];
+
+            for (let i = -1; i < rows; i++) {
+                for (let j = -1; j < cols; j++) {
+                    const blob = document.createElement('div');
+                    blob.className = 'reveal-blob';
+
+                    const size = baseSize * (0.8 + Math.random() * 0.6);
+                    // 配合容器位移 (-20vw/-20vh) 補正座標
+                    const x = j * (baseSize * 0.4) - (size * 0.2) + (Math.random() * baseSize * 0.2);
+                    const y = i * (baseSize * 0.4) - (size * 0.2) + (Math.random() * baseSize * 0.2);
+                    
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+
+                    blob.style.width = `${size}px`;
+                    blob.style.height = `${size}px`;
+                    blob.style.left = `${x}px`;
+                    blob.style.top = `${y}px`;
+                    
+                    blob.style.background = `radial-gradient(circle, ${color} 15%, ${color}00 75%)`;
+
+                    // 讓每個色塊的漂浮速度與起步時間不同，畫面更自然
+                    blob.style.animationDuration = `${6 + Math.random() * 4}s`;
+                    blob.style.animationDelay = `${Math.random() * -6}s`;
+
+                    overlay.appendChild(blob);
+                    blobs.push(blob);
+                }
+            }
+
+            window.addEventListener('load', () => {
+                overlay.style.backgroundColor = 'transparent';
+                overlay.style.pointerEvents = 'none';
+
+                // 頁面載入完成時，讓 Logo 與色塊「同時」開始慢慢淡出與微幅放大
+                const logo = document.getElementById('reveal-logo');
+                if (logo) {
+                    logo.style.transform = 'scale(1.12)'; 
+                    logo.style.opacity = '0';
+                }
+
+                blobs.sort(() => Math.random() - 0.5);
+
+                // 移除過大的隨機亂數延遲，改用固定且緊湊的均勻間隔，避免少數色塊嚴重落後
+                blobs.forEach((blob, idx) => {
+                    setTimeout(() => {
+                        blob.style.animation = 'none'; // 停止浮動動畫
+                        blob.style.transform = `scale(0)`; // 執行縮小淡出
+                        blob.style.opacity = '0';
+                    }, idx * 30); // 每個色塊接續淡出的時間差
+                });
+
+                // 總等待時間對應（ CSS 2.5s 動畫）
+                const totalTime = blobs.length * 40 + 1500;
+                setTimeout(() => {
+                    overlay.style.opacity = '0';
+                    setTimeout(() => overlay.remove(), 500);
+                }, totalTime);
+            });
+        });
+
+        // Cursor動畫
+        document.addEventListener('click', (e) => {
+            const ripple = document.createElement('div');
+            ripple.className = 'click-ripple';
+            
+            const size = 60;
+            ripple.style.width = `${size}px`;
+            ripple.style.height = `${size}px`;
+            ripple.style.left = `${e.clientX}px`;
+            ripple.style.top = `${e.clientY}px`;
+            
+            ripple.style.background = 'radial-gradient(circle, #D97245 0%, #C25F35 45%, rgba(181, 118, 51, 0) 75%)';
+
+            document.body.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
 
 
         // =====================================================
@@ -2138,10 +2577,17 @@ document.addEventListener('click', (e) => {
             const topBtn = document.getElementById('top-btn');
             const sideBtn = document.getElementById('side-btn');
             const tvcSection = document.getElementById('tvc-section');
+            const uspSection = document.getElementById('usp-section');
 
-            if (webHeader && tvcSection) {
+            // Determine which section to use for scroll-based toggles.
+            // Requirement: on mobile portrait (直屏) use usp-section; otherwise use tvc-section.
+            const isMobilePortrait = () => window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 1199;
+            const getChosenSection = () => (isMobilePortrait() && uspSection) ? uspSection : tvcSection;
+
+            if (webHeader && getChosenSection()) {
                 const toggleHeader = () => {
-                    const rect = tvcSection.getBoundingClientRect();
+                    const chosen = getChosenSection();
+                    const rect = chosen.getBoundingClientRect();
                     if (rect.top <= window.innerHeight * 0.8) {
                         webHeader.style.transform = 'translateY(-100%)';
                         webHeader.style.opacity = '0';
@@ -2154,12 +2600,16 @@ document.addEventListener('click', (e) => {
                 };
 
                 window.addEventListener('scroll', toggleHeader, { passive: true });
+                // also update on resize/orientationchange in case chosenSection should switch
+                window.addEventListener('resize', toggleHeader);
+                window.addEventListener('orientationchange', toggleHeader);
                 toggleHeader();
             }
 
-            if (sideBtn && tvcSection) {
+            if (sideBtn && getChosenSection()) {
                 const toggleSideBtn = () => {
-                    const rect = tvcSection.getBoundingClientRect();
+                    const chosen = getChosenSection();
+                    const rect = chosen.getBoundingClientRect();
                     if (rect.top <= window.innerHeight * 0.8) {
                         sideBtn.classList.add('show');
                     } else {
@@ -2168,11 +2618,14 @@ document.addEventListener('click', (e) => {
                 };
 
                 window.addEventListener('scroll', toggleSideBtn, { passive: true });
+                window.addEventListener('resize', toggleSideBtn);
+                window.addEventListener('orientationchange', toggleSideBtn);
                 toggleSideBtn();
             }
-            if (topBtn && tvcSection) {
+            if (topBtn && getChosenSection()) {
                 const toggleTopBtn = () => {
-                    const rect = tvcSection.getBoundingClientRect();
+                    const chosen = getChosenSection();
+                    const rect = chosen.getBoundingClientRect();
                     if (rect.top <= window.innerHeight * 0.8) {
                         topBtn.classList.add('show');
                     } else {
@@ -2200,13 +2653,15 @@ document.addEventListener('click', (e) => {
                     if (!container) return;
 
                     const swiperInstance = new Swiper(container, {
+                        // default for small screens / non-desktop: 1 slide
                         slidesPerView: 1,
                         spaceBetween: 24,
                         slidesPerGroup: 1,
                         observer: true,
                         observeParents: true,
+                        // Desktop layout (web) when viewport width >= 1199px: show 3 slides
                         breakpoints: {
-                            768: {
+                            1199: {
                                 slidesPerView: 3,
                                 spaceBetween: 24
                             }
