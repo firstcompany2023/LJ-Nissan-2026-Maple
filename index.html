@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2026 NISSAN </title>
+    <title>2026 NISSAN</title>
     <meta name="description" content="">
     <link rel="icon" href="./assets/img/favicon/favicon.ico" sizes="any">
     <link rel="shortcut icon" href="./assets/img/favicon/favicon.ico" type="image/x-icon">
@@ -17,6 +17,7 @@
     <link rel="apple-touch-icon" href="./assets/img/icon/logo.svg">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    
     <link rel="stylesheet" href="./assets/css/main.css" />
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
@@ -36,8 +37,14 @@
 </head>
 
 <body>
-    <!-- content here -->
     <style>
+        /* ==========================================================================
+           1. 基礎與通用樣式 (Base & Utilities)
+           ========================================================================== */
+        html {
+            scroll-behavior: smooth;
+        }
+
         html, body {
             width: 100%;
             height: auto !important;
@@ -46,10 +53,7 @@
             cursor: url('./assets/img/maple/cursor.png') 16 16, auto;
             position: relative;
         }
-        /* Native smooth scrolling for supported browsers */
-        html {
-            scroll-behavior: smooth;
-        }
+
         #web-header {
             display: flex;
             transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
@@ -59,13 +63,11 @@
             cursor: pointer;
         }
 
+        /* 楓葉佈局與進場動畫 */
         .layout-maple {
             position: absolute;
             pointer-events: none;
             height: auto;
-        }
-        /* layout-maple entrance animation: use CSS variables so each element can have randomized motion */
-        .layout-maple {
             --maple-translate-x: 0px;
             --maple-translate-y: 12px;
             --maple-rotate: 0deg;
@@ -73,16 +75,17 @@
             --maple-delay: 0ms;
             opacity: 0;
             transform: translate(var(--maple-translate-x), var(--maple-translate-y)) rotate(var(--maple-rotate));
-            transition: transform var(--maple-duration) cubic-bezier(0.22, 1, 0.36, 1), opacity calc(var(--maple-duration) * 1) ease;
+            transition: transform var(--maple-duration) cubic-bezier(0.22, 1, 0.36, 1), opacity var(--maple-duration) ease;
             will-change: transform, opacity;
         }
+
         .layout-maple.in-view {
             opacity: 1;
             transform: translate(0px, 0px) rotate(0deg);
             transition-delay: var(--maple-delay);
         }
 
-        /* 飄落效果 */
+        /* 飄落 Canvas */
         #falling-canvas {
             position: absolute;
             top: 0;
@@ -94,7 +97,7 @@
             display: block;
         }
 
-        /* Cursor動畫 */
+        /* Cursor 點擊波紋 */
         .click-ripple {
             position: fixed;
             border-radius: 50%;
@@ -115,7 +118,7 @@
             }
         }
 
-        /* Loading */
+        /* Loading 動畫覆蓋層 */
         #autumn-reveal-overlay {
             position: fixed;
             width: 100vw;
@@ -131,12 +134,8 @@
         }
 
         @keyframes floatBlob {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(18px, -15px) scale(1.04);
-            }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(18px, -15px) scale(1.04); }
         }
 
         .reveal-blob {
@@ -144,7 +143,7 @@
             border-radius: 50%;
             transform-origin: center center;
             animation: floatBlob 7s ease-in-out infinite;
-            transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 2.0s ease;
+            transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 2s ease;
         }
 
         #reveal-logo {
@@ -155,7 +154,7 @@
             transition: transform 2.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.8s ease;
         }
 
-        /* --- Go To Top Button --- */
+        /* 常駐固定按鈕 (Go To Top & Side Menu) */
         .go-to-top-btn {
             padding: 12px;
             background: #B8B8B8;
@@ -201,28 +200,22 @@
             padding: 10px;
         }
 
-
         /* ==========================================================================
-        Popup Modal
-        ========================================================================== */
-
+           2. Popup Modal 彈出視窗
+           ========================================================================== */
         .popup-overlay {
             background-image: url(./assets/img/tvc/bg_video-section.png);
             background-size: cover;
             display: flex;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background-color: rgba(0, 0, 0, 0.1);
             z-index: 1000;
             align-items: center;
             justify-content: center;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        visibility 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .popup-overlay.show {
@@ -251,9 +244,7 @@
             right: -30px;
             width: 65px;
             height: 65px;
-            background: url('./assets/img/icon/popup_close_btn.svg');
-            background-size: cover;
-            background-position: center;
+            background: url('./assets/img/icon/popup_close_btn.svg') center/cover;
             border: none;
             cursor: pointer;
             z-index: 1001;
@@ -269,33 +260,23 @@
             transform: scale(1.05);
         }
 
-        .popup-close svg {
-            display: none;
-        }
-
         @keyframes popupFadeIn {
-            0%   { opacity: 0; transform: translate(0, 0) scale(0.8); }
-            100% { opacity: 1; transform: translate(0, 0) scale(1); }
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         @keyframes popupFadeOut {
-            0%   { opacity: 1; transform: translate(0, 0) scale(1); }
-            100% { opacity: 0; transform: translate(0, 0) scale(0.8); }
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.8); }
         }
-
 
         /* ==========================================================================
-        banner 樣式
-        ========================================================================== */
-
+           3. Banner 區塊
+           ========================================================================== */
         #banner-section {
             height: calc(100vw - 20px);
-            background-image: url(./assets/img/banner/banner01_d.svg);
-            background-size: 100% auto;
-            background-position: center center;
-            background-repeat: no-repeat;
+            background: url(./assets/img/banner/banner01_d.svg) center center / 100% auto no-repeat;
         }
-
 
         .banner-skew-bg {
             position: absolute;
@@ -308,6 +289,7 @@
             z-index: 1;
             pointer-events: none;
         }
+
         .banner-top-border {
             position: absolute;
             bottom: 3%;
@@ -318,7 +300,7 @@
             pointer-events: none;
         }
 
-        .car-name-btn{
+        .car-name-btn {
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
@@ -328,16 +310,16 @@
         }
 
         /* ==========================================================================
-        tvc 樣式
-        ========================================================================== */
-
+           4. TVC 區塊
+           ========================================================================== */
         #tvc-section {
             height: 90vh;
         }
-        .tvc-mask-bg,
-        .tvc-skew-bg {
+
+        .tvc-mask-bg, .tvc-skew-bg {
             display: none;
         }
+
         .tvc-info {
             position: relative;
             display: flex;
@@ -347,42 +329,14 @@
             z-index: 6;
         }
 
-        .tvc-info .layout-maple{
-            z-index: 1;
-        }
-        .tvc-info .maple-1 {
-            top: -3%;
-            left: -2%;
-            width: 8%;
-        }
-        .tvc-info .maple-2 {
-            top: 13%;
-            left: -8%;
-            width: 15%;
-        }
-        .tvc-info .maple-3 {
-            top: -6%;
-            right: -1%;
-            width: 15%;
-        }
-        .tvc-info .maple-4 {
-            bottom: -2%;
-            left: -5%;
-            width: 21%;
-            transform: rotateY(180deg);
-        }
-        .tvc-info .maple-5 {
-            bottom: 8%;
-            right: -1%;
-            width: 10%;
-        }
-        .tvc-info .maple-6 {
-            bottom: -5%;
-            right: -5%;
-            width: 24%;
-        }
+        .tvc-info .layout-maple { z-index: 1; }
+        .tvc-info .maple-1 { top: -3%; left: -2%; width: 8%; }
+        .tvc-info .maple-2 { top: 13%; left: -8%; width: 15%; }
+        .tvc-info .maple-3 { top: -6%; right: -1%; width: 15%; }
+        .tvc-info .maple-4 { bottom: -2%; left: -5%; width: 21%; transform: rotateY(180deg); }
+        .tvc-info .maple-5 { bottom: 8%; right: -1%; width: 10%; }
+        .tvc-info .maple-6 { bottom: -5%; right: -5%; width: 24%; }
 
-        /* 聲音開關按鈕樣式 (寬高 60px、位於 maple-3 下方、Hover 效果) */
         .sound-on-btn, .sound-off-btn {
             position: absolute;
             top: 15%;
@@ -393,157 +347,71 @@
             cursor: pointer;
         }
 
-        .sound-off-btn {
-            display: block;
-        }
-
-        .sound-on-btn.active {
-            display: block;
-        }
-
-        .sound-off-btn.active {
-            display: none;
-        }
-
-        .sound-on-btn:hover, .sound-off-btn:hover {
-            /* transform: scale(1.05); */
-        }
+        .sound-off-btn { display: block; }
+        .sound-on-btn.active { display: block; }
+        .sound-off-btn.active { display: none; }
 
         .sound-on-btn img, .sound-off-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
+            width: 100%; height: 100%;
+            object-fit: contain; display: block;
         }
 
         .sound-on-btn img.hover-img, .sound-off-btn img.hover-img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
+            position: absolute; top: 0; left: 0; opacity: 0;
         }
 
-        .sound-on-btn:hover img.default-img, .sound-off-btn:hover img.default-img {
-            opacity: 0;
-        }
+        .sound-on-btn:hover img.default-img, .sound-off-btn:hover img.default-img { opacity: 0; }
+        .sound-on-btn:hover img.hover-img, .sound-off-btn:hover img.hover-img { opacity: 1; }
 
-        .sound-on-btn:hover img.hover-img, .sound-off-btn:hover img.hover-img {
-            opacity: 1;
+        .tvc-border-1, .tvc-border-2, .tvc-border-3 {
+            width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0;
+            background-size: 100% 100%;
         }
+        .tvc-border-1 { background-image: url(./assets/img/tvc/border-1.svg); transform: rotate(2deg); }
+        .tvc-border-2 { background-image: url(./assets/img/tvc/border-2.svg); transform: rotate(0deg); }
+        .tvc-border-3 { background-image: url(./assets/img/tvc/border-3.svg); transform: rotate(-2deg); }
 
-        .tvc-border-1 {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-image: url(./assets/img/tvc/border-1.svg);
-            background-size: 100% 100%;
-            transform: rotate(2deg);
-        }
-        .tvc-border-2 {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-image: url(./assets/img/tvc/border-2.svg);
-            background-size: 100% 100%;
-            transform: rotate(0deg);
-        }
-        .tvc-border-3 {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-image: url(./assets/img/tvc/border-3.svg);
-            background-size: 100% 100%;
-            transform: rotate(-2deg);
-        }
-        /* TVC 按鈕容器：置中且壓在相框底部邊界 */
         .tvc-btn-group {
             position: absolute;
-            bottom: 3%;
-            left: 50%;
+            bottom: 3%; left: 50%;
             transform: translate(-50%, 50%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            z-index: 1;
+            display: flex; justify-content: center; align-items: center;
+            gap: 20px; z-index: 1;
         }
 
-        /* 個別按鈕封裝：固定寬度並設定 hover 放大與平滑漸變 */
         .tvc-btn {
             position: relative;
             display: inline-block;
-            width: 200px; /* 可依需求微調按鈕寬度 */
-            height: auto;
+            width: 200px;
             transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
         }
 
-        .tvc-btn:hover {
-            transform: scale(1.05) translateY(-2px);
-        }
+        .tvc-btn:hover { transform: scale(1.05) translateY(-2px); }
 
-        /* 預設圖與 Hover 圖重疊定位 */
         .tvc-btn img {
-            width: 100%;
-            height: auto;
-            display: block;
+            width: 100%; height: auto; display: block;
             transition: opacity 0.3s ease-in-out;
         }
 
-        .tvc-btn img.btn-hover {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0; /* 預設隱藏 hover 圖 */
-        }
-
-        /* 滑鼠懸停時顯示 Hover 圖並隱藏預設圖 */
-        .tvc-btn:hover img.btn-default {
-            opacity: 0;
-        }
-
-        .tvc-btn:hover img.btn-hover {
-            opacity: 1;
-        }
-
+        .tvc-btn img.btn-hover { position: absolute; top: 0; left: 0; opacity: 0; }
+        .tvc-btn:hover img.btn-default { opacity: 0; }
+        .tvc-btn:hover img.btn-hover { opacity: 1; }
 
         /* ==========================================================================
-        usp 樣式
-        ========================================================================== */
-
-        #usp-section {
-        }
-
+           5. USP 區塊與 Tab 頁籤
+           ========================================================================== */
         .usp-kicks {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-            background-color: #FFF8F9;
-            padding-bottom: 80px;
+            position: relative; width: 100%; min-height: 100vh;
+            background-color: #FFF8F9; padding-bottom: 80px;
         }
         .usp-sentra {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-            background-color: #FAFCFF;
-            padding-bottom: 80px;
+            position: relative; width: 100%; min-height: 100vh;
+            background-color: #FAFCFF; padding-bottom: 80px;
         }
 
-
-
-        .usp-bg {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }        
-
+        .usp-bg { position: relative; width: 100%; height: 100%; overflow: hidden; }
         .usp-bg img {
             position: relative;
             -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
@@ -551,1174 +419,426 @@
         }
 
         .usp-kicks .usp-skew-bg {
-            position: absolute;
-            top: -10%;
-            left: 0;
-            width: 100%;
-            height: 20%;
-            background-color: #ffffff;
-            clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%);
-            z-index: 1;
-            pointer-events: none;
+            position: absolute; top: -10%; left: 0; width: 100%; height: 20%;
+            background-color: #ffffff; clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%);
+            z-index: 1; pointer-events: none;
         }
 
         .usp-sentra .usp-skew-bg {
-            position: absolute;
-            top: -10%;
-            left: 0;
-            width: 100%;
-            height: 20%;
-            background-color: #FFF8F9;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 60%);
-            z-index: 1;
-            pointer-events: none;
+            position: absolute; top: -10%; left: 0; width: 100%; height: 20%;
+            background-color: #FFF8F9; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 60%);
+            z-index: 1; pointer-events: none;
         }
 
         .usp-top-border {
-            position: absolute;
-            top: 5%;
-            left: 0;
-            width: 100%;
-            border-top: 4.15px solid #E09B90;
-            z-index: 2;
-            pointer-events: none;
+            position: absolute; top: 5%; left: 0; width: 100%;
+            border-top: 4.15px solid #E09B90; z-index: 2; pointer-events: none;
         }
 
-        .usp-kicks .usp-header-title {
-            position: absolute;
-            bottom: 30%;
-            left: 10%;
-        }
-        .usp-sentra .usp-header-title {
-            position: absolute;
-            bottom: 30%;
-            right: 10%;
-        }
+        .usp-kicks .usp-header-title { position: absolute; bottom: 30%; left: 10%; }
+        .usp-sentra .usp-header-title { position: absolute; bottom: 30%; right: 10%; }
 
-        .usp-header-title {
-            position: relative;
-            pointer-events: none;
-        }
-        .usp-tab-header-title{
-            position: relative;
-            pointer-events: none;
-            display: none;
-        }
+        .usp-header-title { position: relative; pointer-events: none; }
+        .usp-tab-header-title { position: relative; pointer-events: none; display: none; }
 
-
-        .usp-header-title h2,
-        .usp-tab-header-title h2 {
-            position: relative;
-            display: inline-block;
-        }
-        .usp-header-title h2::after,
-        .usp-tab-header-title h2::after {
+        .usp-header-title h2, .usp-tab-header-title h2 { position: relative; display: inline-block; }
+        .usp-header-title h2::after, .usp-tab-header-title h2::after {
             content: attr(data-reflect);
-            position: absolute;
-            left: 0;
-            top: calc(200% - 12px);
-            transform: scaleY(-1);
-            transform-origin: top left;
-            opacity: 0.18;
-            pointer-events: none;
-            white-space: nowrap;
+            position: absolute; left: 0; top: calc(200% - 12px);
+            transform: scaleY(-1); transform-origin: top left;
+            opacity: 0.18; pointer-events: none; white-space: nowrap;
             -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 0.6) 45%, black 82%, transparent);
             mask-image: linear-gradient(rgb(0 0 0 / 20%) 45%, black 82%, transparent);
-            color: inherit;
-            font: inherit;
+            color: inherit; font: inherit;
         }
 
-        /* Hide reflection on small screens for clarity */
-        @media (max-width: 767px) {
-            .usp-header-title h2{
-                -webkit-box-reflect: none;
-            }
-            .usp-header-title h2::after { display: none; }
-        }
+        .usp-kicks .layout-maple, .usp-sentra .layout-maple { z-index: 0; }
+        .usp-kicks .maple-1 { top: -10%; left: 10%; width: 5%; transform: rotateY(180deg); }
+        .usp-kicks .maple-2 { top: 16%; left: -2%; width: 9%; }
+        .usp-kicks .maple-3 { bottom: -20%; left: 26%; width: 15%; }
+        .usp-kicks .maple-4 { top: -10%; right: 0%; width: 11%; }
+        .usp-kicks .maple-5 { bottom: -14%; right: 5%; width: 13%; }
 
-        .usp-kicks .layout-maple,
-        .usp-sentra .layout-maple {
-            z-index: 0;
-        }
-        .usp-kicks .maple-1 {
-            top: -10%;
-            left: 10%;
-            width: 5%;
-            transform: rotateY(180deg);
-        }
-        .usp-kicks .maple-2 {
-            top: 16%;
-            left: -2%;
-            width: 9%;
-        }
-        .usp-kicks .maple-3 {
-            bottom: -20%;
-            left: 26%;
-            width: 15%;
-        }
-        .usp-kicks .maple-4 {
-            top: -10%;
-            right: 0%;
-            width: 11%;
-        }
-        .usp-kicks .maple-5 {
-            bottom: -14%;
-            right: 5%;
-            width: 13%;
-        }
+        .usp-sentra .maple-1 { top: -15%; left: 5%; width: 8%; transform: rotateY(180deg); }
+        .usp-sentra .maple-2 { top: 16%; left: -2%; width: 5.5%; }
+        .usp-sentra .maple-3 { bottom: -3%; left: -9%; width: 14.5%; }
+        .usp-sentra .maple-4 { top: -15%; right: 5%; width: 7.5%; }
+        .usp-sentra .maple-5 { bottom: -15%; right: 5%; width: 11%; }
 
-        .usp-sentra .maple-1 {
-            top: -15%;
-            left: 5%;
-            width: 8%;
-            transform: rotateY(180deg) rotate(0deg);
-        }
-        .usp-sentra .maple-2 {
-            top: 16%;
-                left: -2%;
-                width: 5.5%;
-        }
-        .usp-sentra .maple-3 {
-            bottom: -3%;
-            left: -9%;
-            width: 14.5%;
-        }
-        .usp-sentra .maple-4 {
-        top: -15%;
-            right: 5%;
-            width: 7.5%;
-        }
-        .usp-sentra .maple-5 {
-        bottom: -15%;
-            right: 5%;
-            width: 11%;
-        }
-
-        /* Tab 分頁標籤區 */
-
-        .tab-container {
-            z-index: 6;
-        }
-
+        .tab-container { z-index: 6; }
         .tab-nav {
-            position: relative;
-            width: 600px;            
-            max-width: 100%;
-            z-index: 6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 40px auto;
-            border-bottom: 1px solid #BFA28C;
+            position: relative; width: 600px; max-width: 100%; z-index: 6;
+            display: flex; justify-content: center; align-items: center;
+            margin: 0 auto 40px auto; border-bottom: 1px solid #BFA28C;
         }
 
         .tab-btn {
-            position: relative;
-            text-align: center;
-            width: 100%;
-            padding: 10px 0;
-            font-size: 1.125rem;
-            color: #8C7B70;
-            cursor: pointer;
+            position: relative; text-align: center; width: 100%;
+            padding: 10px 0; font-size: 1.125rem; color: #8C7B70; cursor: pointer;
         }
 
-        /* Tab Active 狀態 */
-        .tab-btn.active {
-            color: #3F2F27;
-            font-weight: 600;
-        }
+        .tab-btn.active { color: #3F2F27; font-weight: 600; }
 
-        /* 滑動底線與倒梯形漸層陰影指示器 */
         .tab-indicator {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            width: 1px; /* 基礎寬度由 JS transform 掌控 */
-            background-color: #3F2F27;
-            transform-origin: left center;
-            /* 改用 transform 動畫，搭配極致順暢的 Bezier 曲線 */
+            position: absolute; bottom: 0; left: 0; height: 3px; width: 1px;
+            background-color: #3F2F27; transform-origin: left center;
             transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-            pointer-events: none;
-            z-index: 6;
-            will-change: transform;
+            pointer-events: none; z-index: 6; will-change: transform;
         }
 
         .tab-indicator::before {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 0;
-            width: 100%;
-            height: 15px;
+            content: ''; position: absolute; bottom: -15px; left: 0;
+            width: 100%; height: 15px;
             background: linear-gradient(180deg, #BFA28C 0%, rgba(246, 228, 214, 0) 60%);
             clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
             pointer-events: none;
         }
 
-        /* 幻燈片主容器 */
         .slider-wrapper {
-            position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 50px;
-            z-index: 6;
+            position: relative; max-width: 1200px; margin: 0 auto;
+            padding: 0 50px; z-index: 6;
         }
 
-        .tab-content {
-            display: none;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .slider-container { overflow: hidden; width: 100%; }
 
-        .tab-content.active {
-            display: block;
-        }
-
-        .slider-container {
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .slider-track {
-            /* 由 Swiper 自動掌控容器佈局與動畫 */
-        }
-
-        /* 卡片單元 */
         .slider-card {
-            height: auto;
-            box-sizing: border-box;
-            padding: 16px;
-            box-shadow: 0px 10px 27.6px -10px #0000000D;
-            backdrop-filter: blur(10px);
+            height: auto; box-sizing: border-box; padding: 16px;
+            box-shadow: 0px 10px 27.6px -10px #0000000D; backdrop-filter: blur(10px);
         }
 
         .slider-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 4px;
-            background: #FFFCF280;
-            padding: 12px;
+            width: 100%; height: 200px; object-fit: cover;
+            border-radius: 4px; background: #FFFCF280; padding: 12px;
         }
 
-        .slider-card-content {
-            background: #FFFFFFCC;
-            padding: 12px 18px;
-        }
+        .slider-card-content { background: #FFFFFFCC; padding: 12px 18px; }
+        .slider-card h4 { font-size: 1.1rem; font-weight: 700; color: #1E1E1E; margin-bottom: 8px; text-align: center; }
+        .slider-card p { font-size: 0.875rem; color: #666666; line-height: 1.6; }
 
-        .slider-card h4 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #1E1E1E;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .slider-card p {
-            font-size: 0.875rem;
-            color: #666666;
-            line-height: 1.6;
-            padding: auto;
-        }
-
-        /* 左右箭頭按鈕 */
         .arrow-btn {
-            position: absolute;
-            top: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
+            position: absolute; top: 50%; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 10; transition: all 0.3s ease;
         }
 
-        .arrow-btn:hover {
-            transform: scale(1.05) translateY(-2px);
-        }
-
-        .arrow-left {
-            left: 0;
-        }
-
-        .arrow-right {
-            right: 0;
-        }
-
-        @media (max-width: 768px) {
-            .slider-card {
-                flex: 0 0 100%;
-            }
-        }
-
+        .arrow-btn:hover { transform: scale(1.05) translateY(-2px); }
+        .arrow-left { left: 0; }
+        .arrow-right { right: 0; }
 
         /* ==========================================================================
-        Price Section 專用樣式 (卡片寬度 350px 與等高對齊版)
-        ========================================================================== */
+           6. Price Section 專區與 Tooltip
+           ========================================================================== */
         #price-section {
             background: linear-gradient(194.97deg, #E0D3C7 4.64%, #FFFCF9 53.12%, #E8D4C2 92.79%);
-            padding: 100px 20px 120px 20px;
-            position: relative;
-            overflow: hidden;
+            padding: 100px 20px 120px 20px; position: relative; overflow: hidden;
         }
 
-        /* 頂部斜切區塊 */
         .price-skew-bg {
-            position: absolute;
-            top: -1px;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            background-color: #FAFCFF;
-            clip-path: polygon(0 0, 100% 0, 100% 0%, 0 100%);
-            z-index: 1;
-            pointer-events: none;
-        }
-        .price-top-border{
-            position: absolute;
-            top: 5%;
-            left: 0;
-            width: 100%;
-            border-top: 4.15px solid #E09B90;
-            z-index: 2;
-            pointer-events: none;
+            position: absolute; top: -1px; left: 0; width: 100%; height: 80px;
+            background-color: #FAFCFF; clip-path: polygon(0 0, 100% 0, 100% 0%, 0 100%);
+            z-index: 1; pointer-events: none;
         }
 
-        /* 裝飾楓葉 */
-        #price-section .layout-maple {
-            z-index: 0;
+        .price-top-border {
+            position: absolute; top: 5%; left: 0; width: 100%;
+            border-top: 4.15px solid #E09B90; z-index: 2; pointer-events: none;
         }
 
-        #price-section .maple-1 {
-            top: 15%;
-            left: -40%;
-            width: 31%;
-            filter: blur(2px);
-        }
-        #price-section .maple-2 {
-            bottom: 10%;
-            left: -45%;
-            width: 40%;
-            filter: blur(5px);
-        }
-        #price-section .maple-3 {
-            top: -3%;
-            right: -35%;
-            width: 27%;
-            filter: blur(6px);
-        }
-        #price-section .maple-4 {
-            top: 30%;
-            right: -65%;
-            width: 37%;
-            filter: blur(3px);
-        }
-        #price-section .maple-5 {
-            bottom: 25%;
-            right: -45%;
-            width: 14.5%;
-            filter: blur(7px);
-        }
-        #price-section .maple-6 {
-            bottom: 10%;
-            right: -22%;
-            width: 21%;
-            filter: blur(2px);
-        }
+        #price-section .layout-maple { z-index: 0; }
+        #price-section .maple-1 { top: 15%; left: -40%; width: 31%; filter: blur(2px); }
+        #price-section .maple-2 { bottom: 10%; left: -45%; width: 40%; filter: blur(5px); }
+        #price-section .maple-3 { top: -3%; right: -35%; width: 27%; filter: blur(6px); }
+        #price-section .maple-4 { top: 30%; right: -65%; width: 37%; filter: blur(3px); }
+        #price-section .maple-5 { bottom: 25%; right: -45%; width: 14.5%; filter: blur(7px); }
+        #price-section .maple-6 { bottom: 10%; right: -22%; width: 21%; filter: blur(2px); }
 
-        /* 卡片總容器 */
         .price-container {
-            position: relative;
-            z-index: 5;
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 50px;
+            position: relative; z-index: 5; max-width: 800px; margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center; gap: 50px;
         }
 
         .price-cards-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            width: 100%;
-            justify-content: center;
-            align-items: stretch; /* 強制子元素卡片等高 */
-            z-index: 6;
+            display: flex; flex-direction: column; gap: 30px; width: 100%;
+            justify-content: center; align-items: stretch; z-index: 6;
         }
 
-        @media (min-width: 768px) {
-            .price-cards-wrapper {
-                flex-direction: row;
-            }
-        }
-
-        /* 價格單一卡片：限制最大寬度 350px、毛玻璃與精準陰影 */
         .price-card {
-            flex: 1;
-            width: 100%;
-            max-width: 350px; /* 限制車型卡片最大寬度 350px */
-            margin: 0 auto;
-            background: transparent;
-            box-shadow: 0px 10px 27.6px -10px #FFFFFFCC;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            flex: 1; width: 100%; max-width: 350px; margin: 0 auto;
+            background: transparent; box-shadow: 0px 10px 27.6px -10px #FFFFFFCC;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; justify-content: space-between;
         }
 
-        .price-card-inner {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
+        .price-card-inner { display: flex; flex-direction: column; flex: 1; }
+        .price-card-header { text-align: center; background: #FFFCF280; }
+        .price-card-title { font-size: 1.5rem; font-weight: 700; color: #3F2F27; letter-spacing: 2px; margin: 15px 0; }
+        .price-car-img { width: 80%; max-width: 260px; height: 140px; object-fit: contain; margin: 0 auto 15px auto; display: block; }
 
-        .price-card-header {
-            text-align: center;
-            background: #FFFCF280;
-        }
+        .color-selector-wrapper { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 20px; }
 
-        .price-card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #3F2F27;
-            letter-spacing: 2px;
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-
-        .price-car-img {
-            width: 80%;
-            max-width: 260px;
-            height: 140px;
-            object-fit: contain;
-            margin: 0 auto 15px auto;
-            display: block;
-        }
-
-        /* 車色選取區塊：背景色 #FFFCF280 */
-        .color-selector-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        /* ==========================================================================
-        Color Dot Tooltip 樣式
-        ========================================================================== */
-
-        /* 1. 將色塊設為相對定位，做為 Tooltip 的定位基準 */
+        /* Tooltip 樣式 */
         .color-dot {
-            position: relative;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #ffffff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            position: relative; width: 35px; height: 35px; border-radius: 50%;
+            cursor: pointer; border: 2px solid #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.15);
             transition: transform 0.2s ease;
         }
 
         .color-dot::after {
-            content: attr(data-tooltip); /* 自動讀取 HTML 上的 data-tooltip 屬性值 */
-            position: absolute;
-            top: calc(100% + 10px);      /* 放置在色塊下方 10px 處 */
-            left: calc(100% - 5px);
-            transform: translateX(-50%) translateY(-4px); /* 水平置中，並上移 4px 預備做向下滑動動畫 */
-            background-color: #1a1a1a;   /* 黑色背景 */
-            color: #ffffff;              /* 白色文字 */
-            font-size: 13px;
-            font-weight: 500;
-            padding: 6px 12px;
-            border-radius: 4px;
-            white-space: nowrap;         /* 避免文字換行 */
-            pointer-events: none;        /* 避免 Tooltip 遮擋滑鼠事件 */
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 20;
-        }
-        .color-dot::before {
-            content: '';
-            position: absolute;
-            top: calc(100% + 5px);       /* 放置於色塊下方 4px 處，使其與文字框緊密重疊 */
-            left: 50%;
+            content: attr(data-tooltip); position: absolute;
+            top: calc(100% + 10px); left: calc(100% - 5px);
             transform: translateX(-50%) translateY(-4px);
-            border-width: 0 6px 6px 6px;  /* 朝向上方的三角形 */
-            border-style: solid;
-            border-color: transparent transparent #1a1a1a transparent;
-            pointer-events: none;
-            opacity: 0;
-            visibility: hidden;
+            background-color: #1a1a1a; color: #ffffff;
+            font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 4px;
+            white-space: nowrap; pointer-events: none; opacity: 0; visibility: hidden;
             transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-            z-index: 21;                 /* 讓箭頭壓在文字框上緣，完全蓋住縫隙 */
-        }
-        .color-dot:hover::after,
-        .color-dot:hover::before,
-        /* also show tooltip when the dot is programmatically activated */
-        .color-dot.active::after,
-        .color-dot.active::before {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); z-index: 20;
         }
 
-        /* 1. 雙色 1：黑 / 銀白 (切割角度 160deg) */
-        .color-dot-1 {
-            background: linear-gradient(160deg, #1A1A1A 35%, #E6E6E8 35%);
+        .color-dot::before {
+            content: ''; position: absolute; top: calc(100% + 5px); left: 50%;
+            transform: translateX(-50%) translateY(-4px);
+            border-width: 0 6px 6px 6px; border-style: solid;
+            border-color: transparent transparent #1a1a1a transparent;
+            pointer-events: none; opacity: 0; visibility: hidden;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s; z-index: 21;
         }
 
-        /* 2. 雙色 2：黑 / 灰藍 (切割角度 160deg) */
-        .color-dot-2 {
-            background: linear-gradient(160deg, #1A1A1A 35%, #74787C 35%);
+        .color-dot:hover::after, .color-dot:hover::before,
+        .color-dot.active::after, .color-dot.active::before {
+            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
         }
 
-        /* 3. 單色 1：亮銀白 */
-        .color-dot-3 {
-            background: linear-gradient(162.01deg, #F1F1F1 25.1%, #E6E6E8 58.89%, #D1D1D1 92.68%);
-        }
+        .color-dot-1 { background: linear-gradient(160deg, #1A1A1A 35%, #E6E6E8 35%); }
+        .color-dot-2 { background: linear-gradient(160deg, #1A1A1A 35%, #74787C 35%); }
+        .color-dot-3 { background: linear-gradient(162.01deg, #F1F1F1 25.1%, #E6E6E8 58.89%, #D1D1D1 92.68%); }
+        .color-dot-4 { background: linear-gradient(0deg, #000000 0%, #303030 100%); }
+        .color-dot-5 { background: linear-gradient(159.67deg, #8F99A3 23.31%, #74787C 57.41%, #81878F 91.52%); }
+        .color-dot-6 { background: linear-gradient(159.67deg, #D2D2D2 23.31%, #C7C7C7 57.41%, #B2B2B2 91.52%); }
 
-        /* 4. 單色 2：極黑 */
-        .color-dot-4 {
-            background: linear-gradient(0deg, #000000 0%, #303030 100%);
-        }
+        .color-dot:hover, .color-dot.active { transform: scale(1.15); }
 
-        /* 5. 單色 3：灰藍鈦 */
-        .color-dot-5 {
-            background: linear-gradient(159.67deg, #8F99A3 23.31%, #74787C 57.41%, #81878F 91.52%);
-        }
-
-        /* 6. 單色 4：淺灰 */
-        .color-dot-6 {
-            background: linear-gradient(159.67deg, #D2D2D2 23.31%, #C7C7C7 57.41%, #B2B2B2 91.52%);
-        }
-
-
-        .color-dot:hover, .color-dot.active {
-            transform: scale(1.15);
-        }
-
-        /* 車型與價格列表：背景色 #FFFFFFCC，自動填滿垂直高度 */
         .price-list {
-            background-color: #FFFFFFCC;
-            padding: 20px 60px;
-            flex: 1; /* 讓列表自動填滿高度 */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* 均分垂直空間，維持一致高度 */
-            min-height: 220px; /* 設定統一的最小高度 */
+            background-color: #FFFFFFCC; padding: 20px 60px; flex: 1;
+            display: flex; flex-direction: column; justify-content: space-between; min-height: 220px;
         }
 
-        /* 每列版本都有底線 #EEDDCE，除了最後一列 */
         .price-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            font-size: 0.95rem;
-            color: #3F2F27;
-            flex: 1;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; font-size: 0.95rem; color: #3F2F27; flex: 1;
         }
 
-        .price-item:not(:last-child) {
-            border-bottom: 1px solid #EEDDCE;
-        }
-        .usp-sentra .price-item:not(:last-child) {
-            border-bottom: 1px solid #EEDDCE;
-        }
+        .price-item:not(:last-child) { border-bottom: 1px solid #EEDDCE; }
 
-        /* 價格結構：上下兩列排版 */
-        .price-val-group {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 2px;
-        }
+        .price-val-group { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+        .price-val-original { text-decoration: line-through; color: #616161; font-size: 1rem; }
+        .price-discount-row { display: flex; align-items: center; gap: 6px; }
+        .price-tag-discount { background: #F3E1B8; color: #89610A; font-size: 10px; padding: 2px 6px; }
 
-        .price-val-original {
-            text-decoration: line-through;
-            color: #616161;
-            font-size: 1rem;
-        }
-
-        .price-discount-row {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .price-tag-discount {
-            background: #F3E1B8;
-            color: #89610A;
-            font-size: 10px;
-            padding: 2px 6px;
-        }
-
-        .price-val {
-
-        }
-
-        .pdf-download-box {
-            background-color: #FFFFFFCC;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        .pdf-download-box { background-color: #FFFFFFCC; padding: 15px 20px; display: flex; justify-content: center; align-items: center; }
         .pdf-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-            width: 100%;
-            padding: 8px 16px;
-            background: #DCCBBC;
-            color: #616161;
-            border: 1px solid #E8D4C2;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            line-height: 1;
+            display: inline-flex; align-items: center; justify-content: center; gap: 2px;
+            width: 100%; padding: 8px 16px; background: #DCCBBC; color: #616161;
+            border: 1px solid #E8D4C2; border-radius: 8px; text-decoration: none;
+            font-size: 0.95rem; font-weight: 500; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; line-height: 1;
         }
 
-        /* 按鈕文字 */
-        .pdf-btn-text {
-            transition: text-decoration 0.3s ease;
-        }
-
-        /* 圓形 ICON 容器 */
+        .pdf-btn-text { transition: text-decoration 0.3s ease; }
         .pdf-btn-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: #3F2F27;
-            border: 3px solid #FFFFFFd4;
-            border-radius: 50%;
-            color: #FFFFFF;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;
+            background: #3F2F27; border: 3px solid #FFFFFFd4; border-radius: 50%; color: #FFFFFF; flex-shrink: 0; transition: all 0.3s ease;
         }
+        .pdf-btn-icon svg { width: 14px; height: 14px; fill: #FFFFFF; }
+        .pdf-btn:hover { background: #D7C0AB; color: #444444; border: 1px solid #E8D4C2; }
+        .pdf-btn:hover .pdf-btn-text { text-decoration: underline; }
+        .pdf-btn:hover .pdf-btn-icon { background: #3F2F27; border: 3px solid #ffffffdb; color: #FFFFFF; }
 
-        /* 內嵌 SVG 尺寸與顏色設定 */
-        .pdf-btn-icon svg {
-            width: 14px;
-            height: 14px;
-            fill: #FFFFFF;
-        }
+        .price-cta-group { display: flex; flex-direction: column; gap: 20px; justify-content: center; align-items: center; width: 100%; }
 
-        /* Hover 懸停狀態 */
-        .pdf-btn:hover {
-            background: #D7C0AB;
-            color: #444444;
-            border: 1px solid #E8D4C2;
-            /* transform: scale(1.05); */
-        }
-        .pdf-btn:hover .pdf-btn-text {
-            text-decoration: underline;
-        }        
-        .pdf-btn:hover .pdf-btn-icon {
-            background: #3F2F27;
-            border: 3px solid #ffffffdb;
-            color: #FFFFFF;
-        }
-        .pdf-btn:hover .pdf-btn-icon svg{
-            fill: #fffffff3;
-        }
-
-
-        /* 底部 CTA 按鈕區 */
-        .price-cta-group {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
-
-        @media (min-width: 640px) {
-            .price-cta-group {
-                flex-direction: row;
-            }
-        }
-
-        .btn-cta-wrap {
-            position: relative;
-            display: inline-block;
-            width: 240px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .btn-cta-wrap:hover {
-            /* transform: scale(1.05) translateY(-2px); */
-        }
-
-        .btn-cta-wrap img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: opacity 0.3s ease;
-        }
-
-        .btn-cta-wrap img.hover-img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-        }
-
+        .btn-cta-wrap { position: relative; display: inline-block; width: 240px; cursor: pointer; transition: transform 0.3s ease; }
+        .btn-cta-wrap img { width: 100%; height: auto; display: block; transition: opacity 0.3s ease; }
+        .btn-cta-wrap img.hover-img { position: absolute; top: 0; left: 0; opacity: 0; }
         .btn-cta-wrap:hover img.default-img { opacity: 0; }
         .btn-cta-wrap:hover img.hover-img { opacity: 1; }
 
-
         /* ==========================================================================
-        Media Queries
-        ========================================================================== */
+           7. 媒體查詢 (Media Queries) 彙整優化
+           ========================================================================== */
+        @media (min-width: 640px) {
+            .price-cta-group { flex-direction: row; }
+        }
 
+        @media (min-width: 768px) {
+            .price-cards-wrapper { flex-direction: row; }
+        }
 
+        @media (max-width: 768px) {
+            .slider-card { flex: 0 0 100%; }
+            .usp-header-title h2::after { display: none; }
+        }
 
-
-        /* 橫屏裝置 (電腦 >= 1199px) */
+        /* 桌面大螢幕尺寸微調 */
         @media (min-width: 1199px) {
-            #banner-section {
-                top: -7vw;
-            }
-            #tvc-section {
-                height: 40vw;
-            }
-
-            .tvc-info {
-                top: -15vw;
-            }
-
-            #tvc-section .scroll-down-btn {
-                bottom: 20%;
-            }
+            #banner-section { top: -7vw; }
+            #tvc-section { height: 40vw; }
+            .tvc-info { top: -15vw; }
+            #tvc-section .scroll-down-btn { bottom: 20%; }
         }
 
-        /* 橫屏裝置 (電腦 >= 1300px) */
         @media (min-width: 1300px) {
-            #banner-section {
-                top: -7vw;
-            }
-            #tvc-section {
-                height: 30vw;
-            }
-
-            .tvc-info {
-                top: -15vw;
-            }
-            #banner-section .scroll-down-btn {
-                bottom: 25%;
-            }
-            #tvc-section .scroll-down-btn {
-                bottom: 33%;
-            }
+            #banner-section { top: -7vw; }
+            #tvc-section { height: 30vw; }
+            .tvc-info { top: -15vw; }
+            #banner-section .scroll-down-btn { bottom: 25%; }
+            #tvc-section .scroll-down-btn { bottom: 33%; }
         }
 
-
-        /* 橫屏裝置 (電腦 >= 1400px) */
         @media (min-width: 1400px) {
-            #banner-section {
-                top: -15vw;;
-            }
-            #tvc-section {
-                height: 35vw;
-            }
-
-            .tvc-info {
-                top: -18vw;
-            }
+            #banner-section { top: -15vw; }
+            #tvc-section { height: 35vw; }
+            .tvc-info { top: -18vw; }
         }
-        /* 橫屏裝置 (電腦 >= 1500px) */
+
         @media (min-width: 1500px) {
-            #banner-section {
-                top: -20vw;;
-            }
-            #tvc-section {
-                height: 20vw;
-            }
-
-            .tvc-info {
-                top: -25vw;
-            }
-            #tvc-section .scroll-down-btn {
-                bottom: 22vw;
-            }
+            #banner-section { top: -20vw; }
+            #tvc-section { height: 20vw; }
+            .tvc-info { top: -25vw; }
+            #tvc-section .scroll-down-btn { bottom: 22vw; }
         }
 
-        /* 橫屏裝置 (電腦 >= 1600px) */
         @media (min-width: 1600px) {
-            #banner-section {
-                top: -25vw;;
-            }
-            #tvc-section {
-                height: 8vw;
-            }
-
-            .tvc-info {
-                top: -33vw;
-            }
-            #tvc-section .scroll-down-btn {
-                bottom: 25vw;
-            }
+            #banner-section { top: -25vw; }
+            #tvc-section { height: 8vw; }
+            .tvc-info { top: -33vw; }
+            #tvc-section .scroll-down-btn { bottom: 25vw; }
         }
 
-        /* 橫屏裝置 (電腦 >= 1900px) */
         @media (min-width: 1900px) {
-            #banner-section {
-                top: -30vw;;
-            }
-            #tvc-section {
-                height: 0vw;
-            }
-
-            .tvc-info {
-                top: -40vw;
-            }
-            #tvc-section .scroll-down-btn {
-                bottom: 30vw;
-            }
+            #banner-section { top: -30vw; }
+            #tvc-section { height: 0vw; }
+            .tvc-info { top: -40vw; }
+            #tvc-section .scroll-down-btn { bottom: 30vw; }
         }
 
-        /* 行動裝置 (手機 <= 767px 與 平板 768px~1199px 直屏)*/
-        @media (max-width: 767px), (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
-            #web-header {
-                display: none !important;
-            }
-            #mobile-header {
-                display: flex !important;
-            }
-            #mobile-menu {
-                opacity: 1;
-                pointer-events: auto;
-            }
-            #mobile-logo {
-                opacity: 1;
-                pointer-events: auto;
-            }
-        }
-
-
+        /* 平板區域與橫屏/直屏切換 */
         @media (min-width: 768px) and (max-width: 1199px) {
-
-            .banner-skew-bg {
-                clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 100%)
-            }
-
-            .banner-top-border {
-                display: none;
-            }
-
-
-            /* ==========================================================================
-            usp 樣式
-            ========================================================================== */
-
-            #usp-section{
-                background: #FFFCF9;
-            }
-
-
-            .usp-kicks,
-            .usp-sentra {
-                display: flex;
-                min-height: unset;
-                padding-bottom: 40px;
-                background-color: #FFFCF9;
-            }
-
-            #usp-section .tab-container,
-            #usp-section .usp-bg{
-                width: 50%;
-            }
-
-            .usp-kicks .tab-container {
-                order: 1;
-            }
-            .usp-kicks .usp-bg{
-                order: 2;
-            }
-
-            .usp-header-title {
-                display: none;
-            }
-            .usp-tab-header-title{
-                display: block;
-                text-align: center;
-                margin-bottom: 30px;
-            }
+            .banner-skew-bg { clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 100%); }
+            .banner-top-border { display: none; }
+            #usp-section { background: #FFFCF9; }
+            .usp-kicks, .usp-sentra { display: flex; min-height: unset; padding-bottom: 40px; background-color: #FFFCF9; }
+            #usp-section .tab-container, #usp-section .usp-bg { width: 50%; }
+            .usp-kicks .tab-container { order: 1; }
+            .usp-kicks .usp-bg { order: 2; }
+            .usp-header-title { display: none; }
+            .usp-tab-header-title { display: block; text-align: center; margin-bottom: 30px; }
 
             .slider-wrapper {
-                background: #FCF4E8;
-                margin: 0 10%;
-                border: 1px solid #E6CEBF;
-                padding: 1px 25px;
-                position: relative;
-                min-height: 70%;
+                background: #FCF4E8; margin: 0 10%; border: 1px solid #E6CEBF;
+                padding: 1px 25px; position: relative; min-height: 70%;
             }
             .slider-wrapper::after {
-                width: calc(100% + 10px);
-                height: calc(100% + 10px);
-                top: -5px;
-                left: -5px;
-                content: '';
-                position: absolute;
-                border: 2px solid #F0EAE5;
-                pointer-events: none;
-                box-sizing: border-box;
+                width: calc(100% + 10px); height: calc(100% + 10px); top: -5px; left: -5px;
+                content: ''; position: absolute; border: 2px solid #F0EAE5; pointer-events: none; box-sizing: border-box;
             }
 
-
-            #price-section {
-                background: linear-gradient(174.51deg, #FEFFF2 6.2%, #F3E7D8 54.62%, #E8D4C2 94.23%);
-            }
-
-            #usp-section .usp-skew-bg,
-            #usp-section .usp-top-border,
-            #usp-section .maple-1,
-            #usp-section .maple-2,
-            #usp-section .maple-3,
-            #usp-section .maple-4,
-            #usp-section .maple-5,
-            #price-section .price-skew-bg,
-            #price-section .price-top-border{
-                display: none;
-            }
-
+            #price-section { background: linear-gradient(174.51deg, #FEFFF2 6.2%, #F3E7D8 54.62%, #E8D4C2 94.23%); }
+            #usp-section .usp-skew-bg, #usp-section .usp-top-border, #usp-section .maple-1, #usp-section .maple-2,
+            #usp-section .maple-3, #usp-section .maple-4, #usp-section .maple-5, #price-section .price-skew-bg, #price-section .price-top-border { display: none; }
         }
-        /* 橫屏裝置 (平板 768px~1199px 橫屏) */
+
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) and (min-height: 500px) {
-
-            #banner-section {
-                top: -10vh;
-            }
-
-            #tvc-section {
-                height: 80vh;
-            }
-
-            .tvc-info {
-                width: 836px;
-                top: -15vh;
-                max-width: 960px;
-            }
-
-            .go-to-top-btn {
-                top: 55%;
-            }
-
-            .usp-kicks,
-            .usp-sentra {
-                height: 100vh;
-            }
+            #banner-section { top: -10vh; }
+            #tvc-section { height: 80vh; }
+            .tvc-info { width: 836px; top: -15vh; max-width: 960px; }
+            .go-to-top-btn { top: 55%; }
+            .usp-kicks, .usp-sentra { height: 100vh; }
         }
-        /* 直屏裝置 (平板 768px~1199px 直屏) */
+
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
-
-            #banner-section .car-name-btn{
-                bottom: 25%;
-            }
-
-            #tvc-section {
-                height: 50vh;
-            }
-
-            .tvc-info {
-                top: -5vh;
-                width: 80%;
-                max-width: 836px;
-            }
-
-            #banner-section .scroll-down-btn{
-                display: none;
-            }
+            #banner-section .car-name-btn { bottom: 25%; }
+            #tvc-section { height: 50vh; }
+            .tvc-info { top: -5vh; width: 80%; max-width: 836px; }
+            #banner-section .scroll-down-btn { display: none; }
         }
 
+        @media (max-width: 767px), (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
+            #web-header { display: none !important; }
+            #mobile-header { display: flex !important; }
+            #mobile-menu, #mobile-logo { opacity: 1; pointer-events: auto; }
+        }
 
         /* 手機橫屏裝置 */
-        @media (max-width: 960px) and (orientation: landscape) and (max-height: 500px){
-
-            #banner-section {
-                top: -70vh;
-            }
-            #tvc-section {
-                height: 75vh;
-            }
-            .tvc-info {
-                top: -75vh;
-                max-width: 660px;
-            }
+        @media (max-width: 960px) and (orientation: landscape) and (max-height: 500px) {
+            #banner-section { top: -70vh; }
+            #tvc-section { height: 75vh; }
+            .tvc-info { top: -75vh; max-width: 660px; }
         }
 
-        /* 手機直屏裝置 767px*/
+        /* 手機直屏裝置 (<= 767px) */
         @media (max-width: 767px) {
-
-            /* 頂部 75% 區塊：寬度滿版 */
             #banner-section {
-                height: 100vh;
-                width: 100%;
-                background-image: url(./assets/img/banner/banner01_m.svg);
-                background-size: auto 100%;
-                background-position: center center;
-                background-repeat: no-repeat;
+                height: 100vh; width: 100%;
+                background: url(./assets/img/banner/banner01_m.svg) center center / auto 100% no-repeat;
             }
             .banner-skew-bg {
-                z-index: 0;
-                clip-path: none;
-                height: 100%;
+                z-index: 0; clip-path: none; height: 100%;
                 background: linear-gradient(180deg, rgba(35, 11, 9, 0) 50%, rgba(138, 52, 32, 0.8) 82.69%, #8A3420 100%);
             }
+            .banner-top-border, #banner-section .scroll-down-btn, #tvc-section .scroll-down-btn,
+            #usp-section .layout-maple, #price-section .layout-maple { display: none; }
 
-            .banner-top-border,
-            #banner-section .scroll-down-btn,
-            #tvc-section .scroll-down-btn,
-            #usp-section .layout-maple,
-            #price-section .layout-maple{
-                display: none;
-            }
-
-            .tvc-info {
-                width: 350px;
-                margin: auto;
-            }
-
-            #tvc-section {
-                height: 50vh;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                position: relative;
-            }
-            .tvc-mask-bg {
-                display: block;
-                position: absolute;
-                top: -1px;
-                left: 0;
-                width: 100%;
-                height: 60%;
-                background: #8A3420;
-                z-index: 1;
-            }
+            .tvc-info { width: 350px; margin: auto; }
+            #tvc-section { height: 50vh; display: flex; align-items: center; justify-content: center; position: relative; }
+            .tvc-mask-bg { display: block; position: absolute; top: -1px; left: 0; width: 100%; height: 60%; background: #8A3420; z-index: 1; }
             .tvc-skew-bg {
-                display: block;
-                position: absolute;
-                top: 30%;
-                left: 0;
-                width: 100%;
-                height: 30%;
-                background-color: #ffffff;
-                clip-path: polygon(0% 100%, 100% 100%, 150% 0%, 0% 85%);
-                z-index: 1;
-                pointer-events: none;
+                display: block; position: absolute; top: 30%; left: 0; width: 100%; height: 30%;
+                background-color: #ffffff; clip-path: polygon(0% 100%, 100% 100%, 150% 0%, 0% 85%); z-index: 1; pointer-events: none;
             }
 
+            .tvc-btn-group { width: 100vw; bottom: -30%; gap: 0; }
+            .tvc-btn { width: 50%; }
 
-            .tvc-btn-group {
-                width: 100vw;
-                bottom: -30%;
-                gap: 0;
-            }
+            .usp-kicks .usp-skew-bg { top: -13%; height: 25%; }
+            .usp-kicks .usp-bg img { height: 275px; object-position: right center; }
+            .usp-sentra .usp-bg img { height: 275px; object-position: left center; }
+            .usp-header-title { display: none; }
+            .usp-tab-header-title { display: block; text-align: center; margin-bottom: 30px; }
 
-            .tvc-btn{
-                width: 50%;
-            }
-
-            .usp-kicks .usp-skew-bg{
-                top: -13%;
-                height: 25%;
-            }
-
-            .usp-kicks .usp-bg img {
-                height: 275px;
-                object-position: right center;
-            }
-            .usp-sentra .usp-bg img {
-                height: 275px;
-                object-position: left center;
-            }
-            .usp-header-title {
-                display: none;
-            }
-            .usp-tab-header-title{
-                display: block;
-                text-align: center;
-                margin-bottom: 30px;
-            }
-
-            .price-skew-bg {
-                clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%);
-                height: 3%;
-                top: -1%;
-            }
-            .price-top-border {
-                top: 1%;
-            }
-            .price-cta-group {
-                gap: 0px;
-            }
-
-            .go-to-top-btn
-            {
-                top: 70%;
-            }
-            #side-btn {
-                top: 85%;
-            }
+            .price-skew-bg { clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%); height: 3%; top: -1%; }
+            .price-top-border { top: 1%; }
+            .price-cta-group { gap: 0px; }
+            .go-to-top-btn { top: 70%; }
+            #side-btn { top: 85%; }
         }
 
-        /* 手機直屏裝置 375px*/
         @media (max-width: 375px) {
-            #banner-section {
-                background-size: 100% auto;
-            }
-            
-            #tvc-section {
-                height: 60vh;
-            }
-            .go-to-top-btn
-            {
-                top: 65%;
-            }
-            #side-btn {
-                top: 85%;
-            }
-
+            #banner-section { background-size: 100% auto; }
+            #tvc-section { height: 60vh; }
+            .go-to-top-btn { top: 65%; }
+            #side-btn { top: 85%; }
         }
-
-
     </style>
 
     <canvas id="falling-canvas"></canvas>
+    
+    <!-- Loading Overlay -->
     <div id="autumn-reveal-overlay">
         <div id="reveal-logo">
             <svg width="130" height="109" viewBox="0 0 130 109" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M75.698 58.6878C75.5954 58.7137 75.1823 58.7137 75.0018 58.7137H61.7026V61.8067H75.2343C75.3369 61.8067 76.1358 61.8067 76.2904 61.7807C79.0482 61.5235 80.3108 59.2294 80.3108 57.2186C80.3108 55.2077 78.9962 52.9397 76.4956 52.7085C76.0059 52.6565 75.5941 52.6565 75.4136 52.6565H66.5725C66.1854 52.6565 65.7477 52.6305 65.5931 52.5786C64.8968 52.398 64.6396 51.7797 64.6396 51.264C64.6396 50.8002 64.8968 50.1819 65.6191 49.9754C65.8256 49.9234 66.0568 49.8974 66.5466 49.8974H79.3041V46.8564H66.34C65.7983 46.8564 65.3866 46.8824 65.0514 46.9344C62.8353 47.2435 61.2882 49.0219 61.2882 51.2899C61.2882 53.1462 62.4482 55.3104 64.9995 55.6715C65.4632 55.7234 66.1075 55.7234 66.3907 55.7234H74.9992C75.1538 55.7234 75.5409 55.7234 75.6175 55.7494C76.597 55.878 76.9321 56.6003 76.9321 57.2446C76.9321 57.8889 76.545 58.5332 75.6954 58.6878H75.698Z" fill="#2D2D2D"/>
-            <path d="M50.491 58.6878C50.3884 58.7137 49.9753 58.7137 49.8207 58.7137H36.4956V61.8067H50.0273C50.1299 61.8067 50.9288 61.8067 51.0834 61.7807C53.8411 61.5235 55.1038 59.2294 55.1038 57.2186C55.1038 55.2077 53.7892 52.9397 51.2886 52.7085C50.7989 52.6565 50.3871 52.6565 50.2065 52.6565H41.3655C40.9784 52.6565 40.5407 52.6305 40.3861 52.5786C39.6898 52.398 39.4326 51.7797 39.4326 51.264C39.4326 50.8002 39.6898 50.1819 40.4121 49.9754C40.6186 49.9234 40.8498 49.8974 41.3395 49.8974H54.097V46.8564H41.133C40.5913 46.8564 40.1795 46.8824 39.8444 46.9344C37.6283 47.2435 36.0812 49.0219 36.0812 51.2899C36.0812 53.1462 37.2412 55.3104 39.7924 55.6715C40.2562 55.7234 40.9005 55.7234 41.1837 55.7234H49.7921C49.9467 55.7234 50.3338 55.7234 50.4105 55.7494C51.3899 55.878 51.7251 56.6003 51.7251 57.2446C51.7251 57.8889 51.3639 58.5332 50.4884 58.6878H50.491Z" fill="#2D2D2D"/>
-            <path d="M29.5627 46.7539H26.2125V61.8834H29.5627V46.7539Z" fill="#2D2D2D"/>
-            <path d="M18.8148 61.8834V46.7539H15.4646V58.0435L4.30489 46.7539H0V61.8834H3.35013V50.5431L14.5878 61.8834H18.8148Z" fill="#2D2D2D"/>
-            <path d="M126.576 46.7539V58.0435L115.416 46.7539H111.111V61.8834H114.462V50.5431L125.673 61.8834H129.9V46.7539H126.576Z" fill="#2D2D2D"/>
-            <path d="M93.662 46.7539L84.2286 61.8834H88.301L89.9767 59.1776H100.982L102.658 61.8834H106.704L97.2706 46.7539H93.662ZM99.2555 56.3159H91.7031L95.4923 50.2326L99.2555 56.3159Z" fill="#2D2D2D"/>
-            <path d="M18.6342 38.1712C25.3878 18.4536 43.996 5.2064 64.9762 5.2064C85.9564 5.2064 104.591 18.4536 111.318 38.1712L111.37 38.3258H126.138V36.5474L120.005 35.8252C116.215 35.3874 115.416 33.7117 114.386 31.5982L114.129 31.0825C105.261 12.2171 85.9564 0 64.9762 0C43.996 0 24.6915 12.2171 15.8258 31.1345L15.5686 31.6502C14.5372 33.7637 13.7383 35.4394 9.95042 35.8771L3.81653 36.5994V38.3777H18.5589L18.6368 38.1712H18.6342Z" fill="#2D2D2D"/>
-            <path d="M111.369 70.3365L111.317 70.4911C104.564 90.2087 85.955 103.43 64.9748 103.43C43.9946 103.43 25.3604 90.1827 18.6329 70.4651L18.5809 70.3105H3.83984V72.0889L9.97373 72.8111C13.7629 73.2489 14.5618 74.9246 15.5919 77.0381L15.8491 77.5538C24.7148 96.4725 44.0206 108.688 64.9995 108.688C85.9784 108.688 105.284 96.4712 114.15 77.5785L114.407 77.0628C115.438 74.9493 116.237 73.2736 120.025 72.8358L126.159 72.1136V70.3352H111.365L111.369 70.3365Z" fill="#2D2D2D"/>
+                <path d="M75.698 58.6878C75.5954 58.7137 75.1823 58.7137 75.0018 58.7137H61.7026V61.8067H75.2343C75.3369 61.8067 76.1358 61.8067 76.2904 61.7807C79.0482 61.5235 80.3108 59.2294 80.3108 57.2186C80.3108 55.2077 78.9962 52.9397 76.4956 52.7085C76.0059 52.6565 75.5941 52.6565 75.4136 52.6565H66.5725C66.1854 52.6565 65.7477 52.6305 65.5931 52.5786C64.8968 52.398 64.6396 51.7797 64.6396 51.264C64.6396 50.8002 64.8968 50.1819 65.6191 49.9754C65.8256 49.9234 66.0568 49.8974 66.5466 49.8974H79.3041V46.8564H66.34C65.7983 46.8564 65.3866 46.8824 65.0514 46.9344C62.8353 47.2435 61.2882 49.0219 61.2882 51.2899C61.2882 53.1462 62.4482 55.3104 64.9995 55.6715C65.4632 55.7234 66.1075 55.7234 66.3907 55.7234H74.9992C75.1538 55.7234 75.5409 55.7234 75.6175 55.7494C76.597 55.878 76.9321 56.6003 76.9321 57.2446C76.9321 57.8889 76.545 58.5332 75.6954 58.6878H75.698Z" fill="#2D2D2D"/>
+                <path d="M50.491 58.6878C50.3884 58.7137 49.9753 58.7137 49.8207 58.7137H36.4956V61.8067H50.0273C50.1299 61.8067 50.9288 61.8067 51.0834 61.7807C53.8411 61.5235 55.1038 59.2294 55.1038 57.2186C55.1038 55.2077 53.7892 52.9397 51.2886 52.7085C50.7989 52.6565 50.3871 52.6565 50.2065 52.6565H41.3655C40.9784 52.6565 40.5407 52.6305 40.3861 52.5786C39.6898 52.398 39.4326 51.7797 39.4326 51.264C39.4326 50.8002 39.6898 50.1819 40.4121 49.9754C40.6186 49.9234 40.8498 49.8974 41.3395 49.8974H54.097V46.8564H41.133C40.5913 46.8564 40.1795 46.8824 39.8444 46.9344C37.6283 47.2435 36.0812 49.0219 36.0812 51.2899C36.0812 53.1462 37.2412 55.3104 39.7924 55.6715C40.2562 55.7234 40.9005 55.7234 41.1837 55.7234H49.7921C49.9467 55.7234 50.3338 55.7234 50.4105 55.7494C51.3899 55.878 51.7251 56.6003 51.7251 57.2446C51.7251 57.8889 51.3639 58.5332 50.4884 58.6878H50.491Z" fill="#2D2D2D"/>
+                <path d="M29.5627 46.7539H26.2125V61.8834H29.5627V46.7539Z" fill="#2D2D2D"/>
+                <path d="M18.8148 61.8834V46.7539H15.4646V58.0435L4.30489 46.7539H0V61.8834H3.35013V50.5431L14.5878 61.8834H18.8148Z" fill="#2D2D2D"/>
+                <path d="M126.576 46.7539V58.0435L115.416 46.7539H111.111V61.8834H114.462V50.5431L125.673 61.8834H129.9V46.7539H126.576Z" fill="#2D2D2D"/>
+                <path d="M93.662 46.7539L84.2286 61.8834H88.301L89.9767 59.1776H100.982L102.658 61.8834H106.704L97.2706 46.7539H93.662ZM99.2555 56.3159H91.7031L95.4923 50.2326L99.2555 56.3159Z" fill="#2D2D2D"/>
+                <path d="M18.6342 38.1712C25.3878 18.4536 43.996 5.2064 64.9762 5.2064C85.9564 5.2064 104.591 18.4536 111.318 38.1712L111.37 38.3258H126.138V36.5474L120.005 35.8252C116.215 35.3874 115.416 33.7117 114.386 31.5982L114.129 31.0825C105.261 12.2171 85.9564 0 64.9762 0C43.996 0 24.6915 12.2171 15.8258 31.1345L15.5686 31.6502C14.5372 33.7637 13.7383 35.4394 9.95042 35.8771L3.81653 36.5994V38.3777H18.5589L18.6368 38.1712H18.6342Z" fill="#2D2D2D"/>
+                <path d="M111.369 70.3365L111.317 70.4911C104.564 90.2087 85.955 103.43 64.9748 103.43C43.9946 103.43 25.3604 90.1827 18.6329 70.4651L18.5809 70.3105H3.83984V72.0889L9.97373 72.8111C13.7629 73.2489 14.5618 74.9246 15.5919 77.0381L15.8491 77.5538C24.7148 96.4725 44.0206 108.688 64.9995 108.688C85.9784 108.688 105.284 96.4712 114.15 77.5785L114.407 77.0628C115.438 74.9493 116.237 73.2736 120.025 72.8358L126.159 72.1136V70.3352H111.365L111.369 70.3365Z" fill="#2D2D2D"/>
             </svg>
         </div>
     </div>
     
+    <!-- Header -->
     <header class="fixed top-0 left-0 w-full z-[100] bg-transparent transition-all duration-300">
         <div id="web-header" class="absolute w-full mx-auto flex flex-row items-center justify-between px-12 py-6 gap-x-0">
             <div id="web-logo" class="block">
@@ -1727,8 +847,8 @@
                 </a>
             </div>
             <nav id="web-menu" class="flex items-center gap-x-4 md:order-2">
-                <a href="#usp-kicks"  class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">KICKS</a>
-                <a href="#usp-sentra"  class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">SENTRA</a>
+                <a href="#usp-kicks" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">KICKS</a>
+                <a href="#usp-sentra" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">SENTRA</a>
                 <a href="#price-section" class="px-[25px] py-2 text-base font-normal text-white bg-[#2F1F1526] border border-white rounded-full transition-all duration-300 hover:brightness-125 hover:shadow-[0px_0px_20px_0px_#FFFFFF]">EXPLORE NISSAN</a>
             </nav>
         </div>
@@ -1752,42 +872,44 @@
         </div>
     </header>
 
+    <!-- Banner Section -->
     <section id="banner-section" class="w-full h-dvh xl:h-screen relative overflow-hidden">
-        <div class="banner-title absolute top-1/4 left-1/2 md:left-3/4 md:top-1/3  transform -translate-x-1/2">
-            <img src="./assets/img/banner/title.svg" alt="banner title" class="">
+        <div class="banner-title absolute top-1/4 left-1/2 md:left-3/4 md:top-1/3 transform -translate-x-1/2">
+            <img src="./assets/img/banner/title.svg" alt="banner title">
         </div>
         <div class="banner-skew-bg"></div>
         <div class="banner-top-border"></div>
         <a class="scroll-down-btn absolute inline-block bottom-[30vh] left-1/2 transform -translate-x-1/2 text-white" href="#tvc-info" aria-label="Scroll Down">
             <div class="flex flex-col justify-center items-center text-xs">
                 Scroll Down
-                <svg class="animate-bounce w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg class="animate-bounce w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </div>
         </a>
-            <a href="#usp-kicks" class="car-name-btn hidden md:block absolute bottom-[30%] left-[20%]" aria-label="kicks">
-                <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks" class="">
-            </a>
-            <a href="#usp-sentra" class="car-name-btn hidden md:block absolute bottom-[30%] right-[15%]" aria-label="sentra">
-                <img src="./assets/img/banner/sentra_name_m.svg" alt="sentra" class="">
-            </a>
+        <a href="#usp-kicks" class="car-name-btn hidden md:block absolute bottom-[30%] left-[20%]" aria-label="kicks">
+            <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks">
+        </a>
+        <a href="#usp-sentra" class="car-name-btn hidden md:block absolute bottom-[30%] right-[15%]" aria-label="sentra">
+            <img src="./assets/img/banner/sentra_name_m.svg" alt="sentra">
+        </a>
         <div class="banner-btn-group flex md:hidden absolute bottom-[10vh] left-1/2 transform -translate-x-1/2 gap-4 flex-col">
             <a href="#usp-kicks" class="flex" aria-label="kicks">
-                <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks" class="">
-                <img src="./assets/img/banner/arrow_right.svg" alt="arrow right" class="">
+                <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks">
+                <img src="./assets/img/banner/arrow_right.svg" alt="arrow right">
             </a>
             <a href="#usp-sentra" class="flex" aria-label="sentra">
-                <img src="./assets/img/banner/sentra_name_m.svg" alt="sentra" class="">
-                <img src="./assets/img/banner/arrow_right.svg" alt="arrow right" class="">
+                <img src="./assets/img/banner/sentra_name_m.svg" alt="sentra">
+                <img src="./assets/img/banner/arrow_right.svg" alt="arrow right">
             </a>
         </div>
     </section>
+
+    <!-- TVC Section -->
     <section id="tvc-section" class="w-full relative">
         <div class="tvc-mask-bg"></div>
         <div class="tvc-skew-bg"></div>
         <div id="tvc-info" class="tvc-info">
-            <!-- 6 片裝飾楓葉 -->
             <img src="./assets/img/maple/maple14.png" alt="Maple 1" class="layout-maple maple-1">
             <img src="./assets/img/maple/maple05.png" alt="Maple 2" class="layout-maple maple-2">
             <img src="./assets/img/maple/maple04.png" alt="Maple 3" class="layout-maple maple-3">
@@ -1795,7 +917,6 @@
             <img src="./assets/img/maple/maple03.png" alt="Maple 5" class="layout-maple maple-5">
             <img src="./assets/img/maple/maple07.png" alt="Maple 6" class="layout-maple maple-6">
 
-            <!-- 原有相框與主圖 -->
             <div class="tvc-border-1"></div>
             <div class="tvc-border-2"></div>
             <div class="tvc-border-3"></div>
@@ -1825,13 +946,14 @@
         <a class="scroll-down-btn relative inline-block bottom-5 left-1/2 transform -translate-x-1/2" href="#usp-section" aria-label="Scroll Down">
             <div class="flex flex-col justify-center items-center mb-10 text-xs">
                 Scroll Down
-                <svg class="animate-bounce w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg class="animate-bounce w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </div>
         </a>
     </section>
 
+    <!-- USP Section -->
     <section id="usp-section" class="w-full relative">
         <div id="usp-kicks" class="usp-kicks">
             <div class="usp-bg">
@@ -1858,7 +980,6 @@
                     <img src="./assets/img/maple/maple08.png" alt="Maple 3" class="layout-maple maple-3">
                     <img src="./assets/img/maple/maple11.png" alt="Maple 4" class="layout-maple maple-4">
                     <img src="./assets/img/maple/maple12.png" alt="Maple 5" class="layout-maple maple-5">
-                    <!-- 左右按鈕 -->
                     <button class="arrow-btn arrow-left" id="kicksPrevBtn">
                         <img src="./assets/img/icon/angle-left.svg" alt="Previous" class="w-4 h-4">
                     </button>
@@ -1889,20 +1010,6 @@
                                         <p>ATC 主動循跡控制、ARC 主動車身抑震、AEB 主動引擎煞車，全面提升駕馭平順性與安全性。</p>
                                     </div>
                                 </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS01.png" alt="3A主動全時防護系統">
-                                    <div class="slider-card-content">
-                                        <h4>3A主動全時防護系統</h4>
-                                        <p>ATC 主動循跡控制、ARC 主動車身抑震、AEB 主動引擎煞車，全面提升駕馭平順性與安全性。</p>
-                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS01.png" alt="3A主動全時防護系統">
-                                    <div class="slider-card-content">
-                                        <h4>3A主動全時防護系統</h4>
-                                        <p>ATC 主動循跡控制、ARC 主動車身抑震、AEB 主動引擎煞車，全面提升駕馭平順性與安全性。</p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -1910,35 +1017,7 @@
                         <div class="slider-container swiper">
                             <div class="slider-track swiper-wrapper">
                                 <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
-                                    <div class="slider-card-content">             
-                                        <h4>智能鋼骨車體</h4>
-                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
-                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
-                                    <div class="slider-card-content">             
-                                        <h4>智能鋼骨車體</h4>
-                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
-                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
-                                    <div class="slider-card-content">             
-                                        <h4>智能鋼骨車體</h4>
-                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
-                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
-                                    <div class="slider-card-content">             
-                                        <h4>智能鋼骨車體</h4>
-                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
-                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="智能鋼骨車體">
                                     <div class="slider-card-content">             
                                         <h4>智能鋼骨車體</h4>
                                         <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
@@ -1951,45 +1030,10 @@
                         <div class="slider-container swiper">
                             <div class="slider-track swiper-wrapper">
                                 <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の心技 特色 1">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="人體工學座椅">
                                     <div class="slider-card-content">             
                                         <h4>人體工學座椅</h4>
                                         <p>紓壓座椅設計降低長途駕駛疲勞，提供絕佳支撐性。</p>                           
-                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
-                                    <div class="slider-card-content">             
-                                        <h4>智能鋼骨車體</h4>
-                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
-                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
-                                    <div class="slider-card-content">             
-                                        <h4>智能鋼骨車體</h4>
-                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
-                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
-                                    <div class="slider-card-content">             
-                                        <h4>智能鋼骨車體</h4>
-                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
-                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
-                                    <div class="slider-card-content">             
-                                        <h4>智能鋼骨車體</h4>
-                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
-                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
-                                    <div class="slider-card-content">             
-                                        <h4>智能鋼骨車體</h4>
-                                        <p>採用高剛性車體結構，提供絕佳防護力與操駕安定感。</p>
                                     </div>
                                 </div>
                             </div>
@@ -1998,6 +1042,7 @@
                 </div>
             </div>
         </div>
+
         <div id="usp-sentra" class="usp-sentra">
             <div class="usp-bg">
                 <img src="./assets/img/usp/USP_bg03 1.png" alt="SENTRA 背景圖" class="w-full h-full object-cover">
@@ -2023,7 +1068,6 @@
                     <img src="./assets/img/maple/maple11.png" alt="Maple 3" class="layout-maple maple-3">
                     <img src="./assets/img/maple/maple18.png" alt="Maple 4" class="layout-maple maple-4">
                     <img src="./assets/img/maple/maple13.png" alt="Maple 5" class="layout-maple maple-5">
-                    <!-- 左右按鈕 -->
                     <button class="arrow-btn arrow-left" id="sentraPrevBtn">
                         <img src="./assets/img/icon/angle-left.svg" alt="Previous" class="w-4 h-4">
                     </button>
@@ -2047,7 +1091,7 @@
                         <div class="slider-container swiper">
                             <div class="slider-track swiper-wrapper">
                                 <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の信頼 特色 1">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="高剛性車體結構">
                                     <div class="slider-card-content">             
                                         <h4>高剛性車體結構</h4>
                                         <p>採用高張力鋼材防護，為全車乘客提供更完善的安全保障。</p>
@@ -2060,7 +1104,7 @@
                         <div class="slider-container swiper">
                             <div class="slider-track swiper-wrapper">
                                 <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS03.png" alt="燦の心技 特色 1">
+                                    <img src="./assets/img/usp/KICKS03.png" alt="3D超體感紓壓座椅">
                                     <div class="slider-card-content">             
                                         <h4>3D超體感紓壓座椅</h4>
                                         <p>符合人體工學設計，有效降低長途行駛時的乘坐疲勞感受。</p>                          
@@ -2073,6 +1117,8 @@
             </div>
         </div>
     </section>
+
+    <!-- Price Section -->
     <section id="price-section" class="w-full relative">
         <div class="price-skew-bg"></div>
         <div class="price-top-border"></div>
@@ -2083,6 +1129,7 @@
             <img src="./assets/img/maple/maple12.png" alt="Maple" class="layout-maple maple-4">
             <img src="./assets/img/maple/maple16.png" alt="Maple" class="layout-maple maple-5">
             <img src="./assets/img/maple/maple06.png" alt="Maple" class="layout-maple maple-6">
+            
             <div class="price-cards-wrapper">                
                 <!-- KICKS 卡片 -->
                 <div class="price-card">
@@ -2100,7 +1147,6 @@
                             </div>
                         </div>
 
-                        <!-- 車型與價格列表 (#FFFFFFCC) -->
                         <div class="price-list">
                             <div class="price-item">
                                 <span>初楓版</span>
@@ -2135,6 +1181,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- SENTRA 卡片 -->
                 <div class="price-card">
                     <div class="price-card-inner">
@@ -2163,7 +1210,7 @@
                                 <span>極楓版</span>
                                 <span class="price-val">88.9 萬元</span>
                             </div>
-                            <div style="flex: 1.5;"> </div>
+                            <div style="flex: 1.5;"></div>
                         </div>
                         <div class="pdf-download-box">
                             <a href="./assets/files/KICKS型錄(網頁版).pdf" target="_blank" class="pdf-btn" aria-label="型錄下載">
@@ -2176,6 +1223,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="price-cta-group">
                 <a href="https://service.nissan.com.tw/testdrive/?mod" target="_blank" class="btn-cta-wrap" aria-label="預約試乘">
                     <img src="./assets/img/price/testdrive-btn.png" alt="預約試乘" class="default-img">
@@ -2189,15 +1237,17 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="w-full text-center py-4 md:py-8 text-sm bg-[#B4A292] text-black">
         © NISSAN TAIWAN.
     </footer>
 
-
-    <a id="top-btn" class="go-to-top-btn">
+    <!-- Go To Top Button -->
+    <a id="top-btn" class="go-to-top-btn" aria-label="Go to Top">
         <img src="./assets/img/icon/arrow-small-up.svg" class="w-7 h-7 brightness-0 invert" alt="go to top">
     </a>
 
+    <!-- Side Menu Button -->
     <div id="side-btn" class="fixed right-0 -translate-y-1/2 z-[120] flex flex-col gap-y-[10px] bg-[#1E1E1E99] p-[10px] group w-16 hover:w-[160px] transition-all duration-300 ease-in-out overflow-hidden rounded-s-lg">
         <a href="https://service.nissan.com.tw/testdrive/?mod" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-white transition-colors duration-300 hover:text-[#BEA894]">
             <div class="flex items-center gap-x-3 whitespace-nowrap font-light text-base tracking-[2px]">
@@ -2217,309 +1267,251 @@
         </a>
     </div>
 
-
     <!-- Popup Modal -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-content">
-            <button class="popup-close" id="popupClose"></button>
+            <button class="popup-close" id="popupClose" aria-label="Close Popup"></button>
             <iframe id="popupVideo" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
     </div>
 
     <script>
-
-
-        const canvas = document.getElementById('falling-canvas');
-        const ctx = canvas.getContext('2d');
-
-        let width, height, dpr;
-        let petals = [];      
-        const petalCount = 8;
-        const imageUrls = [
-            './assets/img/maple/maple01.png', './assets/img/maple/maple02.png', './assets/img/maple/maple03.png', './assets/img/maple/maple04.png', './assets/img/maple/maple05.png',
-            './assets/img/maple/maple06.png', './assets/img/maple/maple07.png', './assets/img/maple/maple08.png', './assets/img/maple/maple09.png', './assets/img/maple/maple10.png',
-            './assets/img/maple/maple11.png', './assets/img/maple/maple12.png', './assets/img/maple/maple13.png', './assets/img/maple/maple14.png', './assets/img/maple/maple15.png',
-            './assets/img/maple/maple16.png', './assets/img/maple/maple17.png', './assets/img/maple/maple18.png', './assets/img/maple/maple19.png', './assets/img/maple/maple20.png'
-        ];
-
-        const petalImages = imageUrls.map(src => {
-            const img = new Image();
-            img.src = src;
-            return img;
-        });
-
-        // 擴充滑鼠物件以追蹤移動速度與方向向量
-        const mouse = { x: -1000, y: -1000, lastX: -1000, lastY: -1000, vx: 0, vy: 0, speed: 0 };
-
-        class Petal {
-            constructor() {
-                this.init(true);
-            }
-
-            init(isInitial = false) {
-                this.x = Math.random() * (width * 1.3) - (width * 0.15);
-                // Determine USP section top (page coordinate). If not found, fall back to full-height behavior.
-                const uspEl = document.getElementById('usp-section');
-                const uspTop = uspEl ? (uspEl.getBoundingClientRect().top + window.pageYOffset) : null;
-
-                if (isInitial) {
-                    if (uspTop !== null) {
-                        // Spawn petals anywhere between the very top of the page (0) and the uspTop
-                        // so the visible falling area covers the page header down to the USP section top.
-                        const minY = 0;
-                        const maxY = Math.max(0, uspTop);
-                        this.y = minY + Math.random() * (maxY - minY);
-                    } else {
-                        this.y = Math.random() * height;
-                    }
-                } else {
-                    if (uspTop !== null) {
-                        // Respawn somewhere above the viewport up to uspTop so leaves fall into that band
-                        const minY = -300;
-                        const maxY = Math.max(0, uspTop);
-                        this.y = minY + Math.random() * (maxY - minY);
-                    } else {
-                        this.y = -Math.random() * 300 - 80;
-                    }
-                }
-                
-                this.img = petalImages[Math.floor(Math.random() * petalImages.length)];
-                
-                // 楓葉大小重新計算（因應滿版 550% 高度不拉伸）：巨型 40-60px，標準 18-33px
-                const isGiant = Math.random() < 0.3; 
-                if (isGiant) {
-                    this.size = Math.random() * 20 + 40; 
-                    this.blur = Math.random() * 3 + 2;   
-                    this.baseVy = Math.random() * 0.5 + 0.4; 
-                } else {
-                    this.size = Math.random() * 15 + 18;  
-                    this.blur = Math.random() * 1.2 + 0.3;   
-                    this.baseVy = Math.random() * 0.8 + 0.6; 
-                }
-                
-                this.vy = this.baseVy;
-                this.opacity = Math.random() * 0.15 + 0.8; 
-                this.rotation = Math.random() * Math.PI * 2;
-                this.spin = (Math.random() - 0.5) * 0.02; 
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.offset = Math.random() * Math.PI * 2; 
-            }
-
-            update() {
-                this.offset += 0.008;
-                
-                let targetVx = this.vx + Math.sin(this.offset) * 0.8;
-                this.x += targetVx;
-                this.y += this.vy;
-
-                // 滑鼠劃過時：順著方向推開，並限制最大推力避免飛太快
-                const dx = this.x - mouse.x;
-                const dy = this.y - mouse.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                
-                if (dist < 250 && mouse.speed > 0.5) {
-                    const force = (250 - dist) / 250;
-                    // 限制風力上限 (max: ±1.2)，確保滑鼠揮動再快也只有輕柔的風吹效果
-                    const windVx = Math.max(-1.2, Math.min(1.2, mouse.vx * 0.03));
-                    const windVy = Math.max(-1.2, Math.min(1.2, mouse.vy * 0.03));
-                    
-                    this.vx += windVx * force;
-                    this.vy += windVy * force;
-                }
-
-                // 速度阻尼：讓被風吹開的楓葉順暢滑行後，慢慢恢復原本的下落狀態
-                this.vx *= 0.95;
-                this.vy = this.vy * 0.95 + this.baseVy * 0.05;
-
-                // 邊界檢查：改為以 usp-section 的頂部為下界，避免落葉掉到整個頁面底部
-                const boundX = width * 0.15;
-                const uspEl = document.getElementById('usp-section');
-                const uspTop = uspEl ? (uspEl.getBoundingClientRect().top + window.pageYOffset) : null;
-                // 若 uspTop 可用，限制落葉最下界為 uspTop；否則保留舊有的高度判斷
-                const bottomLimit = (uspTop !== null) ? uspTop : (height * 1.3);
-                if (this.y > bottomLimit || this.x < -boundX || this.x > width + boundX) {
-                    this.init(false);
-                }
-                
-                this.rotation += this.spin;
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation);
-                
-                ctx.globalAlpha = this.opacity;
-                ctx.filter = `blur(${this.blur}px)`;
-
-                if (this.img.complete && this.img.naturalWidth !== 0) {
-                    ctx.drawImage(this.img, -this.size/2, -this.size/2, this.size, this.size);
-                } else {
-                    ctx.beginPath();
-                    ctx.ellipse(0, 0, this.size/2, this.size/2.5, 0, 0, Math.PI * 2);
-                    ctx.fillStyle = '#D35400';
-                    ctx.fill();
-                }
-                ctx.restore();
-            }
+        // 工具函式：Debounce 防抖
+        function debounce(func, wait = 100) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
         }
 
-        // 螢幕尺寸與 DPR 初始化
-        function resize() {
-            dpr = window.devicePixelRatio || 1;
-            width = window.innerWidth;
-            height = document.body.scrollHeight || canvas.clientHeight || window.innerHeight;
+        /* ==========================================================================
+           1. 楓葉動態 Canvas 動畫
+           ========================================================================== */
+        (function initCanvasAnimation() {
+            const canvas = document.getElementById('falling-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
 
-            canvas.width = width * dpr;
-            canvas.height = height * dpr;
-            ctx.scale(dpr, dpr);
+            let width, height, dpr;
+            let petals = [];
+            const petalCount = 8;
+            const imageUrls = Array.from({ length: 20 }, (_, i) => `./assets/img/maple/maple${String(i + 1).padStart(2, '0')}.png`);
 
-            // 初始化楓葉實例
-            petals = [];
-            for (let i = 0; i < petalCount; i++) {
-                petals.push(new Petal());
-            }
-        }
-
-        window.addEventListener('resize', resize);
-        window.addEventListener('orientationchange', resize);
-        resize();
-
-        // 監聽滑鼠移動，即時計算移動速度 (Velocity)
-        window.addEventListener('mousemove', (e) => {
-            mouse.lastX = mouse.x;
-            mouse.lastY = mouse.y;
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-            
-            // 計算滑鼠移動的向量與速度
-            mouse.vx = mouse.x - mouse.lastX;
-            mouse.vy = mouse.y - mouse.lastY;
-            mouse.speed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
-        });
-
-        // 動畫主循環
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-
-            // 每一幀讓滑鼠速度自然遞減衰減，確保滑鼠停下時風力消失
-            mouse.speed *= 0.92;
-
-            petals.forEach(p => {
-                p.update();
-                p.draw();
+            const petalImages = imageUrls.map(src => {
+                const img = new Image();
+                img.src = src;
+                return img;
             });
 
-            requestAnimationFrame(animate);
-        }
+            const mouse = { x: -1000, y: -1000, lastX: -1000, lastY: -1000, vx: 0, vy: 0, speed: 0 };
 
-        animate();
+            class Petal {
+                constructor() { this.init(true); }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const overlay = document.getElementById('autumn-reveal-overlay');
-            const colors = ['#FFFFFF', '#F2F4F7', '#E5E9F0', '#D0D6DC', '#A3ACB9'];
+                init(isInitial = false) {
+                    this.x = Math.random() * (width * 1.3) - (width * 0.15);
+                    const uspEl = document.getElementById('usp-section');
+                    const uspTop = uspEl ? (uspEl.getBoundingClientRect().top + window.pageYOffset) : null;
 
-            const baseSize = Math.max(window.innerWidth, window.innerHeight) * 0.7;
-            // 配合擴大的容器計算網格
-            const cols = Math.ceil((window.innerWidth * 1.4) / (baseSize * 0.4)) + 1;
-            const rows = Math.ceil((window.innerHeight * 1.4) / (baseSize * 0.4)) + 1;
-            const blobs = [];
+                    if (isInitial) {
+                        this.y = (uspTop !== null) ? Math.random() * Math.max(0, uspTop) : Math.random() * height;
+                    } else {
+                        this.y = (uspTop !== null) ? (-300 + Math.random() * (Math.max(0, uspTop) + 300)) : (-Math.random() * 300 - 80);
+                    }
 
-            for (let i = -1; i < rows; i++) {
-                for (let j = -1; j < cols; j++) {
-                    const blob = document.createElement('div');
-                    blob.className = 'reveal-blob';
+                    this.img = petalImages[Math.floor(Math.random() * petalImages.length)];
+                    const isGiant = Math.random() < 0.3;
+                    this.size = isGiant ? (Math.random() * 20 + 40) : (Math.random() * 15 + 18);
+                    this.blur = isGiant ? (Math.random() * 3 + 2) : (Math.random() * 1.2 + 0.3);
+                    this.baseVy = isGiant ? (Math.random() * 0.5 + 0.4) : (Math.random() * 0.8 + 0.6);
 
-                    const size = baseSize * (0.8 + Math.random() * 0.6);
-                    // 配合容器位移 (-20vw/-20vh) 補正座標
-                    const x = j * (baseSize * 0.4) - (size * 0.2) + (Math.random() * baseSize * 0.2);
-                    const y = i * (baseSize * 0.4) - (size * 0.2) + (Math.random() * baseSize * 0.2);
-                    
-                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    this.vy = this.baseVy;
+                    this.opacity = Math.random() * 0.15 + 0.8;
+                    this.fading = false; // whether it's currently fading out
+                    this._fadeStart = 0;
+                    this._fadeDuration = 500 + Math.round(Math.random() * 300); // 500~800ms fade
+                    this.rotation = Math.random() * Math.PI * 2;
+                    this.spin = (Math.random() - 0.5) * 0.02;
+                    this.vx = (Math.random() - 0.5) * 0.3;
+                    this.offset = Math.random() * Math.PI * 2;
+                }
 
-                    blob.style.width = `${size}px`;
-                    blob.style.height = `${size}px`;
-                    blob.style.left = `${x}px`;
-                    blob.style.top = `${y}px`;
-                    
-                    blob.style.background = `radial-gradient(circle, ${color} 15%, ${color}00 75%)`;
+                update() {
+                    this.offset += 0.008;
+                    this.x += this.vx + Math.sin(this.offset) * 0.8;
+                    this.y += this.vy;
 
-                    // 讓每個色塊的漂浮速度與起步時間不同，畫面更自然
-                    blob.style.animationDuration = `${6 + Math.random() * 4}s`;
-                    blob.style.animationDelay = `${Math.random() * -6}s`;
+                    const dx = this.x - mouse.x;
+                    const dy = this.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    overlay.appendChild(blob);
-                    blobs.push(blob);
+                    if (dist < 250 && mouse.speed > 0.5) {
+                        const force = (250 - dist) / 250;
+                        const windVx = Math.max(-1.2, Math.min(1.2, mouse.vx * 0.03));
+                        const windVy = Math.max(-1.2, Math.min(1.2, mouse.vy * 0.03));
+                        this.vx += windVx * force;
+                        this.vy += windVy * force;
+                    }
+
+                    this.vx *= 0.95;
+                    this.vy = this.vy * 0.95 + this.baseVy * 0.05;
+
+                    const boundX = width * 0.15;
+                    const uspEl = document.getElementById('usp-section');
+                    const uspTop = uspEl ? (uspEl.getBoundingClientRect().top + window.pageYOffset) : null;
+                    const bottomLimit = (uspTop !== null) ? uspTop : (height * 1.3);
+
+                    if ((this.y > bottomLimit || this.x < -boundX || this.x > width + boundX) && !this.fading) {
+                        // begin fading instead of immediate re-init
+                        this.fading = true;
+                        this._fadeStart = performance.now();
+                        // reduce motion for fade
+                        this.vx *= 0.2;
+                        this.vy *= 0.2;
+                    }
+
+                    // handle fading progress and re-init at end
+                    if (this.fading) {
+                        const elapsed = performance.now() - this._fadeStart;
+                        const t = Math.min(1, elapsed / this._fadeDuration);
+                        // linear fade-out
+                        this.opacity = (1 - t) * (Math.random() * 0.15 + 0.8);
+                        // gradually rotate down
+                        this.spin *= 0.96;
+                        if (t >= 1) this.init(false);
+                    }
+                    this.rotation += this.spin;
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation);
+                    ctx.globalAlpha = this.opacity;
+                    ctx.filter = `blur(${this.blur}px)`;
+
+                    if (this.img.complete && this.img.naturalWidth !== 0) {
+                        ctx.drawImage(this.img, -this.size / 2, -this.size / 2, this.size, this.size);
+                    } else {
+                        ctx.beginPath();
+                        ctx.ellipse(0, 0, this.size / 2, this.size / 2.5, 0, 0, Math.PI * 2);
+                        ctx.fillStyle = '#D35400';
+                        ctx.fill();
+                    }
+                    ctx.restore();
                 }
             }
 
-            window.addEventListener('load', () => {
-                overlay.style.backgroundColor = 'transparent';
-                overlay.style.pointerEvents = 'none';
+            function resize() {
+                dpr = window.devicePixelRatio || 1;
+                width = window.innerWidth;
+                height = document.body.scrollHeight || canvas.clientHeight || window.innerHeight;
 
-                // 頁面載入完成時，讓 Logo 與色塊「同時」開始慢慢淡出與微幅放大
-                const logo = document.getElementById('reveal-logo');
-                if (logo) {
-                    logo.style.transform = 'scale(1.12)'; 
-                    logo.style.opacity = '0';
-                }
+                canvas.width = width * dpr;
+                canvas.height = height * dpr;
+                ctx.scale(dpr, dpr);
 
-                blobs.sort(() => Math.random() - 0.5);
+                petals = Array.from({ length: petalCount }, () => new Petal());
+            }
 
-                // 移除過大的隨機亂數延遲，改用固定且緊湊的均勻間隔，避免少數色塊嚴重落後
-                blobs.forEach((blob, idx) => {
-                    setTimeout(() => {
-                        blob.style.animation = 'none'; // 停止浮動動畫
-                        blob.style.transform = `scale(0)`; // 執行縮小淡出
-                        blob.style.opacity = '0';
-                    }, idx * 30); // 每個色塊接續淡出的時間差
-                });
+            window.addEventListener('resize', debounce(resize, 150));
+            window.addEventListener('orientationchange', resize);
+            resize();
 
-                // 總等待時間對應（ CSS 2.5s 動畫）
-                const totalTime = blobs.length * 40 + 1500;
-                setTimeout(() => {
-                    overlay.style.opacity = '0';
-                    setTimeout(() => overlay.remove(), 500);
-                }, totalTime);
+            window.addEventListener('mousemove', (e) => {
+                mouse.lastX = mouse.x;
+                mouse.lastY = mouse.y;
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+                mouse.vx = mouse.x - mouse.lastX;
+                mouse.vy = mouse.y - mouse.lastY;
+                mouse.speed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
             });
-        });
 
-        // Cursor動畫
-        document.addEventListener('click', (e) => {
-            const ripple = document.createElement('div');
-            ripple.className = 'click-ripple';
-            
-            const size = 60;
-            ripple.style.width = `${size}px`;
-            ripple.style.height = `${size}px`;
-            ripple.style.left = `${e.clientX}px`;
-            ripple.style.top = `${e.clientY}px`;
-            
-            ripple.style.background = 'radial-gradient(circle, #D97245 0%, #C25F35 45%, rgba(181, 118, 51, 0) 75%)';
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                mouse.speed *= 0.92;
+                petals.forEach(p => { p.update(); p.draw(); });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        })();
 
-            document.body.appendChild(ripple);
-
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-
-
-        // =====================================================
-        //  區塊 1：開關邏輯
-        // =====================================================
+        /* ==========================================================================
+           2. DOM 事件監聽與邏輯控制
+           ========================================================================== */
         document.addEventListener('DOMContentLoaded', () => {
+            // Loading Overlay 邏輯
+            const overlay = document.getElementById('autumn-reveal-overlay');
+            if (overlay) {
+                const colors = ['#FFFFFF', '#F2F4F7', '#E5E9F0', '#D0D6DC', '#A3ACB9'];
+                const baseSize = Math.max(window.innerWidth, window.innerHeight) * 0.7;
+                const cols = Math.ceil((window.innerWidth * 1.4) / (baseSize * 0.4)) + 1;
+                const rows = Math.ceil((window.innerHeight * 1.4) / (baseSize * 0.4)) + 1;
+                const blobs = [];
 
+                for (let i = -1; i < rows; i++) {
+                    for (let j = -1; j < cols; j++) {
+                        const blob = document.createElement('div');
+                        blob.className = 'reveal-blob';
+                        const size = baseSize * (0.8 + Math.random() * 0.6);
+                        blob.style.width = `${size}px`;
+                        blob.style.height = `${size}px`;
+                        blob.style.left = `${j * (baseSize * 0.4) - (size * 0.2) + (Math.random() * baseSize * 0.2)}px`;
+                        blob.style.top = `${i * (baseSize * 0.4) - (size * 0.2) + (Math.random() * baseSize * 0.2)}px`;
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        blob.style.background = `radial-gradient(circle, ${color} 15%, ${color}00 75%)`;
+                        blob.style.animationDuration = `${6 + Math.random() * 4}s`;
+                        blob.style.animationDelay = `${Math.random() * -6}s`;
 
-            // =====================================================
-            // 影片靜音、自動播放與暫停
-            // =====================================================
+                        overlay.appendChild(blob);
+                        blobs.push(blob);
+                    }
+                }
 
-            // 確保所有影片靜音（部分瀏覽器須以 JS 設定才生效）
-            document.querySelectorAll('video').forEach(v => { v.muted = true; });
-            // 滾動時影片自動暫停與恢復播放
+                window.addEventListener('load', () => {
+                    overlay.style.backgroundColor = 'transparent';
+                    overlay.style.pointerEvents = 'none';
+                    const logo = document.getElementById('reveal-logo');
+                    if (logo) {
+                        logo.style.transform = 'scale(1.12)';
+                        logo.style.opacity = '0';
+                    }
+                    blobs.sort(() => Math.random() - 0.5);
+                    blobs.forEach((blob, idx) => {
+                        setTimeout(() => {
+                            blob.style.animation = 'none';
+                            blob.style.transform = 'scale(0)';
+                            blob.style.opacity = '0';
+                        }, idx * 30);
+                    });
+
+                    setTimeout(() => {
+                        overlay.style.opacity = '0';
+                        setTimeout(() => overlay.remove(), 500);
+                    }, blobs.length * 40 + 1500);
+                });
+            }
+
+            // 全域點擊波紋效果
+            document.addEventListener('click', (e) => {
+                const ripple = document.createElement('div');
+                ripple.className = 'click-ripple';
+                ripple.style.width = '60px';
+                ripple.style.height = '60px';
+                ripple.style.left = `${e.clientX}px`;
+                ripple.style.top = `${e.clientY}px`;
+                ripple.style.background = 'radial-gradient(circle, #D97245 0%, #C25F35 45%, rgba(181, 118, 51, 0) 75%)';
+                document.body.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+
+            // 影片自動靜音與 IntersectionObserver 控管
             const allVideos = document.querySelectorAll('video');
-            if (allVideos.length > 0) {
+            allVideos.forEach(v => { v.muted = true; });
+
+            if (allVideos.length > 0 && 'IntersectionObserver' in window) {
                 const videoObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         const video = entry.target;
@@ -2528,59 +1520,41 @@
                                 video.src = video.dataset.src;
                                 video.load();
                             }
-                            if (document.visibilityState === 'visible') {
-                                video.play().catch(() => {});
-                            }
+                            if (document.visibilityState === 'visible') video.play().catch(() => {});
                         } else {
-                            if (!video.paused) {
-                                video.pause();
-                            }
+                            if (!video.paused) video.pause();
                         }
                     });
                 }, { threshold: 0.1 });
 
-                allVideos.forEach(video => videoObserver.observe(video));
+                allVideos.forEach(v => videoObserver.observe(v));
 
-                // 頁面切換 / 離開視窗自動暫停與恢復
                 document.addEventListener('visibilitychange', () => {
                     allVideos.forEach(video => {
                         if (document.hidden) {
                             if (!video.paused) video.pause();
                         } else {
                             const rect = video.getBoundingClientRect();
-                            const inView = rect.top < window.innerHeight && rect.bottom > 0 && rect.left < window.innerWidth && rect.right > 0;
-                            if (inView) {
-                                if (video.dataset.src && !video.src) {
-                                    video.src = video.dataset.src;
-                                    video.load();
-                                }
+                            if (rect.top < window.innerHeight && rect.bottom > 0) {
                                 video.play().catch(() => {});
                             }
                         }
                     });
                 });
-
-                window.addEventListener('pagehide', () => {
-                    allVideos.forEach(video => { if (!video.paused) video.pause(); });
-                });
             }
 
-            // =====================================================
-            // 手機選單開關
-            // =====================================================
-
+            // Popup Modal 控管
             const popupOverlay = document.getElementById('popupOverlay');
             const popupClose = document.getElementById('popupClose');
             const popupVideo = document.getElementById('popupVideo');
-            const tvcPlayButtons = document.querySelectorAll('.tvc-btn');
-            tvcPlayButtons.forEach((btn) => {
+
+            document.querySelectorAll('.tvc-btn').forEach((btn) => {
                 btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const videoUrl = btn.dataset.video_url || 'https://www.youtube.com/embed/fu7wIkQ95_M?autoplay=1&mute=1';
-                popupVideo.src = videoUrl;
-                popupOverlay.classList.add('show');
-                popupOverlay.classList.remove('hide');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    popupVideo.src = btn.dataset.video_url || 'https://www.youtube.com/embed/fu7wIkQ95_M?autoplay=1&mute=1';
+                    popupOverlay.classList.add('show');
+                    popupOverlay.classList.remove('hide');
                 });
             });
 
@@ -2590,51 +1564,41 @@
                 setTimeout(() => { popupVideo.src = ''; }, 600);
             };
 
-            popupClose.addEventListener('click', closePopup);
-            popupOverlay.addEventListener('click', (e) => {
-                if (e.target === popupOverlay) closePopup();
-            });
-
-
-            // =====================================================
-            // 手機選單開關
-            // =====================================================
-            const toggleBtn    = document.getElementById('mobile-menu');
-            const dropdownMenu = document.getElementById('mobile-dropdown-menu');
-           
-            const menuLinks    = document.querySelectorAll('.mobile-menu-link');
-
-            if (!toggleBtn || !dropdownMenu) return;
-
-            toggleBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                dropdownMenu.classList.toggle('hidden');
-            });
-
-            menuLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    dropdownMenu.classList.add('hidden');
+            if (popupClose) popupClose.addEventListener('click', closePopup);
+            if (popupOverlay) {
+                popupOverlay.addEventListener('click', (e) => {
+                    if (e.target === popupOverlay) closePopup();
                 });
-            });
+            }
 
-            document.addEventListener('click', (e) => {
-                const isMenuOpen     = !dropdownMenu.classList.contains('hidden');
-                const clickedOutside = !toggleBtn.contains(e.target) && !dropdownMenu.contains(e.target);
-                if (isMenuOpen && clickedOutside) {
-                    dropdownMenu.classList.add('hidden');
-                }
-            });
+            // 行動裝置主選單
+            const toggleBtn = document.getElementById('mobile-menu');
+            const dropdownMenu = document.getElementById('mobile-dropdown-menu');
 
+            if (toggleBtn && dropdownMenu) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dropdownMenu.classList.toggle('hidden');
+                });
 
-            // =====================================================
-            // TVC 聲音按鈕切換
-            // =====================================================
+                document.querySelectorAll('.mobile-menu-link').forEach(link => {
+                    link.addEventListener('click', () => dropdownMenu.classList.add('hidden'));
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!dropdownMenu.classList.contains('hidden') && !toggleBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                        dropdownMenu.classList.add('hidden');
+                    }
+                });
+            }
+
+            // TVC 聲音按鈕
             const soundOnBtn = document.querySelector('.sound-on-btn');
             const soundOffBtn = document.querySelector('.sound-off-btn');
             const tvcVideo = document.getElementById('tvc-video');
 
             if (soundOnBtn && soundOffBtn) {
-                const updateButtons = () => {
+                const updateSoundButtons = () => {
                     if (tvcVideo && !tvcVideo.muted) {
                         soundOnBtn.classList.add('active');
                         soundOffBtn.classList.remove('active');
@@ -2645,38 +1609,20 @@
                 };
 
                 const toggleSound = (e) => {
-                    // prefer controlling the actual video element
+                    if (e) e.preventDefault();
                     if (tvcVideo) {
-                        const willMute = tvcVideo.muted; // current muted (true means currently muted)
-                        // toggle: if currently muted -> unmute (false), else mute (true)
-                        tvcVideo.muted = !willMute;
-
-                        // If unmuting, try to play (user interaction allows play with sound)
-                        if (!tvcVideo.muted) {
-                            const p = tvcVideo.play();
-                            if (p && p.catch) p.catch(() => {});
-                        }
-                        updateButtons();
-                    } else {
-                        // fallback: just toggle classes
-                        soundOnBtn.classList.toggle('active');
-                        soundOffBtn.classList.toggle('active');
+                        tvcVideo.muted = !tvcVideo.muted;
+                        if (!tvcVideo.muted) tvcVideo.play().catch(() => {});
+                        updateSoundButtons();
                     }
-                    // prevent default anchor behavior
-                    if (e && e.preventDefault) e.preventDefault();
                 };
 
                 soundOnBtn.addEventListener('click', toggleSound);
                 soundOffBtn.addEventListener('click', toggleSound);
-
-                // initialize buttons according to video state
-                updateButtons();
+                updateSoundButtons();
             }
 
-
-            // =====================================================
-            // 側邊按鈕滾動顯示/隱藏 (淡入淡出)
-            // =====================================================
+            // Header 與浮動按鈕捲動顯示控制
             const webHeader = document.getElementById('web-header');
             const mobileHeader = document.getElementById('mobile-header');
             const topBtn = document.getElementById('top-btn');
@@ -2684,81 +1630,39 @@
             const tvcSection = document.getElementById('tvc-section');
             const uspSection = document.getElementById('usp-section');
 
-            // Determine which section to use for scroll-based toggles.
-            // Requirement: on mobile portrait (直屏) use usp-section; otherwise use tvc-section.
             const isMobilePortrait = () => window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 1199;
             const getChosenSection = () => (isMobilePortrait() && uspSection) ? uspSection : tvcSection;
 
-            if (webHeader && getChosenSection()) {
-                const toggleHeader = () => {
-                    const chosen = getChosenSection();
-                    const rect = chosen.getBoundingClientRect();
-                    if (rect.top <= window.innerHeight * 0.8) {
-                        webHeader.style.transform = 'translateY(-100%)';
-                        webHeader.style.opacity = '0';
-                        webHeader.style.pointerEvents = 'none';
-                        if (mobileHeader && !isMobilePortrait()) {
-                            mobileHeader.style.transform = 'translateY(0)';
-                            mobileHeader.style.opacity = '1';
-                            mobileHeader.style.pointerEvents = 'auto';
-                        }
-                    } else {
-                        webHeader.style.transform = 'translateY(0)';
-                        webHeader.style.opacity = '1';
-                        webHeader.style.pointerEvents = 'auto';
-                        if (mobileHeader && !isMobilePortrait()) {
-                            mobileHeader.style.transform = 'translateY(-100%)';
-                            mobileHeader.style.opacity = '0';
-                            mobileHeader.style.pointerEvents = 'none';
-                        }
-                    }
-                };
+            const handleScrollToggles = () => {
+                const chosen = getChosenSection();
+                if (!chosen) return;
+                const rect = chosen.getBoundingClientRect();
+                const isPassed = rect.top <= window.innerHeight * 0.8;
 
-                window.addEventListener('scroll', toggleHeader, { passive: true });
-                // also update on resize/orientationchange in case chosenSection should switch
-                window.addEventListener('resize', toggleHeader);
-                window.addEventListener('orientationchange', toggleHeader);
-                toggleHeader();
+                if (webHeader) {
+                    webHeader.style.transform = isPassed ? 'translateY(-100%)' : 'translateY(0)';
+                    webHeader.style.opacity = isPassed ? '0' : '1';
+                    webHeader.style.pointerEvents = isPassed ? 'none' : 'auto';
+                }
+
+                if (mobileHeader && !isMobilePortrait()) {
+                    mobileHeader.style.transform = isPassed ? 'translateY(0)' : 'translateY(-100%)';
+                    mobileHeader.style.opacity = isPassed ? '1' : '0';
+                    mobileHeader.style.pointerEvents = isPassed ? 'auto' : 'none';
+                }
+
+                if (sideBtn) sideBtn.classList.toggle('show', isPassed);
+                if (topBtn) topBtn.classList.toggle('show', isPassed);
+            };
+
+            window.addEventListener('scroll', handleScrollToggles, { passive: true });
+            window.addEventListener('resize', debounce(handleScrollToggles, 100));
+            if (topBtn) {
+                topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
             }
+            handleScrollToggles();
 
-            if (sideBtn && getChosenSection()) {
-                const toggleSideBtn = () => {
-                    const chosen = getChosenSection();
-                    const rect = chosen.getBoundingClientRect();
-                    if (rect.top <= window.innerHeight * 0.8) {
-                        sideBtn.classList.add('show');
-                    } else {
-                        sideBtn.classList.remove('show');
-                    }
-                };
-
-                window.addEventListener('scroll', toggleSideBtn, { passive: true });
-                window.addEventListener('resize', toggleSideBtn);
-                window.addEventListener('orientationchange', toggleSideBtn);
-                toggleSideBtn();
-            }
-            if (topBtn && getChosenSection()) {
-                const toggleTopBtn = () => {
-                    const chosen = getChosenSection();
-                    const rect = chosen.getBoundingClientRect();
-                    if (rect.top <= window.innerHeight * 0.8) {
-                        topBtn.classList.add('show');
-                    } else {
-                        topBtn.classList.remove('show');
-                    }
-                };
-
-                topBtn.addEventListener('click', () => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-
-                window.addEventListener('scroll', toggleTopBtn, { passive: true });
-                toggleTopBtn();
-            }
-
-            // =====================================================
-            // KICKS USP TAB 分頁切換 & Swiper 初始化
-            // =====================================================
+            // Swiper 初始化函式
             const kicksSwipers = {};
             const sentraSwipers = {};
 
@@ -2767,283 +1671,190 @@
                     const container = tab.querySelector('.slider-container');
                     if (!container) return;
 
-                    const swiperInstance = new Swiper(container, {
-                        // default for small screens / non-desktop: 1 slide
+                    targetObj[tab.id] = new Swiper(container, {
                         slidesPerView: 1,
                         spaceBetween: 24,
                         slidesPerGroup: 1,
                         observer: true,
                         observeParents: true,
-                        // Desktop layout (web) when viewport width >= 1199px: show 3 slides
-                        breakpoints: {
-                            1199: {
-                                slidesPerView: 3,
-                                spaceBetween: 24
-                            }
-                        },
-                        navigation: {
-                            nextEl: nextBtnId,
-                            prevEl: prevBtnId,
-                        }
+                        breakpoints: { 1199: { slidesPerView: 3, spaceBetween: 24 } },
+                        navigation: { nextEl: nextBtnId, prevEl: prevBtnId }
                     });
-                    targetObj[tab.id] = swiperInstance;
                 });
             };
 
             initSwipers('#kicks-slider-wrapper', '#kicksPrevBtn', '#kicksNextBtn', kicksSwipers);
             initSwipers('#sentra-slider-wrapper', '#sentraPrevBtn', '#sentraNextBtn', sentraSwipers);
 
-            const kicksTabNav = document.getElementById('kicks-tab-nav');
-            if (kicksTabNav) {
-                const tabBtns = kicksTabNav.querySelectorAll('.tab-btn');
-                const tabContents = document.querySelectorAll('#kicks-slider-wrapper .tab-content');
-                const indicator = kicksTabNav.querySelector('.tab-indicator');
+            // Tab 標籤切換處理器
+            const setupTabNavigation = (navId, wrapperId, swipersObj, prefix) => {
+                const tabNav = document.getElementById(navId);
+                if (!tabNav) return;
+
+                const tabBtns = tabNav.querySelectorAll('.tab-btn');
+                const tabContents = document.querySelectorAll(`${wrapperId} .tab-content`);
+                const indicator = tabNav.querySelector('.tab-indicator');
 
                 const updateIndicator = (activeBtn) => {
                     if (!indicator || !activeBtn) return;
-                    const xPos = activeBtn.offsetLeft;
-                    const width = activeBtn.offsetWidth;
-                    indicator.style.transform = `translateX(${xPos}px) scaleX(${width})`;
+                    indicator.style.transform = `translateX(${activeBtn.offsetLeft}px) scaleX(${activeBtn.offsetWidth})`;
                 };
 
-                const initialActive = kicksTabNav.querySelector('.tab-btn.active');
-                updateIndicator(initialActive);
-
-                window.addEventListener('resize', () => {
-                    const currentActive = kicksTabNav.querySelector('.tab-btn.active');
-                    updateIndicator(currentActive);
-                });
+                updateIndicator(tabNav.querySelector('.tab-btn.active'));
+                window.addEventListener('resize', debounce(() => updateIndicator(tabNav.querySelector('.tab-btn.active')), 100));
 
                 tabBtns.forEach(btn => {
                     btn.addEventListener('click', () => {
                         const targetTabId = btn.getAttribute('data-tab');
-
                         tabBtns.forEach(b => b.classList.remove('active'));
                         btn.classList.add('active');
-
                         updateIndicator(btn);
 
                         tabContents.forEach(content => {
-                            const fullTabId = `kicks-${targetTabId}`;
-                            if (content.id === fullTabId) {
-                                content.classList.add('active');
-                                if (kicksSwipers[fullTabId]) {
-                                    kicksSwipers[fullTabId].update();
-                                    kicksSwipers[fullTabId].navigation.update();
-                                }
-                            } else {
-                                content.classList.remove('active');
+                            const fullTabId = `${prefix}-${targetTabId}`;
+                            const isTarget = content.id === fullTabId;
+                            content.classList.toggle('active', isTarget);
+                            if (isTarget && swipersObj[fullTabId]) {
+                                swipersObj[fullTabId].update();
+                                swipersObj[fullTabId].navigation.update();
                             }
                         });
                     });
                 });
-            }
+            };
 
-            // =====================================================
-            // SENTRA USP TAB 分頁切換
-            // =====================================================
-            const sentraTabNav = document.getElementById('sentra-tab-nav');
-            if (sentraTabNav) {
-                const tabBtns = sentraTabNav.querySelectorAll('.tab-btn');
-                const tabContents = document.querySelectorAll('#sentra-slider-wrapper .tab-content');
-                const indicator = sentraTabNav.querySelector('.tab-indicator');
-
-                const updateIndicator = (activeBtn) => {
-                    if (!indicator || !activeBtn) return;
-                    const xPos = activeBtn.offsetLeft;
-                    const width = activeBtn.offsetWidth;
-                    indicator.style.transform = `translateX(${xPos}px) scaleX(${width})`;
-                };
-
-                const initialActive = sentraTabNav.querySelector('.tab-btn.active');
-                updateIndicator(initialActive);
-
-                window.addEventListener('resize', () => {
-                    const currentActive = sentraTabNav.querySelector('.tab-btn.active');
-                    updateIndicator(currentActive);
-                });
-
-                tabBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const targetTabId = btn.getAttribute('data-tab');
-
-                        tabBtns.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-
-                        updateIndicator(btn);
-
-                        tabContents.forEach(content => {
-                            const fullTabId = `sentra-${targetTabId}`;
-                            if (content.id === fullTabId) {
-                                content.classList.add('active');
-                                if (sentraSwipers[fullTabId]) {
-                                    sentraSwipers[fullTabId].update();
-                                    sentraSwipers[fullTabId].navigation.update();
-                                }
-                            } else {
-                                content.classList.remove('active');
-                            }
-                        });
-                    });
-                });
-            }
-
-    });
-
-    // Smooth-scroll interception for internal anchors with header offset
-    (function(){
-        function getHeaderHeight(){
-            const web = document.getElementById('web-header');
-            const mob = document.getElementById('mobile-header');
-            const el = (web && window.getComputedStyle(web).display !== 'none') ? web : (mob || web);
-            return el ? el.offsetHeight : 0;
-        }
-
-        function scrollToElementWithOffset(el){
-            if(!el) return;
-            console.log('Scrolling to element:', el);
-            const headerH = (el == document.getElementById('tvc-info')) ? getHeaderHeight() : 0;
-            const top = el.getBoundingClientRect().top + window.pageYOffset - headerH;
-            window.scrollTo({ top, behavior: 'smooth' });
-        }
-
-        // Intercept clicks on same-page anchors
-        document.addEventListener('click', function(e){
-            const a = e.target.closest && e.target.closest('a[href^="#"]');
-            if(!a) return;
-            const href = a.getAttribute('href');
-            if(!href || href === '#') return;
-            // only handle same-document hashes
-            if(href.indexOf('#') === 0){
-                const id = href.slice(1);
-                const target = document.getElementById(id);
-                if(target){
-                    e.preventDefault();
-                    scrollToElementWithOffset(target);
-                    // update history without jumping
-                    if(history.pushState) history.pushState(null, '', href);
-                    else location.hash = href;
-                }
-            }
-        }, { passive: false });
-
-        // Handle initial load with a hash
-        window.addEventListener('load', function(){
-            if(location.hash){
-                const id = location.hash.slice(1);
-                const target = document.getElementById(id);
-                if(target) setTimeout(function(){ scrollToElementWithOffset(target); }, 60);
-            }
+            setupTabNavigation('kicks-tab-nav', '#kicks-slider-wrapper', kicksSwipers, 'kicks');
+            setupTabNavigation('sentra-tab-nav', '#sentra-slider-wrapper', sentraSwipers, 'sentra');
         });
-        
-        // Entrance animation for layout-maple elements: observe and add .in-view once
-        const maples = document.querySelectorAll('.layout-maple');
-        if (maples.length > 0 && 'IntersectionObserver' in window) {
-            const io = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                        obs.unobserve(entry.target);
+
+        /* ==========================================================================
+           3. 錨點平滑捲動與觀測器 (IIFE)
+           ========================================================================== */
+        (function() {
+            function getHeaderHeight() {
+                const web = document.getElementById('web-header');
+                const mob = document.getElementById('mobile-header');
+                const el = (web && window.getComputedStyle(web).display !== 'none') ? web : (mob || web);
+                return el ? el.offsetHeight : 0;
+            }
+
+            function scrollToElementWithOffset(el) {
+                if (!el) return;
+                const headerH = (el === document.getElementById('tvc-info')) ? getHeaderHeight() : 0;
+                const top = el.getBoundingClientRect().top + window.pageYOffset - headerH;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+
+            document.addEventListener('click', (e) => {
+                const a = e.target.closest && e.target.closest('a[href^="#"]');
+                if (!a) return;
+                const href = a.getAttribute('href');
+                if (!href || href === '#') return;
+
+                if (href.indexOf('#') === 0) {
+                    const target = document.getElementById(href.slice(1));
+                    if (target) {
+                        e.preventDefault();
+                        scrollToElementWithOffset(target);
+                        if (history.pushState) history.pushState(null, '', href);
+                        else location.hash = href;
                     }
+                }
+            }, { passive: false });
+
+            window.addEventListener('load', () => {
+                if (location.hash) {
+                    const target = document.getElementById(location.hash.slice(1));
+                    if (target) setTimeout(() => scrollToElementWithOffset(target), 60);
+                }
+            });
+
+            // 楓葉滾動顯現 IntersectionObserver
+            const maples = document.querySelectorAll('.layout-maple');
+            if (maples.length > 0 && 'IntersectionObserver' in window) {
+                const io = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('in-view');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.08 });
+
+                maples.forEach(el => {
+                    const rand = (min, max) => (min + Math.random() * (max - min));
+                    el.style.setProperty('--maple-translate-x', `${Math.round(rand(-8, 8))}px`);
+                    el.style.setProperty('--maple-translate-y', `${Math.round(rand(6, 20))}px`);
+                    el.style.setProperty('--maple-rotate', `${Math.round(rand(-8, 8))}deg`);
+                    el.style.setProperty('--maple-duration', `${Math.round(rand(420, 900))}ms`);
+                    el.style.setProperty('--maple-delay', `${Math.round(rand(0, 300))}ms`);
+                    io.observe(el);
                 });
-            }, { threshold: 0.08 });
-            maples.forEach(el => {
-                // randomize per-element variables: x -8..8, y 6..20, rotate -8..8, duration 420..900ms, delay 0..300ms
-                const rand = (min, max) => (min + Math.random() * (max - min));
-                const tx = Math.round(rand(-8, 8));
-                const ty = Math.round(rand(6, 20));
-                const rot = Math.round(rand(-8, 8));
-                const dur = Math.round(rand(420, 900));
-                const delay = Math.round(rand(0, 300));
-                el.style.setProperty('--maple-translate-x', tx + 'px');
-                el.style.setProperty('--maple-translate-y', ty + 'px');
-                el.style.setProperty('--maple-rotate', rot + 'deg');
-                el.style.setProperty('--maple-duration', dur + 'ms');
-                el.style.setProperty('--maple-delay', delay + 'ms');
-                io.observe(el);
-            });
-        } else {
-            // Fallback: reveal all after small delay
-            setTimeout(() => document.querySelectorAll('.layout-maple').forEach(el => el.classList.add('in-view')), 300);
-        }
-    })();
+            } else {
+                setTimeout(() => maples.forEach(el => el.classList.add('in-view')), 300);
+            }
+        })();
 
-    // =====================================================
-    // Mobile: auto-hover first color-dot when price-card comes into view
-    // =====================================================
-    (function(){
-        let io = null;
-        let observed = false;
+        /* ==========================================================================
+           4. 手機版價格卡片自動 Hover 提示 (IIFE)
+           ========================================================================== */
+        (function() {
+            let io = null;
+            let observed = false;
+            const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
 
-        const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
+            function handleIntersect(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const card = entry.target;
+                    if (card.dataset.dotPlayed === 'true') {
+                        observer.unobserve(card);
+                        return;
+                    }
 
-        function handleIntersect(entries, observer) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                const card = entry.target;
-                // only trigger once per card per page load
-                if (card.dataset.dotPlayed === 'true') {
+                    const dot = card.querySelector('.color-dot');
+                    if (dot) {
+                        dot.classList.add('active');
+                        setTimeout(() => dot.classList.remove('active'), 2000);
+                    }
+                    card.dataset.dotPlayed = 'true';
                     observer.unobserve(card);
-                    return;
-                }
+                });
+            }
 
-                const dot = card.querySelector('.color-dot');
-                if (dot) {
-                    dot.classList.add('active');
-                    setTimeout(() => {
-                        dot.classList.remove('active');
-                    }, 2000);
-                }
-                card.dataset.dotPlayed = 'true';
-                observer.unobserve(card);
-            });
-        }
+            function startObserving() {
+                if (observed) return;
+                const cards = document.querySelectorAll('.price-card');
+                if (!cards.length) return;
 
-        function startObserving() {
-            if (observed) return;
-            const cards = document.querySelectorAll('.price-card');
-            if (!cards || cards.length === 0) return;
+                io = new IntersectionObserver(handleIntersect, { rootMargin: '0px 0px -20% 0px', threshold: 0.45 });
+                cards.forEach(card => {
+                    if (card.dataset.dotPlayed !== 'true') io.observe(card);
+                });
+                observed = true;
+            }
 
-            io = new IntersectionObserver(handleIntersect, {
-                root: null,
-                rootMargin: '0px 0px -20% 0px',
-                threshold: 0.45
-            });
+            function stopObserving() {
+                if (!io) return;
+                io.disconnect();
+                io = null;
+                observed = false;
+            }
 
-            cards.forEach(card => {
-                // skip cards that already played
-                if (card.dataset.dotPlayed !== 'true') io.observe(card);
-            });
-            observed = true;
-        }
+            function evaluate() {
+                if (isMobile()) startObserving();
+                else stopObserving();
+            }
 
-        function stopObserving() {
-            if (!io) return;
-            io.disconnect();
-            io = null;
-            observed = false;
-        }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', evaluate);
+            } else {
+                evaluate();
+            }
 
-        function evaluate() {
-            if (isMobile()) startObserving();
-            else stopObserving();
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', evaluate);
-        } else {
-            evaluate();
-        }
-
-        // Re-evaluate on resize/orientationchange
-        window.addEventListener('resize', () => {
-            // small debounce
-            clearTimeout(window._priceCardHoverTimeout);
-            window._priceCardHoverTimeout = setTimeout(evaluate, 180);
-        });
-        window.addEventListener('orientationchange', () => setTimeout(evaluate, 160));
-    })();
-
+            window.addEventListener('resize', debounce(evaluate, 180));
+            window.addEventListener('orientationchange', () => setTimeout(evaluate, 160));
+        })();
     </script>
 </body>
 </html>
