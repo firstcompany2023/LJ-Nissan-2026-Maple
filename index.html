@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000003</version> -->
+    <!-- <version>20261006000005</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -526,7 +526,7 @@
            ========================================================================== */
         .usp-kicks {
             position: relative; width: 100%; min-height: 100vh;
-            background-color: #FFF8F9; padding-bottom: 80px;
+            background-color: #FFFCF9; padding-bottom: 80px;
         }
         .usp-sentra {
             position: relative; width: 100%; min-height: 100vh;
@@ -534,31 +534,52 @@
         }
 
         .usp-bg { position: relative; width: 100%; height: 100%; overflow: hidden; }
-        .usp-bg img {
+        .usp-bg .usp-bg-img {
             position: relative;
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
-            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);
         }
 
         .usp-kicks .usp-skew-bg {
-            position: absolute; top: -10%; left: 0; width: 100%; height: 20%;
-            background-color: #ffffff; clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%);
-            z-index: 1; pointer-events: none;
+            position: absolute;
+            top: -1px;
+            height: 10%;
+            width: 100%;
+            background-color: #ffffff;
+            clip-path: polygon(0 0, 100% 0, 100% 10%, 0 100%);
+            z-index: 1;
+            pointer-events: none;
         }
 
         .usp-sentra .usp-skew-bg {
-            position: absolute; top: -10%; left: 0; width: 100%; height: 20%;
-            background-color: #FFF8F9; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 60%);
-            z-index: 1; pointer-events: none;
+            position: absolute;
+            top: -1px;
+            height: 10%;
+            width: 100%;
+            background-color: #FFFCF9;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 10%);
+            z-index: 1;
+            pointer-events: none;
         }
 
         .usp-top-border {
-            position: absolute; top: 5%; left: 0; width: 100%;
-            border-top: 4.15px solid #E09B90; z-index: 2; pointer-events: none;
+            position: absolute;
+            top: 1%;
+            left: 0;
+            width: 100%;
+            padding-bottom: 3%;
+            z-index: 2;
+            pointer-events: none;
+            background-image: url(./assets/img/usp/bg-line.svg);
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-position: center center;
         }
 
+        .usp-sentra .usp-top-border { transform: scaleX(-1); }
+
         .usp-kicks .usp-header-title { position: absolute; bottom: 30%; left: 10%; }
-        .usp-sentra .usp-header-title { position: absolute; bottom: 30%; right: 10%; }
+        .usp-sentra .usp-header-title { position: absolute; bottom: 30%; left: 10%; }
 
         .usp-header-title { position: relative; pointer-events: none; color: #191919}
         .usp-tab-header-title { position: relative; pointer-events: none; display: none; }
@@ -572,6 +593,10 @@
             -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 0.6) 45%, black 82%, transparent);
             mask-image: linear-gradient(rgb(0 0 0 / 20%) 45%, black 82%, transparent);
             color: inherit; font: inherit;
+        }
+        .usp-header-title .USP-subtitle {
+            width: 50%;
+            margin: 6% auto 0;
         }
 
         .usp-kicks .layout-maple, .usp-sentra .layout-maple { z-index: 0; }
@@ -631,8 +656,12 @@
         }
 
         .slider-card img {
-            width: 100%; object-fit: cover; padding: 20px;
+            width: 100%;
+            object-fit: cover;
+            padding: 20px;
             background: #FFFCF280;
+            border: 1px solid #ffffffab;
+            box-shadow: 0 10px 27.6px -10px rgba(255, 255, 255, 0.8);
         }
 
         .slider-card-content { background: #FFFFFFCC; padding: 20px 20px 30px; }
@@ -654,18 +683,33 @@
            ========================================================================== */
         #price-section {
             background: linear-gradient(194.97deg, #E0D3C7 4.64%, #FFFCF9 53.12%, #E8D4C2 92.79%);
-            padding: 100px 20px 120px 20px; position: relative; overflow: hidden;
+            padding: 140px 20px 100px 20px; position: relative; overflow: hidden;
         }
 
         .price-skew-bg {
-            position: absolute; top: -1px; left: 0; width: 100%; height: 80px;
-            background-color: #FAFCFF; clip-path: polygon(0 0, 100% 0, 100% 0%, 0 100%);
-            z-index: 1; pointer-events: none;
+            position: absolute;
+            top: -1px;
+            left: 0;
+            height: 4%;
+            width: 100%;
+            background-color: #FAFCFF;
+            clip-path: polygon(0 0, 100% 0, 100% 10%, 0 100%);
+            z-index: 1;
+            pointer-events: none;
         }
 
         .price-top-border {
-            position: absolute; top: 5%; left: 0; width: 100%;
-            border-top: 4.15px solid #E09B90; z-index: 2; pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding-bottom: 3%;
+            z-index: 2;
+            pointer-events: none;
+            background-image: url(./assets/img/usp/bg-line.svg);
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-position: center center;
         }
 
         #price-section .layout-maple { z-index: 0; }
@@ -694,7 +738,12 @@
         }
 
         .price-card-inner { display: flex; flex-direction: column; flex: 1; }
-        .price-card-header { text-align: center; background: #FFFCF280; }
+        .price-card-header {
+            text-align: center;
+            background: #FFFCF280;
+            border: 1px solid #ffffffab;
+            box-shadow: 0 10px 27.6px -10px rgba(255, 255, 255, 0.8);
+        }
         .price-card-title { font-size: 1.5rem; color: #373737; letter-spacing: 2px; margin: 15px 0; }
         .price-car-img { width: 80%; max-width: 260px; height: 140px; object-fit: contain; margin: 0 auto 15px auto; display: block; }
 
@@ -798,14 +847,6 @@
 
         @media (max-width: 768px) {
             .slider-card { flex: 0 0 100%; }
-            .usp-header-title h2::after { display: none; }
-        }
-
-        @media (max-width: 1199px) {
-            #banner-section{
-                height: 0;
-                padding-bottom: 60%;
-            }
         }
 
         /* 桌面大螢幕尺寸微調 */
@@ -833,7 +874,7 @@
 
         /* 平板區域與橫屏/直屏切換 */
         @media (min-width: 768px) and (max-width: 1199px) {
-            .banner-skew-bg { clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 100%); }
+            /* .banner-skew-bg { clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 100%); }
             .banner-top-border { display: none; }
             #usp-section { background: #FFFCF9; }
             .usp-kicks, .usp-sentra { display: flex; min-height: unset; padding-bottom: 40px; background-color: #FFFCF9; }
@@ -854,20 +895,20 @@
 
             #price-section { background: linear-gradient(174.51deg, #FEFFF2 6.2%, #F3E7D8 54.62%, #E8D4C2 94.23%); }
             #usp-section .usp-skew-bg, #usp-section .usp-top-border, #usp-section .maple-1, #usp-section .maple-2,
-            #usp-section .maple-3, #usp-section .maple-4, #usp-section .maple-5, #price-section .price-skew-bg, #price-section .price-top-border { display: none; }
+            #usp-section .maple-3, #usp-section .maple-4, #usp-section .maple-5, #price-section .price-skew-bg, #price-section .price-top-border { display: none; } */
         }
 
         /* 平板橫屏裝置 */
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) and (min-height: 500px) {
-            #tvc-section { height: 80vh; }
+            #banner-section { height: 0; padding-bottom: 60%; }
             .tvc-info { top: -15vh;}
-            .usp-kicks, .usp-sentra { height: 100vh; }
+            #banner-section .scroll-down-btn { display: none; }
         }
         /* 平板直屏裝置 */
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
-            #tvc-section { height: 60vh; }
+            #banner-section { height: 0; padding-bottom: 60%; }
             #tvc-info { top: -5vh; }
-            .usp-header-title h2, .usp-tab-header-title h2 { font-size: 2.5rem; }
+            .usp-header-title h2, .usp-tab-header-title h2 { font-size: 2.2rem; }
             #banner-section .scroll-down-btn { display: none; }
         }
         /* 手機、平板直屏裝置 */
@@ -901,22 +942,40 @@
             #tvc-section { height: 50vh; display: flex; align-items: center; justify-content: center; position: relative; }
             .tvc-mask-bg { display: block; position: absolute; top: -1px; left: 0; width: 100%; height: 60%; background: #8A3420; z-index: 1; }
             .tvc-skew-bg {
-                display: block; position: absolute; top: 30%; left: 0; width: 100%; height: 30%;
-                background-color: #ffffff; clip-path: polygon(0% 100%, 100% 100%, 150% 0%, 0% 85%); z-index: 1; pointer-events: none;
+                display: block;
+                position: absolute;
+                top: 30%;
+                left: 0;
+                width: 100%;
+                height: 30%;
+                background-color: #ffffff;
+                clip-path: polygon(0% 100%, 100% 100%, 160% 0%, 0% 50%);
+                z-index: 1;
+                pointer-events: none;
             }
+            .sound-on-btn, .sound-off-btn { width: 30px; height: 30px; padding-bottom: 0; right: -2% }
 
             .tvc-btn-group { width: 100vw; bottom: -30%; gap: 0; }
             .tvc-btn { width: 50%; }
 
-            .usp-kicks .usp-skew-bg { top: -13%; height: 25%; }
-            .usp-kicks .usp-bg img { height: 275px; object-position: right center; }
-            .usp-sentra .usp-bg img { height: 275px; object-position: left center; }
+            .usp-top-border { background-size: 1300px auto; top: 3% }
+            .usp-kicks .usp-skew-bg, .usp-sentra .usp-skew-bg { height: 10%; }
+            .usp-kicks .usp-bg .usp-bg-img { height: 275px; object-position: right center; }
+            .usp-sentra .usp-bg .usp-bg-img { height: 275px; object-position: right center; }
             .usp-header-title { display: none; }
             .usp-tab-header-title { display: block; text-align: center; margin-bottom: 30px; }
+            .usp-tab-header-title .USP-subtitle {
+                width: auto;
+                height: 18px;
+                margin: 4% auto 0;
+            }
+            .tab-btn { font-size: 1rem; }
 
-            .price-skew-bg { clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%); height: 3%; top: -1%; }
-            .price-top-border { top: 1%; }
+            #price-section { padding: 80px 20px 80px 20px; }
+            .price-skew-bg { height: 30px; }
+            .price-top-border { background-size: 1300px auto; top: 10px }
             .price-cta-group { gap: 0px; }
+            .color-dot { width: 30px; height: 30px; }
         }
 
         @media (max-width: 375px) {
@@ -1044,7 +1103,7 @@
         <div class="banner-mob-title md:hidden absolute top-1/4 left-1/2 transform -translate-x-1/2">
             <img src="./assets/img/banner/title.svg" alt="banner title">
         </div>
-        <div class="banner-btn-group flex md:hidden absolute bottom-[10vh] left-1/2 transform -translate-x-1/2 gap-4 flex-col">
+        <div class="banner-btn-group z-[5] flex md:hidden absolute bottom-[10vh] left-1/2 transform -translate-x-1/2 gap-4 flex-col">
             <a href="#usp-kicks" class="flex" aria-label="kicks">
                 <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks">
                 <img src="./assets/img/banner/arrow_right.svg" alt="arrow right">
@@ -1103,16 +1162,18 @@
     <section id="usp-section" class="w-full relative">
         <div id="usp-kicks" class="usp-kicks">
             <div class="usp-bg">
-                <img src="./assets/img/usp/USP_bg02 3.png" alt="KICKS 背景圖" class="w-full h-full object-cover">
+                <img src="./assets/img/usp/KICKS_bg.jpg" alt="KICKS 背景圖" class="w-full h-full object-cover usp-bg-img">
                 <div class="usp-skew-bg"></div>
                 <div class="usp-top-border"></div>
                 <div class="usp-header-title">
                     <h2 class="text-3xl md:text-5xl tracking-wider" data-reflect="KICKS MOMIJI">KICKS MOMIJI</h2>
+                    <img src="./assets/img/usp/KICKS-subtitle.svg" alt="為自己燦爛" class="USP-subtitle">
                 </div>
             </div>
             <div class="tab-container relative">
                 <div class="usp-tab-header-title">
                     <h2 class="text-3xl md:text-5xl tracking-wider" data-reflect="KICKS MOMIJI">KICKS MOMIJI</h2>
+                    <img src="./assets/img/usp/KICKS-subtitle.svg" alt="為自己燦爛" class="USP-subtitle">
                 </div>
                 <div id="kicks-tab-nav" class="tab-nav">
                     <div class="tab-btn active" data-tab="tab-1">燦の智驅</div>
@@ -1226,16 +1287,18 @@
 
         <div id="usp-sentra" class="usp-sentra">
             <div class="usp-bg">
-                <img src="./assets/img/usp/USP_bg03 1.png" alt="SENTRA 背景圖" class="w-full h-full object-cover">
+                <img src="./assets/img/usp/SENTRA_bg.jpg" alt="SENTRA 背景圖" class="w-full h-full object-cover usp-bg-img">
                 <div class="usp-skew-bg"></div>
                 <div class="usp-top-border"></div>
                 <div class="usp-header-title">
                     <h2 class="text-3xl md:text-5xl tracking-wider" data-reflect="SENTRA MOMIJI">SENTRA MOMIJI</h2>
+                    <img src="./assets/img/usp/SENTRA-subtitle.svg" alt="為自由燦爛" class="USP-subtitle">
                 </div>
             </div>
             <div class="tab-container relative">
                 <div class="usp-tab-header-title">
                     <h2 class="text-3xl md:text-5xl tracking-wider" data-reflect="SENTRA MOMIJI">SENTRA MOMIJI</h2>
+                    <img src="./assets/img/usp/SENTRA-subtitle.svg" alt="為自由燦爛" class="USP-subtitle">
                 </div>
                 <div id="sentra-tab-nav" class="tab-nav">
                     <div class="tab-btn active" data-tab="tab-1">燦の智驅</div>
@@ -1526,6 +1589,8 @@
 
             let width, height, dpr;
             let petals = [];
+            // scale vertical speed on smaller viewports (mobile/tablet)
+            let speedScale = 1;
             const petalCount = 7;
             const imageUrls = Array.from({ length: 20 }, (_, i) => `./assets/img/maple/maple${String(i + 1).padStart(2, '0')}.png`);
 
@@ -1557,7 +1622,8 @@
                     const isGiant = Math.random() < 0.3;
                     this.size = isGiant ? (Math.random() * 20 + 40) : (Math.random() * 15 + 18);
                     this.blur = isGiant ? (Math.random() * 3 + 2) : (Math.random() * 1.2 + 0.3);
-                    this.baseVy = isGiant ? (Math.random() * 0.5 + 0.4) : (Math.random() * 0.8 + 0.6);
+                    // apply speedScale so leaves fall slower on mobile/tablet
+                    this.baseVy = (isGiant ? (Math.random() * 0.5 + 0.4) : (Math.random() * 0.8 + 0.6)) * speedScale;
 
                     this.vy = this.baseVy;
                     this.opacity = Math.random() * 0.15 + 0.8;
@@ -1647,6 +1713,9 @@
                 canvas.width = width * dpr;
                 canvas.height = height * dpr;
                 ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                // reduce fall speed on mobile/tablet (<=1199px)
+                speedScale = (window.innerWidth <= 1199) ? 0.5 : 1;
 
                 petals = Array.from({ length: petalCount }, () => new Petal());
             }
