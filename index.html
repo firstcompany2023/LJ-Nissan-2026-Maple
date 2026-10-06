@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>DDDD</version> -->
+    <!-- <version>20261006000001</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -377,7 +377,6 @@
            4. TVC 區塊
            ========================================================================== */
         #tvc-section {
-            height: 50vh;
         }
 
         .tvc-mask-bg, .tvc-skew-bg {
@@ -388,85 +387,83 @@
         .tvc-info {
             position: relative;
             display: flex;
-            width: 836px;
-            height: 468px;
+            width: 1800px;
             margin: auto;
             top: -20vh;
             z-index: 6;
             max-width: 85%;
             max-height: calc(80vw * 0.6);
         }
+        .video-container {
+            width: 100%;
+            height: 0;
+            padding-bottom: 56%;
+        }
 
         /* 1280px 螢幕 (可視高度 550px -> 寬度 982px) */
         @media (min-width: 1280px) {
             .tvc-info {
-                width: 982px;
-                height: 550px;
+                width: 900px;
             }
         }
 
         /* 1366px 螢幕 (可視高度 590px -> 寬度 1054px) */
         @media (min-width: 1366px) {
             .tvc-info {
-                width: 1054px;
-                height: 590px;
+                width: 1000px;
             }
         }
 
         /* 1440px 螢幕 (可視高度 700px -> 寬度 1250px) */
         @media (min-width: 1440px) {
             .tvc-info {
-                width: 1250px;
-                height: 700px;
+                width: 1140px;
             }
         }
 
         /* 1536px 螢幕 (可視高度 680px -> 寬度 1215px) */
         @media (min-width: 1536px) {
             .tvc-info {
-                width: 1215px;
-                height: 680px;
+                width: 1100px;
             }
         }
 
         /* 1600px 螢幕 (可視高度 730px -> 寬度 1304px) */
         @media (min-width: 1600px) {
             .tvc-info {
-                width: 1304px;
-                height: 730px;
+                width: 1200px;
             }
         }
 
         /* 1920px 螢幕 (可視高度 880px -> 寬度 1572px) */
         @media (min-width: 1920px) {
             .tvc-info {
-                width: 1572px;
-                height: 880px;
+                width: 1400px;
             }
         }
 
         /* 2560px 螢幕 (可視高度 1250px -> 寬度 2233px) */
         @media (min-width: 2560px) {
             .tvc-info {
-                width: 2233px;
-                height: 1250px;
+                width: 2000px;
             }
         }
 
-        .tvc-info .layout-maple { z-index: 1; }
-        .tvc-info .maple-1 { top: -3%; left: -2%; width: 8%; }
-        .tvc-info .maple-2 { top: 13%; left: -8%; width: 15%; }
-        .tvc-info .maple-3 { top: -6%; right: -1%; width: 15%; }
-        .tvc-info .maple-4 { bottom: -2%; left: -5%; width: 21%; transform: rotateY(180deg); }
+        .tvc-info .layout-maple { z-index: 2; }
+        .tvc-info .maple-1 { top: -5%; left: -2%; width: 7%; }
+        .tvc-info .maple-2 { top: 9%; left: -6.5%; width: 13%; }
+        .tvc-info .maple-3 { top: -6%; right: -2%; width: 13%; }
+        .tvc-info .maple-4 { bottom: -2%; left: -4%; width: 16%; transform: rotateY(180deg); }
         .tvc-info .maple-5 { bottom: 8%; right: -1%; width: 10%; }
         .tvc-info .maple-6 { bottom: -5%; right: -5%; width: 24%; }
 
         .sound-on-btn, .sound-off-btn {
             position: absolute;
             top: 15%;
-            right: 5%;
-            width: 60px;
-            height: 60px;
+            right: 2%;
+            width: 5%;
+            height: 0;
+            padding-bottom: 5%;
             z-index: 20;
             cursor: pointer;
         }
@@ -491,6 +488,8 @@
             width: 100%; height: 100%;
             position: absolute; top: 0; left: 0;
             background-size: 100% 100%;
+            z-index: 1;
+            pointer-events: none; 
         }
         .tvc-border-1 { background-image: url(./assets/img/tvc/border-1.svg); transform: rotate(2deg); }
         .tvc-border-2 { background-image: url(./assets/img/tvc/border-2.svg); transform: rotate(0deg); }
@@ -628,16 +627,16 @@
         .slider-container { overflow: hidden; width: 100%; }
 
         .slider-card {
-            height: auto; box-sizing: border-box; padding: 16px;
+            height: auto; box-sizing: border-box;
             box-shadow: 0px 10px 27.6px -10px #0000000D; backdrop-filter: blur(10px);
         }
 
         .slider-card img {
-            width: 100%; height: 200px; object-fit: cover;
+            width: 100%; object-fit: cover; padding: 20px;
             background: #FFFCF280;
         }
 
-        .slider-card-content { background: #FFFFFFCC; padding: 12px 18px; }
+        .slider-card-content { background: #FFFFFFCC; padding: 20px 20px 30px; }
         .slider-card h4 { font-size: 0.875rem; font-weight: 700; color: #191919; margin-bottom: 8px; text-align: center; }
         .slider-card p { font-size: 0.75rem; color: #616161; line-height: 1.6; }
 
@@ -819,22 +818,18 @@
         }
 
         @media (min-width: 1400px) {
-            #tvc-section { height: 60vh; }
         }
 
         @media (min-width: 1500px) {
         }
 
         @media (min-width: 1600px) {
-            #tvc-section { height: 70vh; }
         }
 
         @media (min-width: 1800px) {
-            #tvc-section { height: 85vh; }
         }
 
         @media (min-width: 2000px) {
-            #tvc-section { height: 100vh; }
         }
 
         /* 平板區域與橫屏/直屏切換 */
@@ -1070,9 +1065,11 @@
         <div class="tvc-mask-bg"></div>
         <div class="tvc-skew-bg"></div>
         <div id="tvc-info" class="tvc-info">
-            <video id="tvc-video" class="absolute top-0 left-0 w-full h-full object-cover p-[20px] z-[1]" muted loop playsinline preload="none">
-                <source src="./assets/video/07 心和_v2.mp4" type="video/mp4">
-            </video>
+            <div class="video-container">
+                <video id="tvc-video" class="absolute top-0 left-0 w-full h-full object-cover p-[1%] z-[1]" muted loop playsinline preload="none">
+                    <source src="./assets/video/video03-s.mp4" type="video/mp4">
+                </video>
+            </div>
             <a href="javascript:void(0);" class="sound-on-btn" aria-label="聲音開關">
                 <img src="./assets/img/tvc/sound_on.png" alt="聲音開關" class="default-img">
                 <img src="./assets/img/tvc/sound_on_hover.png" alt="聲音開關" class="hover-img">
@@ -1873,8 +1870,8 @@
             }
 
             // TVC 聲音按鈕
-            const soundOnBtn = document.querySelector('.sound-on-btn');
-            const soundOffBtn = document.querySelector('.sound-off-btn');
+            const soundOnBtn = document.querySelector('.sound-off-btn');
+            const soundOffBtn = document.querySelector('.sound-on-btn');
             const tvcVideo = document.getElementById('tvc-video');
 
             if (soundOnBtn && soundOffBtn) {
