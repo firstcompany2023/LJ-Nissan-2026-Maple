@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000002</version> -->
+    <!-- <version>20261006000003</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -1768,6 +1768,8 @@
                         setTimeout(() => overlay.remove(), 300);
                     }, blobs.length * 40 + 1000);
                 });
+
+                
             }
 
             // 全域點擊波紋效果
@@ -1994,14 +1996,10 @@
                             const slides = container.querySelectorAll('.slider-card, .swiper-slide');
                             const slideCount = slides.length || container.children.length || 0;
 
-                            // disable loop when there are not enough slides to loop
-                            const shouldLoop = slideCount >= (bpSlidesPerView + 1);
-
                             targetObj[tab.id] = new Swiper(container, {
                                 slidesPerView: defaultSlidesPerView,
                                 spaceBetween: 24,
                                 slidesPerGroup: 1,
-                                loop: shouldLoop,
                                 // when there are too few slides, let Swiper handle overflow gracefully
                                 watchOverflow: true,
                                 observer: true,
@@ -2010,14 +2008,75 @@
                                 navigation: {
                                     nextEl: nextBtnId,
                                     prevEl: prevBtnId,
-                                },
-                                autoplay: {
-                                    delay: 3500,
-                                    disableOnInteraction: false,
-                                    pauseOnMouseEnter: window.matchMedia('(pointer:fine)').matches
                                 }
                             });
+
+                    // after initialization, hide nav buttons if navigation isn't usable
+                    try {
+                        const swiper = targetObj[tab.id];
+                        const prevBtnEl = document.querySelector(prevBtnId);
+                        const nextBtnEl = document.querySelector(nextBtnId);
+
+                        const updateNavVisibility = () => {
+                            if (!swiper || !prevBtnEl || !nextBtnEl) return;
+
+                            // If Swiper is locked (not enough slides) or at boundaries in non-loop mode,
+                            // hide the corresponding buttons to avoid unresponsive clicks.
+                            const locked = !!swiper.isLocked;
+
+                            // isBeginning/isEnd reflect the current real slide in non-loop mode
+                            const atBeginning = !!swiper.isBeginning;
+                            const atEnd = !!swiper.isEnd;
+
+                            // hide both if locked
+                            if (locked) {
+                                prevBtnEl.style.display = 'none';
+                                nextBtnEl.style.display = 'none';
+                                return;
+                            }
+
+                            // when loop is disabled, hide prev when atBeginning, hide next when atEnd
+                            if (!swiper.params.loop) {
+                                prevBtnEl.style.display = atBeginning ? 'none' : '';
+                                nextBtnEl.style.display = atEnd ? 'none' : '';
+                            } else {
+                                // loop enabled -> always show
+                                prevBtnEl.style.display = '';
+                                nextBtnEl.style.display = '';
+                            }
+                        };
+
+                        // initial update and on swiper events — run in next frame so Swiper layout is ready
+                        requestAnimationFrame(() => {
+                            try { updateNavVisibility(); } catch (e) {}
+                            try { swiper._updateNavVisibility = updateNavVisibility; } catch (e) {}
+                        });
+                        if (swiper && swiper.on) {
+                            swiper.on('slideChange transitionEnd lock unlock', updateNavVisibility);
+                            window.addEventListener('resize', debounce(updateNavVisibility, 120));
+                        }
+                    } catch (e) {
+                        // silent fallback
+                        console.warn('Swiper nav visibility update failed', e);
+                    }
                 });
+                // Ensure the currently active tab's swiper updates its navigation visibility
+                // after all swipers for this wrapper have been initialized.
+                try {
+                    const activeContent = document.querySelector(`${wrapperSelector} .tab-content.active`);
+                    if (activeContent) {
+                        const activeSwiper = targetObj[activeContent.id];
+                        if (activeSwiper) {
+                            requestAnimationFrame(() => {
+                                if (typeof activeSwiper.update === 'function') activeSwiper.update();
+                                if (activeSwiper.navigation && typeof activeSwiper.navigation.update === 'function') activeSwiper.navigation.update();
+                                if (typeof activeSwiper._updateNavVisibility === 'function') activeSwiper._updateNavVisibility();
+                            });
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Failed to set initial swiper nav visibility for', wrapperSelector, e);
+                }
             };
 
             initSwipers('#kicks-slider-wrapper', '#kicksPrevBtn', '#kicksNextBtn', kicksSwipers);
@@ -2054,8 +2113,13 @@
                             const isTarget = content.id === fullTabId;
                             content.classList.toggle('active', isTarget);
                             if (isTarget && swipersObj[fullTabId]) {
-                                swipersObj[fullTabId].update();
-                                swipersObj[fullTabId].navigation.update();
+                                const s = swipersObj[fullTabId];
+                                s.update();
+                                if (s.navigation && s.navigation.update) s.navigation.update();
+                                // if nav visibility updater was exposed, call it to refresh button visibility
+                                if (typeof s._updateNavVisibility === 'function') {
+                                    s._updateNavVisibility();
+                                }
                             }
                         });
                     });
