@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000001</version> -->
+    <!-- <version>20261006000002</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -176,7 +176,7 @@
 
         #side-btn {
             z-index: 1000;
-            top: 75%;
+            bottom: 40px;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.5s ease-in-out, width 0.3s ease-in-out;
@@ -473,8 +473,7 @@
         .sound-off-btn.active { display: none; }
 
         .sound-on-btn img, .sound-off-btn img {
-            width: 100%; height: 100%;
-            object-fit: contain; display: block;
+            width: 100%; display: block;
         }
 
         .sound-on-btn img.hover-img, .sound-off-btn img.hover-img {
@@ -883,7 +882,6 @@
         @media (max-width: 960px) and (orientation: landscape) and (max-height: 500px) {
             #tvc-section { height: 100vh; }
             .tvc-info { width: 660px; height: 370px;}
-            #side-btn { top: 70%; }
         }
 
         /* 手機直屏裝置 (<= 767px) */
@@ -919,13 +917,11 @@
             .price-skew-bg { clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%); height: 3%; top: -1%; }
             .price-top-border { top: 1%; }
             .price-cta-group { gap: 0px; }
-            #side-btn { top: 85%; }
         }
 
         @media (max-width: 375px) {
             #banner-section { background-size: 100% auto; }
             #tvc-section { height: 60vh; }
-            #side-btn { top: 85%; }
         }
         /* SE手機橫屏裝置 */
         @media (max-width: 667px) and (orientation: landscape) and (max-height: 375px) {
@@ -1066,6 +1062,9 @@
         <div class="tvc-skew-bg"></div>
         <div id="tvc-info" class="tvc-info">
             <div class="video-container">
+                <div id="tvc-cover-img" class="absolute top-0 left-0 p-[1%] z-[1]">
+                    <img src="./assets/img/tvc/tvc1.jpg" alt="TVC Cover Image" class="w-full h-full object-cover">
+                </div>
                 <video id="tvc-video" class="absolute top-0 left-0 w-full h-full object-cover p-[1%] z-[1]" muted loop playsinline preload="none">
                     <source src="./assets/video/video03-s.mp4" type="video/mp4">
                 </video>
@@ -1372,7 +1371,7 @@
                                 <span class="color-dot color-dot-1" data-tooltip="黑頂對白" title="黑頂對白"></span>
                                 <span class="color-dot color-dot-2" data-tooltip="黑頂放黑" title="黑頂放黑"></span>
                                 <span class="color-dot color-dot-3" data-tooltip="不留白" title="不留白"></span>
-                                <span class="color-dot color-dot-4" data-tooltip="不怕黑 [接訂生產]" title="不怕黑 [接訂生產]"></span>
+                                <span class="color-dot color-dot-4" data-tooltip="不怕黑" title="不怕黑"></span>
                                 <span class="color-dot color-dot-5" data-tooltip="放風灰" title="放風灰"></span>
                                 <span class="color-dot color-dot-6" data-tooltip="很想銀" title="很想銀"></span>
                             </div>
@@ -1390,7 +1389,7 @@
                                 </div>
                             </div>
                             <div class="price-item">
-                                <span>盛楓版</span>
+                                <span>初楓Air版</span>
                                 <span class="price-val">81.9 萬元</span>
                             </div>
                             <div class="price-item">
@@ -1480,7 +1479,7 @@
             <img src="./assets/img/icon/arrow-small-up.svg" class="w-7 h-7 brightness-0 invert" alt="go to top">
         </a>
         <div id="side-btn-group" class="flex flex-col gap-y-[10px] bg-[#1E1E1E99] p-[10px] group w-16 hover:w-[160px] transition-all duration-300 ease-in-out overflow-hidden rounded-s-lg">
-            <a href="https://service.nissan.com.tw/testdrive/?mod" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-white transition-colors duration-300 hover:text-[#BEA894]">
+            <a href="https://service.nissan.com.tw/testdrive/?mod" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-white transition-colors duration-300 ">
                 <div class="flex items-center gap-x-3 whitespace-nowrap font-light text-base tracking-[2px]">
                     <div class="rounded-full me-2">                    
                         <span role="img" aria-label="testdrive" class="w-7 h-7 inline-block" style="background-color:#6A4839; display:inline-block; -webkit-mask-image: url('./assets/img/icon/car.svg'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('./assets/img/icon/car.svg'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;"></span>
@@ -1488,7 +1487,7 @@
                     <span>預約試乘</span>
                 </div>
             </a>
-            <a href="https://new.nissan.com.tw/upload/brochures/421B8DH106F5/X-TRAIL_ikitsuki.pdf" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-[#6A4839] transition-colors duration-300 hover:text-[#BEA894]">
+            <a href="https://new.nissan.com.tw/upload/brochures/421B8DH106F5/X-TRAIL_ikitsuki.pdf" target="_blank" class="flex items-center justify-between w-[158px] h-12 text-white transition-colors duration-300 ">
                 <div class="flex items-center gap-x-3 whitespace-nowrap font-light text-base tracking-[2px]">
                     <div class="rounded-full me-2">                    
                         <span role="img" aria-label="coupon" class="w-7 h-7 inline-block" style="background-color:#6A4839; display:inline-block; -webkit-mask-image: url('./assets/img/icon/coupon.svg'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-image: url('./assets/img/icon/coupon.svg'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;"></span>
@@ -1899,6 +1898,48 @@
                 updateSoundButtons();
             }
 
+            // TVC cover image: keep cover visible until video has buffered enough to play
+            const tvcCover = document.getElementById('tvc-cover-img');
+            if (tvcVideo && tvcCover) {
+                // ensure initial visible state
+                tvcCover.style.opacity = tvcCover.style.opacity || '1';
+                tvcCover.style.transition = tvcCover.style.transition || 'opacity 0.45s ease';
+
+                const removeListeners = () => {
+                    tvcVideo.removeEventListener('loadeddata', hideCover);
+                    tvcVideo.removeEventListener('canplay', hideCover);
+                    tvcVideo.removeEventListener('canplaythrough', hideCover);
+                    tvcVideo.removeEventListener('error', onError);
+                };
+
+                function hideCover() {
+                    // fade out then set display:none to remove click/hover intercept
+                    try {
+                        tvcCover.style.opacity = '0';
+                        setTimeout(() => { tvcCover.style.display = 'none'; }, 480);
+                    } finally {
+                        removeListeners();
+                    }
+                }
+
+                function onError() {
+                    // keep cover visible on error; optionally mark state
+                    tvcCover.classList.add('tvc-cover-error');
+                    removeListeners();
+                }
+
+                // If video already has buffered enough, hide immediately
+                // readyState >= 3 (HAVE_FUTURE_DATA) indicates data is available for current playback
+                if (tvcVideo.readyState >= 3) {
+                    hideCover();
+                } else {
+                    tvcVideo.addEventListener('loadeddata', hideCover);
+                    tvcVideo.addEventListener('canplay', hideCover);
+                    tvcVideo.addEventListener('canplaythrough', hideCover);
+                    tvcVideo.addEventListener('error', onError);
+                }
+            }
+
             // Header 與浮動按鈕捲動顯示控制
             const webHeader = document.getElementById('web-header');
             const mobileHeader = document.getElementById('mobile-header');
@@ -1947,21 +1988,35 @@
                     const container = tab.querySelector('.slider-container');
                     if (!container) return;
 
-                    targetObj[tab.id] = new Swiper(container, {
-                        slidesPerView: 1,
-                        spaceBetween: 24,
-                        slidesPerGroup: 1,
-                        loop: true,
-                        observer: true,
-                        observeParents: true,
-                        breakpoints: { 1199: { slidesPerView: 3, spaceBetween: 24 } },
-                        navigation: { nextEl: nextBtnId, prevEl: prevBtnId },
-                        autoplay: {
-                            delay: 3500,
-                            disableOnInteraction: false,
-                            pauseOnMouseEnter: window.matchMedia('(pointer:fine)').matches
-                        }
-                    });
+                            // determine slidesPerView for current viewport using breakpoints logic
+                            const defaultSlidesPerView = 1;
+                            const bpSlidesPerView = (window.innerWidth >= 1199) ? 3 : defaultSlidesPerView;
+                            const slides = container.querySelectorAll('.slider-card, .swiper-slide');
+                            const slideCount = slides.length || container.children.length || 0;
+
+                            // disable loop when there are not enough slides to loop
+                            const shouldLoop = slideCount >= (bpSlidesPerView + 1);
+
+                            targetObj[tab.id] = new Swiper(container, {
+                                slidesPerView: defaultSlidesPerView,
+                                spaceBetween: 24,
+                                slidesPerGroup: 1,
+                                loop: shouldLoop,
+                                // when there are too few slides, let Swiper handle overflow gracefully
+                                watchOverflow: true,
+                                observer: true,
+                                observeParents: true,
+                                breakpoints: { 1199: { slidesPerView: bpSlidesPerView, spaceBetween: 24 } },
+                                navigation: {
+                                    nextEl: nextBtnId,
+                                    prevEl: prevBtnId,
+                                },
+                                autoplay: {
+                                    delay: 3500,
+                                    disableOnInteraction: false,
+                                    pauseOnMouseEnter: window.matchMedia('(pointer:fine)').matches
+                                }
+                            });
                 });
             };
 
