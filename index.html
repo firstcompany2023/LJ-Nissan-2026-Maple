@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000008</version> -->
+    <!-- <version>20261006000009</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -642,8 +642,8 @@
         }
 
         .slider-wrapper {
-            position: relative; max-width: 1200px; margin: 0 auto;
-            padding: 0 50px; z-index: 6;
+            position: relative; max-width: 1500px; margin: 0 auto;
+            padding: 0 30px; z-index: 6;
         }
 
         .tab-content { display: none; }
@@ -667,20 +667,45 @@
             box-shadow: 0 10px 27.6px -10px rgba(255, 255, 255, 0.8);
         }
 
-        .slider-card-content { background: #FFFFFFCC; padding: 20px 20px 30px; }
+        .slider-card-content { background: #FFFFFFCC; padding: 20px 20px 30px; height: stretch;}
         .slider-card h4 { font-size: 0.875rem; font-weight: 700; color: #191919; margin-bottom: 8px; text-align: center; }
         .slider-card p,
         .slider-card li { font-size: 0.75rem; color: #616161; line-height: 1.6; }
 
         .arrow-btn {
-            position: absolute; top: 50%; width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 10; transition: all 0.3s ease;
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.3s ease;
+            animation: arrowBounce 1.8s ease-in-out infinite alternate;
+            border-radius: 100px;
+            border: 1px solid #FEEDE1;
+            background: radial-gradient(50% 50% at 50% 50%, #FFF 0%, #FCEEE5 100%);
+            box-shadow: 0 0 20px 0 #FADCC8;
+        }
+        @keyframes arrowBounce {
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 10px 0 #FADCC8;
+            }
+
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 30px 0 #FADCC8;
+                
+            }
         }
 
-        .arrow-btn:hover { transform: scale(1.05) translateY(-2px); }
-        .arrow-left { left: 0; }
-        .arrow-right { right: 0; }
+        .arrow-btn:hover { transform: scale(1.05) translateY(-2px); animation-play-state: paused; }
+        .arrow-left { left: 10px; }
+        .arrow-right { right: 10px; }
 
         /* ==========================================================================
            6. Price Section 專區與 Tooltip
@@ -1194,10 +1219,10 @@
                     <img src="./assets/img/maple/maple11.png" alt="Maple 4" class="layout-maple maple-4">
                     <img src="./assets/img/maple/maple12.png" alt="Maple 5" class="layout-maple maple-5">
                     <button class="arrow-btn arrow-left" id="kicksPrevBtn">
-                        <img src="./assets/img/icon/angle-left.svg" alt="Previous" class="w-4 h-4">
+                        <img src="./assets/img/icon/angle-left.svg" alt="Previous" class="w-5 h-5">
                     </button>
                     <button class="arrow-btn arrow-right" id="kicksNextBtn">
-                        <img src="./assets/img/icon/angle-right.svg" alt="Next" class="w-4 h-4">
+                        <img src="./assets/img/icon/angle-right.svg" alt="Next" class="w-5 h-5">
                     </button>
                     <div class="tab-content active" id="kicks-tab-1">
                         <div class="slider-container swiper">
@@ -1345,10 +1370,10 @@
                     <img src="./assets/img/maple/maple18.png" alt="Maple 4" class="layout-maple maple-4">
                     <img src="./assets/img/maple/maple13.png" alt="Maple 5" class="layout-maple maple-5">
                     <button class="arrow-btn arrow-left" id="sentraPrevBtn">
-                        <img src="./assets/img/icon/angle-left.svg" alt="Previous" class="w-4 h-4">
+                        <img src="./assets/img/icon/angle-left.svg" alt="Previous" class="w-5 h-5">
                     </button>
                     <button class="arrow-btn arrow-right" id="sentraNextBtn">
-                        <img src="./assets/img/icon/angle-right.svg" alt="Next" class="w-4 h-4">
+                        <img src="./assets/img/icon/angle-right.svg" alt="Next" class="w-5 h-5">
                     </button>
                     <div class="tab-content active" id="sentra-tab-1">
                         <div class="slider-container swiper">
@@ -2183,10 +2208,11 @@
                                 watchOverflow: true,
                                 observer: true,
                                 observeParents: true,
+                                centerInsufficientSlides: true,
                                 // show 2 slides on >=768px, 3 slides on >=1199px
                                 breakpoints: {
-                                    768: { slidesPerView: 2, spaceBetween: 24 },
-                                    1199: { slidesPerView: 3, spaceBetween: 24 }
+                                    768: { slidesPerView: 2, spaceBetween: 10 },
+                                    1199: { slidesPerView: 4, spaceBetween: 10 }
                                 },
                                 navigation: {
                                     nextEl: nextBtnId,
