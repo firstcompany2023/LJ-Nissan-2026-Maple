@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000006</version> -->
+    <!-- <version>20261006000007</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -1945,6 +1945,54 @@
                     });
                 });
             }
+
+            // Additional: scroll/resize listener to ensure videos only play when actually visible
+            // This preserves the IntersectionObserver logic above but adds a debounced safeguard
+            // for environments where IO may be delayed or to further reduce data usage.
+            function isElementVisibleInViewport(el, threshold = 0.25) {
+                if (!el) return false;
+                const rect = el.getBoundingClientRect();
+                const vh = window.innerHeight || document.documentElement.clientHeight;
+                const vw = window.innerWidth || document.documentElement.clientWidth;
+
+                // Completely off-screen
+                if (rect.bottom <= 0 || rect.top >= vh || rect.right <= 0 || rect.left >= vw) return false;
+
+                // Compute visible area ratio (approx)
+                const visibleHeight = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
+                const visibleWidth = Math.min(rect.right, vw) - Math.max(rect.left, 0);
+                const visibleArea = Math.max(0, visibleHeight) * Math.max(0, visibleWidth);
+                const totalArea = Math.max(1, rect.width * rect.height);
+                const ratio = visibleArea / totalArea;
+                return ratio >= threshold;
+            }
+
+            const evaluateVideosVisibility = debounce(() => {
+                allVideos.forEach(video => {
+                    try {
+                        const shouldBePlaying = isElementVisibleInViewport(video, 0.25) && document.visibilityState === 'visible';
+                        if (shouldBePlaying) {
+                            // lazy-load src if needed (keep parity with IntersectionObserver behavior)
+                            if (video.dataset.src && !video.src) {
+                                video.src = video.dataset.src;
+                                video.load();
+                            }
+                            if (video.paused) video.play().catch(() => {});
+                        } else {
+                            if (!video.paused) video.pause();
+                        }
+                    } catch (e) {
+                        // ignore per-video errors
+                    }
+                });
+            }, 150);
+
+            // Attach listeners (passive where appropriate)
+            window.addEventListener('scroll', evaluateVideosVisibility, { passive: true });
+            window.addEventListener('resize', evaluateVideosVisibility);
+
+            // initial evaluation after small delay to allow layout to settle
+            setTimeout(evaluateVideosVisibility, 120);
 
             // Popup Modal 控管
             const popupOverlay = document.getElementById('popupOverlay');
