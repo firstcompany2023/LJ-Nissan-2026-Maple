@@ -646,6 +646,10 @@
             padding: 0 30px; z-index: 6;
         }
 
+        .swiper-slide{
+            width: calc((72.5%) / 3);
+        }
+
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .slider-container { overflow: hidden; width: 100%; }
@@ -657,8 +661,10 @@
         .slider-card video,
         .slider-card img {
             display: block;
-            width: 100%;
+            width: auto;
             height: auto;
+            max-height: 260px;
+            margin: auto;
             object-fit: cover;
             box-sizing: border-box;
             padding: 20px;
@@ -671,6 +677,62 @@
         .slider-card h4 { font-size: 0.875rem; font-weight: 700; color: #191919; margin-bottom: 8px; text-align: center; }
         .slider-card p,
         .slider-card li { font-size: 0.75rem; color: #616161; line-height: 1.6; }
+
+        .double-slide {
+            width: 100% !important;
+            box-sizing: border-box;
+        }
+
+        .double-slide .slider-card-content {
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .double-slide .slider-card-content > div {
+            width: 100%;
+        }
+
+        /* 平板版 (768px ~ 1198px)：顯示 2 張卡片，double-slide 佔據 100% (即 2 格寬) */
+        @media (min-width: 768px) and (max-width: 1198px) {
+
+            .swiper-slide{
+                width: calc((97.5%) / 2);
+            }
+
+            .double-slide {
+                width: 100% !important;
+                flex-shrink: 0;
+            }
+
+            .double-slide .slider-card-content {
+                flex-direction: row;
+                gap: 24px;
+            }
+
+            .double-slide .slider-card-content > div {
+                flex: 1;
+                width: 50%;
+            }
+        }
+
+        /* 桌機版 (1199px 以上)：顯示 4 張卡片，double-slide 佔據 2 格寬 (50% - 10px) */
+        @media (min-width: 1199px) {
+            .double-slide {
+                /* 計算公式：(50% 扣除間距) 正好等於 2 個標準 Slide 的寬度加 1 個 Gap */
+                width: calc(50% - 10px) !important;
+                flex-shrink: 0;
+            }
+
+            .double-slide .slider-card-content {
+                flex-direction: row;
+                gap: 24px;
+            }
+
+            .double-slide .slider-card-content > div {
+                flex: 1;
+                width: 50%;
+            }
+        }
 
         .arrow-btn {
             position: absolute;
@@ -1227,18 +1289,18 @@
                     <div class="tab-content active" id="kicks-tab-1">
                         <div class="slider-container swiper">
                             <div class="slider-track swiper-wrapper">
-                                <div class="slider-card swiper-slide">
+                                <div class="slider-card swiper-slide double-slide">
                                     <img src="./assets/img/usp/KICKS GT-R鏡面缸孔熔射技術.jpg" alt="1.6G HR16DE 鋁合金引擎">
-                                    <div class="slider-card-content">
-                                        <h4>1.6G HR16DE 鋁合金引擎</h4>
-                                        <p>採用長衝程設定，加大曲軸連桿的力臂長度，使引擎在中低轉速就能產生充沛扭力。降至 10.4 均衡壓縮比，點火提前角容許範圍更廣，有效降低油品辛烷值導致的高溫爆震</p>                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="" alt="">
-                                    <div class="slider-card-content">
-                                        <h4>雙氣門正時控制系統(VTC)<br>搭配擾流控制閥(TCV) </h4>
-                                        <p>進氣端改用電子馬達控制汽門正時，比傳統油壓式控制更為精準快速，且不受油溫與油壓高低影響</p>
-                                        <p>在進氣歧管內加入擾流控制閥門，於低負載或怠速時增強進氣渦流，加強進氣慣性，讓油氣混合更穩定，提升扭力與燃燒效率</p>
+                                    <div class="slider-card-content flex">
+                                        <div>
+                                            <h4>1.6G HR16DE 鋁合金引擎</h4>
+                                            <p>採用長衝程設定，加大曲軸連桿的力臂長度，使引擎在中低轉速就能產生充沛扭力。降至 10.4 均衡壓縮比，點火提前角容許範圍更廣，有效降低油品辛烷值導致的高溫爆震</p>
+                                        </div>
+                                        <div>
+                                            <h4>雙氣門正時控制系統(VTC)<br>搭配擾流控制閥(TCV) </h4>
+                                            <p>進氣端改用電子馬達控制汽門正時，比傳統油壓式控制更為精準快速，且不受油溫與油壓高低影響</p>
+                                            <p>在進氣歧管內加入擾流控制閥門，於低負載或怠速時增強進氣渦流，加強進氣慣性，讓油氣混合更穩定，提升扭力與燃燒效率</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
@@ -2162,7 +2224,7 @@
                             const slideCount = slides.length || container.children.length || 0;
 
                             targetObj[tab.id] = new Swiper(container, {
-                                slidesPerView: defaultSlidesPerView,
+                                slidesPerView: 'auto',
                                 spaceBetween: 24,
                                 slidesPerGroup: 1,
                                 // when there are too few slides, let Swiper handle overflow gracefully
@@ -2172,8 +2234,8 @@
                                 centerInsufficientSlides: true,
                                 // show 2 slides on >=768px, 3 slides on >=1199px
                                 breakpoints: {
-                                    768: { slidesPerView: 2, spaceBetween: 10 },
-                                    1199: { slidesPerView: 4, spaceBetween: 10 }
+                                    768: { slidesPerView: 'auto', spaceBetween: 10 },
+                                    1199: { slidesPerView: 'auto', spaceBetween: 10 }
                                 },
                                 navigation: {
                                     nextEl: nextBtnId,
