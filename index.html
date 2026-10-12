@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000021</version> -->
+    <!-- <version>20261006000022</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -980,8 +980,9 @@
 
         @media (max-width: 1199px) {
             /* 平板以下的車價 */
+            .price-card { min-width: 300px; }
             .price-list {
-                background-color: #FFFFFFCC; padding: 20px; flex: 1;
+                background-color: #FFFFFFCC; padding: 20px 30px; flex: 1;
                 display: flex; flex-direction: column; justify-content: space-between; min-height: 220px;
             }
 
@@ -999,12 +1000,6 @@
             .price-tag-discount { background: #F3E1B8; color: #89610A; font-size: 10px; padding: 2px 6px; }
             .color-selector-wrapper { gap: 8px; }
             .color-dot { width: 30px; height: 30px; }
-        }
-
-        /* limit the single-column slider rule to viewports strictly below 768px
-           so Swiper's breakpoint at 768px can display 2 slides as intended */
-        @media (max-width: 767px) {
-            .slider-card { flex: 0 0 100%; }
         }
 
         /* 平板區域與橫屏/直屏切換 */
@@ -1077,10 +1072,17 @@
                 z-index: 1;
                 pointer-events: none;
             }
-            .sound-on-btn, .sound-off-btn { width: 30px; height: 30px; padding-bottom: 0; right: -2% }
+            .sound-on-btn, .sound-off-btn { width: 30px; height: 30px; padding-bottom: 0; }
 
             .tvc-btn-group { width: 100vw; bottom: -30%; gap: 0; }
             .tvc-btn { width: 50%; }
+
+            .slider-card { flex: 0 0 100%; }
+            .tvc-info .maple-1 { top: -6%; left: -1.5%; width: 11%; }
+            .tvc-info .maple-2 { top: 5%; left: -6.5%; width: 7%; }
+            .tvc-info .maple-3 { top: -6%; right: -1%; width: 10%; }
+            .tvc-info .maple-4 { bottom: -7%; left: -6%; width: 13%; }
+            .tvc-info .maple-5 { bottom: -7%; right: -3%; width: 13%; }
 
             .usp-top-border { background-size: 1300px auto; top: 3% }
             .usp-kicks .usp-skew-bg, .usp-sentra .usp-skew-bg { height: 10%; }
