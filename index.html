@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000020</version> -->
+    <!-- <version>20261006000021</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -1044,12 +1044,6 @@
             }
         }
 
-        /* 手機橫屏裝置 */
-        @media (max-width: 960px) and (orientation: landscape) and (max-height: 500px) {
-            #banner-section { height: 0; padding-bottom: 150%; }
-            .tvc-info { width: 660px; margin-bottom: 50px; }
-        }
-
         /* 手機直屏裝置 (<= 767px) */
         @media (max-width: 767px) {
             #banner-section {
@@ -1068,7 +1062,7 @@
             .banner-top-border, #banner-section .scroll-down-btn, #tvc-section .scroll-down-btn,
             #usp-section .layout-maple, #price-section .layout-maple { display: none; }
 
-            .tvc-info { width: 350px; height: 196px; margin: auto; top: 0;}
+            .tvc-info { width: 350px; margin: auto; top: 0;}
             #tvc-section { height: 50vh; display: flex; align-items: center; justify-content: center; position: relative; }
             .tvc-mask-bg { display: block; position: absolute; top: -1px; left: 0; width: 100%; height: 60%; background: #701210; z-index: 1; }
             .tvc-skew-bg {
@@ -1105,6 +1099,13 @@
             .price-skew-bg { height: 30px; }
             .price-top-border { background-size: 1300px auto; top: 10px }
             .price-cta-group { gap: 0px; }
+        }
+
+        /* 手機橫屏裝置 */
+        @media (max-width: 960px) and (orientation: landscape) and (max-height: 500px) {
+            #banner-section { height: 0; padding-bottom: 150%; }
+            #tvc-section { height: auto; }
+            .tvc-info { width: 660px; margin-bottom: 50px; }
         }
 
         @media (max-width: 375px) {
