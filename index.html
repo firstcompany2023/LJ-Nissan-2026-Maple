@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000016</version> -->
+    <!-- <version>20261006000017</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -336,6 +336,11 @@
             right: 27%;
             width: 15%;
             height: auto;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        .banner-mob-title{
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
         }
 
         .textGroup_sentra {
@@ -1205,7 +1210,7 @@
             <a href="#usp-kicks" class="textGroup_kicks">
                 <img src="./assets/img/banner/outline_k.png" class="outline-bg">
             </a>
-            <img src="./assets/img/banner/title.svg" alt="banner title" class="banner-title">
+            <img src="./assets/img/banner/title_n.svg" alt="banner title" class="banner-title">
         </div>
         <a class="scroll-down-btn absolute inline-block left-1/2 transform -translate-x-1/2 text-white" href="#tvc-info" aria-label="Scroll Down">
             <div class="flex flex-col justify-center items-center text-xs">
@@ -1219,7 +1224,7 @@
         <div class="banner-skew-bg"></div>
         <div class="banner-top-border"></div>
         <div class="banner-mob-title md:hidden absolute top-1/4 left-1/2 transform -translate-x-1/2">
-            <img src="./assets/img/banner/title.svg" alt="banner title">
+            <img src="./assets/img/banner/title_n.svg" alt="banner title" class="banner-mob-title">
         </div>
         <div class="banner-btn-group w-full z-[5] flex md:hidden absolute gap-4 flex-row">
             <a href="#usp-sentra" class="flex" aria-label="sentra">
@@ -1895,7 +1900,6 @@
                 if (running) return;
                 console.log('Starting canvas animation');
                 running = true;
-                // ensure canvas sizing is fresh when starting
                 resize();
                 loop();
             }
@@ -1920,15 +1924,12 @@
                 }, { threshold: 0.05 });
                 bannerObserver.observe(banner);
 
-                // start immediately if banner already in view on load
                 const rect = banner.getBoundingClientRect();
                 if (rect.top < window.innerHeight && rect.bottom > 0) start();
             } else {
-                // fallback: start by default
                 start();
             }
 
-            // expose simple API if needed elsewhere
             window.__mapleCanvasController = { start, stop, isRunning: () => running };
         })();
 
@@ -2175,7 +2176,6 @@
             // TVC cover image: keep cover visible until video has buffered enough to play
             const tvcCover = document.getElementById('tvc-cover-img');
             if (tvcVideo && tvcCover) {
-                // ensure initial visible state
                 tvcCover.style.opacity = tvcCover.style.opacity || '1';
                 tvcCover.style.transition = tvcCover.style.transition || 'opacity 0.45s ease';
 
@@ -2187,7 +2187,6 @@
                 };
 
                 function hideCover() {
-                    // fade out then set display:none to remove click/hover intercept
                     try {
                         tvcCover.style.opacity = '0';
                         setTimeout(() => { tvcCover.style.display = 'none'; }, 480);
@@ -2197,12 +2196,10 @@
                 }
 
                 function onError() {
-                    // keep cover visible on error; optionally mark state
                     tvcCover.classList.add('tvc-cover-error');
                     removeListeners();
                 }
 
-                // If video already has buffered enough, hide immediately
                 // readyState >= 3 (HAVE_FUTURE_DATA) indicates data is available for current playback
                 if (tvcVideo.readyState >= 3) {
                     hideCover();
@@ -2236,11 +2233,16 @@
                     webHeader.style.opacity = isPassed ? '0' : '1';
                     webHeader.style.pointerEvents = isPassed ? 'none' : 'auto';
                 }
-
                 if (mobileHeader && !isMobilePortrait()) {
                     mobileHeader.style.transform = isPassed ? 'translateY(0)' : 'translateY(-100%)';
                     mobileHeader.style.opacity = isPassed ? '1' : '0';
                     mobileHeader.style.pointerEvents = isPassed ? 'auto' : 'none';
+                } else {
+                    if (mobileHeader) {
+                        mobileHeader.style.transform = 'translateY(0)';
+                        mobileHeader.style.opacity = '1';
+                        mobileHeader.style.pointerEvents = 'auto';
+                    }
                 }
 
                 if (sideBtn) sideBtn.classList.toggle('show', isPassed);
@@ -2258,39 +2260,31 @@
             const sentraSwipers = {};
 
             const initSwipers = (wrapperSelector, prevBtnId, nextBtnId, targetObj) => {
-                // Create a Swiper for each tab content but don't bind the same DOM nav buttons
-                // to every Swiper instance. Instead we'll attach wrapper-level handlers that
-                // control only the currently active tab's Swiper.
+
                 document.querySelectorAll(`${wrapperSelector} .tab-content`).forEach(tab => {
                     const container = tab.querySelector('.slider-container');
                     if (!container) return;
+                        const defaultSlidesPerView = 1;
+                        const slides = container.querySelectorAll('.slider-card, .swiper-slide');
+                        const slideCount = slides.length || container.children.length || 0;
 
-                            // determine slidesPerView for current viewport using breakpoints logic
-                            const defaultSlidesPerView = 1;
-                            const slides = container.querySelectorAll('.slider-card, .swiper-slide');
-                            const slideCount = slides.length || container.children.length || 0;
+                        const swiperInstance = new Swiper(container, {
+                            slidesPerView: 'auto',
+                            spaceBetween: 24,
+                            slidesPerGroup: 1,
+                            watchOverflow: true,
+                            observer: true,
+                            observeParents: true,
+                            centerInsufficientSlides: true,
+                            breakpoints: {
+                                768: { slidesPerView: 'auto', spaceBetween: 10 },
+                                1199: { slidesPerView: 'auto', spaceBetween: 10 }
+                            }
+                        });
 
-                            // create swiper without navigation DOM bindings
-                            const swiperInstance = new Swiper(container, {
-                                slidesPerView: 'auto',
-                                spaceBetween: 24,
-                                slidesPerGroup: 1,
-                                // when there are too few slides, let Swiper handle overflow gracefully
-                                watchOverflow: true,
-                                observer: true,
-                                observeParents: true,
-                                centerInsufficientSlides: true,
-                                // show 2 slides on >=768px, 3 slides on >=1199px
-                                breakpoints: {
-                                    768: { slidesPerView: 'auto', spaceBetween: 10 },
-                                    1199: { slidesPerView: 'auto', spaceBetween: 10 }
-                                }
-                            });
-
-                            targetObj[tab.id] = swiperInstance;
+                        targetObj[tab.id] = swiperInstance;
                 });
 
-                // Wire up wrapper-level prev/next buttons so they only affect the active tab's Swiper
                 try {
                     const prevBtnEl = document.querySelector(prevBtnId);
                     const nextBtnEl = document.querySelector(nextBtnId);
@@ -2326,7 +2320,6 @@
                         }
                     };
 
-                    // Attach click handlers once (guard with data attribute)
                     if (prevBtnEl && !prevBtnEl.dataset.swiperManaged) {
                         prevBtnEl.addEventListener('click', (e) => {
                             e.preventDefault();
@@ -2345,20 +2338,16 @@
                         nextBtnEl.dataset.swiperManaged = 'true';
                     }
 
-                    // Hook Swiper events for all instances so nav visibility is kept in sync
                     Object.keys(targetObj).forEach(key => {
                         const s = targetObj[key];
                         if (s && s.on) {
                             s.on('slideChange transitionEnd lock unlock', debounce(updateNavVisibility, 40));
-                            // expose compatibility helper used elsewhere
                             s._updateNavVisibility = updateNavVisibility;
                         }
                     });
 
-                    // initial visibility update after layout is ready
                     requestAnimationFrame(() => updateNavVisibility());
                     window.addEventListener('resize', debounce(updateNavVisibility, 120));
-                    // also expose on the mapping object for external callers
                     try { targetObj._updateNavVisibility = updateNavVisibility; } catch (e) {}
                 } catch (e) {
                     console.warn('Failed to wire wrapper navigation for', wrapperSelector, e);
@@ -2402,7 +2391,6 @@
                                 const s = swipersObj[fullTabId];
                                 s.update();
                                 if (s.navigation && s.navigation.update) s.navigation.update();
-                                // if nav visibility updater was exposed, call it to refresh button visibility
                                 if (typeof s._updateNavVisibility === 'function') {
                                     s._updateNavVisibility();
                                 }
