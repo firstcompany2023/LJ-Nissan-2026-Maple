@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000017</version> -->
+    <!-- <version>20261006000018</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -1038,7 +1038,9 @@
             #web-header { display: none !important; }
             #mobile-header { display: flex !important; }
             #mobile-menu, #mobile-logo { opacity: 1; pointer-events: auto; }
-            .svg-mask--logo-text { background-color: #FFFFFF !important; }
+            body.banner-in-view .svg-mask--logo-text {
+                background-color: #ffffff !important;
+            }
         }
 
         /* 手機橫屏裝置 */
@@ -1180,7 +1182,7 @@
                 <a href="#price-section" class="px-[2.5rem] py-2 text-base font-normal text-white bg-[#2F1F1526] hover:bg-[#2F1F1580] border border-white rounded-full transition-all duration-300 brightness-125 text-center shadow-[0px_0px_20px_0px_#FFFFFF]">MOMIJI <span class="block text-xs">轉變燦爛</span></a>
             </nav>
         </div>
-        <div id="mobile-header" class="absolute w-full mx-auto flex flex-row items-center justify-start px-6 py-6 gap-x-4">
+        <div id="mobile-header" class="absolute mx-auto inline-flex flex-row items-center justify-start px-6 py-6 gap-x-4">
             <button id="mobile-menu" type="button" class="flex items-center justify-center w-10 h-10 rounded-full border border-white/50 bg-black/80 transition-all duration-300 focus:outline-none" aria-label="Toggle Menu">
                 <img src="./assets/img/icon/menu-burger.svg" class="w-4 h-4 brightness-0 invert" alt="menu icon">
             </button>
@@ -2242,6 +2244,11 @@
                         mobileHeader.style.transform = 'translateY(0)';
                         mobileHeader.style.opacity = '1';
                         mobileHeader.style.pointerEvents = 'auto';
+                    }
+                    if(!isPassed && mobileHeader) {
+                        document.body.classList.add('banner-in-view');
+                    } else {
+                        document.body.classList.remove('banner-in-view');
                     }
                 }
 
