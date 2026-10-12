@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000013</version> -->
+    <!-- <version>20261006000014</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -2214,6 +2214,9 @@
             const sentraSwipers = {};
 
             const initSwipers = (wrapperSelector, prevBtnId, nextBtnId, targetObj) => {
+                // Create a Swiper for each tab content but don't bind the same DOM nav buttons
+                // to every Swiper instance. Instead we'll attach wrapper-level handlers that
+                // control only the currently active tab's Swiper.
                 document.querySelectorAll(`${wrapperSelector} .tab-content`).forEach(tab => {
                     const container = tab.querySelector('.slider-container');
                     if (!container) return;
@@ -2223,7 +2226,8 @@
                             const slides = container.querySelectorAll('.slider-card, .swiper-slide');
                             const slideCount = slides.length || container.children.length || 0;
 
-                            targetObj[tab.id] = new Swiper(container, {
+                            // create swiper without navigation DOM bindings
+                            const swiperInstance = new Swiper(container, {
                                 slidesPerView: 'auto',
                                 spaceBetween: 24,
                                 slidesPerGroup: 1,
@@ -2236,78 +2240,84 @@
                                 breakpoints: {
                                     768: { slidesPerView: 'auto', spaceBetween: 10 },
                                     1199: { slidesPerView: 'auto', spaceBetween: 10 }
-                                },
-                                navigation: {
-                                    nextEl: nextBtnId,
-                                    prevEl: prevBtnId,
                                 }
                             });
 
-                    // after initialization, hide nav buttons if navigation isn't usable
-                    try {
-                        const swiper = targetObj[tab.id];
-                        const prevBtnEl = document.querySelector(prevBtnId);
-                        const nextBtnEl = document.querySelector(nextBtnId);
-
-                        const updateNavVisibility = () => {
-                            if (!swiper || !prevBtnEl || !nextBtnEl) return;
-
-                            // If Swiper is locked (not enough slides) or at boundaries in non-loop mode,
-                            // hide the corresponding buttons to avoid unresponsive clicks.
-                            const locked = !!swiper.isLocked;
-
-                            // isBeginning/isEnd reflect the current real slide in non-loop mode
-                            const atBeginning = !!swiper.isBeginning;
-                            const atEnd = !!swiper.isEnd;
-
-                            // hide both if locked
-                            if (locked) {
-                                prevBtnEl.style.display = 'none';
-                                nextBtnEl.style.display = 'none';
-                                return;
-                            }
-
-                            // when loop is disabled, hide prev when atBeginning, hide next when atEnd
-                            if (!swiper.params.loop) {
-                                prevBtnEl.style.display = atBeginning ? 'none' : '';
-                                nextBtnEl.style.display = atEnd ? 'none' : '';
-                            } else {
-                                // loop enabled -> always show
-                                prevBtnEl.style.display = '';
-                                nextBtnEl.style.display = '';
-                            }
-                        };
-
-                        // initial update and on swiper events — run in next frame so Swiper layout is ready
-                        requestAnimationFrame(() => {
-                            try { updateNavVisibility(); } catch (e) {}
-                            try { swiper._updateNavVisibility = updateNavVisibility; } catch (e) {}
-                        });
-                        if (swiper && swiper.on) {
-                            swiper.on('slideChange transitionEnd lock unlock', updateNavVisibility);
-                            window.addEventListener('resize', debounce(updateNavVisibility, 120));
-                        }
-                    } catch (e) {
-                        // silent fallback
-                        console.warn('Swiper nav visibility update failed', e);
-                    }
+                            targetObj[tab.id] = swiperInstance;
                 });
-                // Ensure the currently active tab's swiper updates its navigation visibility
-                // after all swipers for this wrapper have been initialized.
+
+                // Wire up wrapper-level prev/next buttons so they only affect the active tab's Swiper
                 try {
-                    const activeContent = document.querySelector(`${wrapperSelector} .tab-content.active`);
-                    if (activeContent) {
-                        const activeSwiper = targetObj[activeContent.id];
-                        if (activeSwiper) {
-                            requestAnimationFrame(() => {
-                                if (typeof activeSwiper.update === 'function') activeSwiper.update();
-                                if (activeSwiper.navigation && typeof activeSwiper.navigation.update === 'function') activeSwiper.navigation.update();
-                                if (typeof activeSwiper._updateNavVisibility === 'function') activeSwiper._updateNavVisibility();
-                            });
+                    const prevBtnEl = document.querySelector(prevBtnId);
+                    const nextBtnEl = document.querySelector(nextBtnId);
+
+                    const getActiveSwiper = () => {
+                        const activeContent = document.querySelector(`${wrapperSelector} .tab-content.active`);
+                        return activeContent ? targetObj[activeContent.id] : null;
+                    };
+
+                    const updateNavVisibility = () => {
+                        const swiper = getActiveSwiper();
+                        if (!prevBtnEl || !nextBtnEl) return;
+
+                        if (!swiper) {
+                            prevBtnEl.style.display = '';
+                            nextBtnEl.style.display = '';
+                            return;
                         }
+
+                        const locked = !!swiper.isLocked;
+                        if (locked) {
+                            prevBtnEl.style.display = 'none';
+                            nextBtnEl.style.display = 'none';
+                            return;
+                        }
+
+                        if (!swiper.params.loop) {
+                            prevBtnEl.style.display = swiper.isBeginning ? 'none' : '';
+                            nextBtnEl.style.display = swiper.isEnd ? 'none' : '';
+                        } else {
+                            prevBtnEl.style.display = '';
+                            nextBtnEl.style.display = '';
+                        }
+                    };
+
+                    // Attach click handlers once (guard with data attribute)
+                    if (prevBtnEl && !prevBtnEl.dataset.swiperManaged) {
+                        prevBtnEl.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const s = getActiveSwiper();
+                            if (s && typeof s.slidePrev === 'function') s.slidePrev();
+                        });
+                        prevBtnEl.dataset.swiperManaged = 'true';
                     }
+
+                    if (nextBtnEl && !nextBtnEl.dataset.swiperManaged) {
+                        nextBtnEl.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const s = getActiveSwiper();
+                            if (s && typeof s.slideNext === 'function') s.slideNext();
+                        });
+                        nextBtnEl.dataset.swiperManaged = 'true';
+                    }
+
+                    // Hook Swiper events for all instances so nav visibility is kept in sync
+                    Object.keys(targetObj).forEach(key => {
+                        const s = targetObj[key];
+                        if (s && s.on) {
+                            s.on('slideChange transitionEnd lock unlock', debounce(updateNavVisibility, 40));
+                            // expose compatibility helper used elsewhere
+                            s._updateNavVisibility = updateNavVisibility;
+                        }
+                    });
+
+                    // initial visibility update after layout is ready
+                    requestAnimationFrame(() => updateNavVisibility());
+                    window.addEventListener('resize', debounce(updateNavVisibility, 120));
+                    // also expose on the mapping object for external callers
+                    try { targetObj._updateNavVisibility = updateNavVisibility; } catch (e) {}
                 } catch (e) {
-                    console.warn('Failed to set initial swiper nav visibility for', wrapperSelector, e);
+                    console.warn('Failed to wire wrapper navigation for', wrapperSelector, e);
                 }
             };
 
