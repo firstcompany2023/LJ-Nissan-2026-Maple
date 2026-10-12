@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000014</version> -->
+    <!-- <version>20261006000016</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -278,6 +278,7 @@
             width: 100%;
             height: calc(100vh + 35vh); /* 影片後方背景佔比如需調整 改後面的值 */
             overflow: hidden;
+            background-color: #6e8bb7;
         }
 
         .banner_d {
@@ -289,6 +290,9 @@
             background-repeat: no-repeat;
             background-size: 100% auto;
             background-position: center top;
+            transform: translateY(-50%);
+            top: 45%;
+
         }
 
         .banner-mask-bg {
@@ -297,14 +301,14 @@
             right: 0;
             top: 0;
             bottom: 0;
-            background: linear-gradient(180deg, rgba(35, 11, 9, 0) 35%, rgba(138, 52, 32, 0.8) 50%, rgba(35, 11, 9, 0.4) 100%);
+            background: linear-gradient(180deg, rgba(35, 11, 9, 0) 60%, rgb(139 20 20 / 80%) 70%, rgb(29 5 3 / 80%) 100%);
         }
         .banner-skew-bg {
             position: absolute;
             bottom: -1px;
             left: 0;
             width: 100%;
-            height: 5%;
+            height: 4%;
             background-color: #ffffff;
             clip-path: polygon(0 100%, 100% 100%, 100% 89%, 0 0);
             z-index: 1;
@@ -313,17 +317,22 @@
 
         .banner-top-border {
             position: absolute;
-            bottom: 3%;
+            bottom: 0;
             left: 0;
             width: 100%;
-            border-top: 4.15px solid #E09B90;
+            padding-bottom: 3%;
             z-index: 2;
             pointer-events: none;
+            background-image: url(./assets/img/usp/bg-line.svg);
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-position: center center;
+            transform: rotate(1deg);
         }
 
         .banner-title {
             position: absolute;
-            top: 9%;
+            top: 36%;
             right: 27%;
             width: 15%;
             height: auto;
@@ -331,18 +340,18 @@
 
         .textGroup_sentra {
             position: absolute;
-            width: 41.2%;
+            width: 30.95%;
             height: auto;
-            left: 9.4%;
-            top: 20.4%;
+            left: 15.3%;
+            top: 47.9%;
             cursor: pointer;
         }
         .textGroup_kicks {
             position: absolute;
-            width: 41.2%;
+            width: 43.5%;
             height: auto;
-            left: 43.1%;
-            top: 15.4%;
+            left: 41.85%;
+            top: 40.25%;
             cursor: pointer;
         }
         .textGroup_sentra .outline-bg,
@@ -379,6 +388,7 @@
         .textGroup_kicks:hover .text {
             transform: scale(1.05);
         }
+
 
         /* ==========================================================================
            4. TVC 區塊
@@ -457,17 +467,21 @@
         }
 
         .tvc-info .layout-maple { z-index: 2; }
-        .tvc-info .maple-1 { top: -5%; left: -2%; width: 7%; }
-        .tvc-info .maple-2 { top: 9%; left: -6.5%; width: 13%; }
-        .tvc-info .maple-3 { top: -6%; right: -2%; width: 13%; }
-        .tvc-info .maple-4 { bottom: -2%; left: -4%; width: 16%; transform: rotateY(180deg); }
-        .tvc-info .maple-5 { bottom: 8%; right: -1%; width: 10%; }
-        .tvc-info .maple-6 { bottom: -5%; right: -5%; width: 24%; }
+        .tvc-info .maple-1 { top: -3%; left: -1.5%; width: 6%; }
+        .tvc-info .maple-2 { top: 4%; left: -3.5%; width: 6%; transform: rotateY(180deg); }
+        .tvc-info .maple-3 { top: -5%; right: -1%; width: 9%; }
+        .tvc-info .maple-4 { bottom: -2%; left: -4%; width: 9%; transform: rotateY(180deg); }
+        .tvc-info .maple-5 { bottom: -4%; right: -2%; width: 9%; }
+        .tvc-info .maple-6 { bottom: 6%; right: -2%; width: 6%; }
+        .tvc-info .maple-7 { top: 2%; right: -4%; width: 5%; }
+        .tvc-info .maple-8 { top: -4%; right: 13%; width: 3.5%; }
+        .tvc-info .maple-9 { bottom: -8.5%; left: 3%; width: 5%; transform: rotateY(180deg); }
+        .tvc-info .maple-10 { bottom: -2%; left: 9%; width: 4%; transform: rotateY(180deg); }
 
         .sound-on-btn, .sound-off-btn {
             position: absolute;
-            top: 15%;
-            right: 2%;
+            top: 6%;
+            right: 3%;
             width: 5%;
             height: 0;
             padding-bottom: 5%;
@@ -607,17 +621,19 @@
         }
 
         .usp-kicks .layout-maple, .usp-sentra .layout-maple { z-index: 0; }
-        .usp-kicks .maple-1 { top: -10%; left: 10%; width: 5%; transform: rotateY(180deg); }
-        .usp-kicks .maple-2 { top: 16%; left: -2%; width: 9%; }
-        .usp-kicks .maple-3 { bottom: -20%; left: 26%; width: 15%; }
-        .usp-kicks .maple-4 { top: -10%; right: 0%; width: 11%; }
-        .usp-kicks .maple-5 { bottom: -14%; right: 5%; width: 13%; }
+        .usp-kicks .maple-1 { top: -10%; left: 12%; width: 4%; transform: rotateY(180deg); }
+        .usp-kicks .maple-2 { top: 5%; left: 7%; width: 5%; }
+        .usp-kicks .maple-3 { bottom: -9%; left: 15%; width: 5%; transform: rotateY(180deg); }
+        .usp-kicks .maple-4 { top: -12%; right: 10%; width: 5%; }
+        .usp-kicks .maple-5 { bottom: -8%; right: 8%; width: 6%; }
+        .usp-kicks .maple-6 { bottom: 11%; right: 12%; width: 4%; }
 
-        .usp-sentra .maple-1 { top: -15%; left: 5%; width: 8%; transform: rotateY(180deg); }
-        .usp-sentra .maple-2 { top: 16%; left: -2%; width: 5.5%; }
-        .usp-sentra .maple-3 { bottom: -3%; left: -9%; width: 14.5%; }
-        .usp-sentra .maple-4 { top: -15%; right: 5%; width: 7.5%; }
-        .usp-sentra .maple-5 { bottom: -15%; right: 5%; width: 11%; }
+        .usp-sentra .maple-1 { top: -2%; left: 9%; width: 4%; transform: rotateY(180deg); }
+        .usp-sentra .maple-2 { top: -12%; right: 10%; width: 5%; }
+        .usp-sentra .maple-3 { top: 5%; right: 9%; width: 3.5%; transform: rotateY(180deg); }
+        .usp-sentra .maple-4 { bottom: 4%; left: 6%; width: 5.5%; transform: rotateY(180deg); }
+        .usp-sentra .maple-5 { bottom: -11%; left: 11%; width: 4%; }
+        .usp-sentra .maple-6 { bottom: -10%; right: 17%; width: 4%; }
 
         .tab-container { z-index: 6; }
         .tab-nav {
@@ -811,25 +827,25 @@
         }
 
         #price-section .layout-maple { z-index: 0; }
-        #price-section .maple-1 { top: 15%; left: -40%; width: 31%; filter: blur(2px); }
-        #price-section .maple-2 { bottom: 10%; left: -45%; width: 40%; filter: blur(5px); }
-        #price-section .maple-3 { top: -3%; right: -35%; width: 27%; filter: blur(6px); }
-        #price-section .maple-4 { top: 30%; right: -65%; width: 37%; filter: blur(3px); }
-        #price-section .maple-5 { bottom: 25%; right: -45%; width: 14.5%; filter: blur(7px); }
-        #price-section .maple-6 { bottom: 10%; right: -22%; width: 21%; filter: blur(2px); }
+        #price-section .maple-1 { top: 10%; left: -17%; width: 7%; transform: rotateY(180deg);  }
+        #price-section .maple-2 { top: -5%; right: -9%; width: 10%;  }
+        #price-section .maple-3 { top: 3%; right: -15%; width: 8%;  }
+        #price-section .maple-4 { bottom: 14%; left: -2%; width: 6%;  }
+        #price-section .maple-5 { bottom: 14%; right: -3%; width: 9%;  }
+        #price-section .maple-6 { bottom: 11%; right: 4%; width: 6%;  }
 
         .price-container {
-            position: relative; z-index: 5; max-width: 800px; margin: 0 auto;
+            position: relative; z-index: 5; margin: 0 auto; max-width: 1000px;
             display: flex; flex-direction: column; align-items: center; gap: 50px;
         }
 
         .price-cards-wrapper {
-            display: flex; flex-direction: column; gap: 30px; width: 100%;
+            display: flex; flex-direction: column; gap: 30px;
             justify-content: center; align-items: stretch; z-index: 6;
         }
 
         .price-card {
-            flex: 1; width: 100%; max-width: 350px; margin: 0 auto;
+            flex: 1; width: 100%; margin: 0 auto;
             background: transparent; box-shadow: 0px 10px 27.6px -10px #FFFFFFCC;
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             display: flex; flex-direction: column; justify-content: space-between;
@@ -845,7 +861,7 @@
         .price-card-title { font-size: 1.5rem; color: #373737; letter-spacing: 2px; margin: 15px 0; }
         .price-car-img { width: 80%; max-width: 260px; height: 140px; object-fit: contain; margin: 0 auto 15px auto; display: block; }
 
-        .color-selector-wrapper { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .color-selector-wrapper { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 20px; padding: 0 20px; }
 
         /* Tooltip 樣式 */
         .color-dot {
@@ -888,24 +904,6 @@
 
         .color-dot:hover, .color-dot.active { transform: scale(1.15); }
 
-        .price-list {
-            background-color: #FFFFFFCC; padding: 20px 60px; flex: 1;
-            display: flex; flex-direction: column; justify-content: space-between; min-height: 220px;
-        }
-
-        .price-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 0; font-size: 18px; color: #616161; flex: 1;
-            font-weight: 700;
-        }
-
-        .price-item:not(:last-child) { border-bottom: 1px solid #EEDDCE; }
-        .price-val { font-size: 1rem; font-weight: 400; }
-        .price-val-group { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-        .price-val-original { text-decoration: line-through; color: #616161; font-size: 1rem; }
-        .price-discount-row { display: flex; align-items: center; gap: 6px; }
-        .price-tag-discount { background: #F3E1B8; color: #89610A; font-size: 10px; padding: 2px 6px; }
-
         .pdf-download-box { background-color: #FFFFFFCC; padding: 15px 20px; display: flex; justify-content: center; align-items: center; }
         .pdf-btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 2px;
@@ -935,12 +933,67 @@
         /* ==========================================================================
            7. 媒體查詢 (Media Queries) 彙整優化
            ========================================================================== */
+
         @media (min-width: 640px) {
             .price-cta-group { flex-direction: row; }
         }
 
         @media (min-width: 768px) {
             .price-cards-wrapper { flex-direction: row; }
+            .scroll-down-btn {
+                top: calc(100vh - 40px);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            /* 電腦版的車價 */
+            .price-card { width: auto; flex: auto; }
+            .price-list {
+                background-color: #FFFFFFCC; padding: 20px; flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start; align-items: stretch;
+            }
+
+            .price-item {
+                display: flex; flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 10px 18px; font-size: 18px; color: #616161; flex: 1;
+                font-weight: 700;
+            }
+
+            .price-item span {  word-break: keep-all; width: max-content; }
+
+            .price-item:not(:first-child) { border-left: 1px solid #EEDDCE; }
+            .price-val { font-size: 1rem; font-weight: 400; align-items: center; }
+            .price-val-group { display: flex; flex-direction: column; gap: 2px; font-weight: 400; align-items: center; }
+            .price-val-original { color: #616161; font-size: 1rem; }
+            .price-discount-row { display: flex; padding: 5px 10px; flex-direction: column; align-items: center; }
+            .price-tag-discount { background: #F3E1B8; color: #89610A; font-size: 10px; padding: 2px 6px; }
+        }
+
+        @media (max-width: 1199px) {
+            /* 平板以下的車價 */
+            .price-list {
+                background-color: #FFFFFFCC; padding: 20px; flex: 1;
+                display: flex; flex-direction: column; justify-content: space-between; min-height: 220px;
+            }
+
+            .price-item {
+                display: flex; justify-content: space-between; align-items: center;
+                padding: 10px 0; font-size: 18px; color: #616161; flex: 1;
+                font-weight: 700;
+            }
+
+            .price-item:not(:last-child) { border-bottom: 1px solid #EEDDCE; }
+            .price-val { font-size: 0.875rem; font-weight: 400; }
+            .price-val-group { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-weight: 400; }
+            .price-val-original { color: #616161; font-size: 1rem; }
+            .price-discount-row { display: flex; align-items: center; gap: 6px; }
+            .price-tag-discount { background: #F3E1B8; color: #89610A; font-size: 10px; padding: 2px 6px; }
+            .color-selector-wrapper { gap: 8px; }
+            .color-dot { width: 30px; height: 30px; }
         }
 
         /* limit the single-column slider rule to viewports strictly below 768px
@@ -949,67 +1002,31 @@
             .slider-card { flex: 0 0 100%; }
         }
 
-        /* 桌面大螢幕尺寸微調 */
-        @media (min-width: 1199px) {
-
-        }
-
-        @media (min-width: 1300px) {
-        }
-
-        @media (min-width: 1400px) {
-        }
-
-        @media (min-width: 1500px) {
-        }
-
-        @media (min-width: 1600px) {
-        }
-
-        @media (min-width: 1800px) {
-        }
-
-        @media (min-width: 2000px) {
-        }
-
         /* 平板區域與橫屏/直屏切換 */
         @media (min-width: 768px) and (max-width: 1199px) {
-            /* .banner-skew-bg { clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 100%); }
-            .banner-top-border { display: none; }
-            #usp-section { background: #FFFCF9; }
-            .usp-kicks, .usp-sentra { display: flex; min-height: unset; padding-bottom: 40px; background-color: #FFFCF9; }
-            #usp-section .tab-container, #usp-section .usp-bg { width: 50%; }
-            .usp-kicks .tab-container { order: 1; }
-            .usp-kicks .usp-bg { order: 2; }
-            .usp-header-title { display: none; }
-            .usp-tab-header-title { display: block; text-align: center; margin-bottom: 30px; }
-
-            .slider-wrapper {
-                background: #FCF4E8; margin: 0 10%; border: 1px solid #E6CEBF;
-                padding: 1px 25px; position: relative; min-height: 70%;
-            }
-            .slider-wrapper::after {
-                width: calc(100% + 10px); height: calc(100% + 10px); top: -5px; left: -5px;
-                content: ''; position: absolute; border: 2px solid #F0EAE5; pointer-events: none; box-sizing: border-box;
-            }
-
-            #price-section { background: linear-gradient(174.51deg, #FEFFF2 6.2%, #F3E7D8 54.62%, #E8D4C2 94.23%); }
-            #usp-section .usp-skew-bg, #usp-section .usp-top-border, #usp-section .maple-1, #usp-section .maple-2,
-            #usp-section .maple-3, #usp-section .maple-4, #usp-section .maple-5, #price-section .price-skew-bg, #price-section .price-top-border { display: none; } */
+            .price-list .ipad { display: block; }
         }
 
         /* 平板橫屏裝置 */
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) and (min-height: 500px) {
             #banner-section { height: 0; padding-bottom: 60%; }
-            .tvc-info { top: -15vh;}
+            .tvc-info { top: 0; margin-top: -8%; margin-bottom: 50px; }
             #banner-section .scroll-down-btn { display: none; }
+            .banner_d {
+                transform: translateY(-15%);
+                top: 50%;
+            }
         }
         /* 平板直屏裝置 */
         @media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
             #banner-section { height: 0; padding-bottom: 60%; }
-            #tvc-info { top: -5vh; }
+            .tvc-info { top: 0; margin-top: -8%; margin-bottom: 50px; }
             .usp-header-title h2, .usp-tab-header-title h2 { font-size: 2.2rem; }
             #banner-section .scroll-down-btn { display: none; }
+            .banner_d {
+                transform: translateY(-15%);
+                top: 50%;
+            }
         }
         /* 手機、平板直屏裝置 */
         @media (max-width: 767px), (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
@@ -1029,18 +1046,23 @@
         @media (max-width: 767px) {
             #banner-section {
                 height: 100dvh; width: 100%;
-                background: url(./assets/img/banner/banner01_m.svg) center center / cover no-repeat;
+                background: url(./assets/img/banner/banner_m.jpg) center center / cover no-repeat;
             }
             .banner-skew-bg {
                 z-index: 0; clip-path: none; height: 100%;
-                background: linear-gradient(180deg, rgba(35, 11, 9, 0) 50%, rgba(138, 52, 32, 0.8) 82.69%, #8A3420 100%);
+                background: linear-gradient(180deg, rgba(35, 11, 9, 0.00) 70.19%, rgba(138, 47, 32, 0.80) 85.1%, #701210 100%);
+            }
+            .banner-btn-group {
+                justify-content: center;
+                top: 80%;
+                transform: translateY(-50%);
             }
             .banner-top-border, #banner-section .scroll-down-btn, #tvc-section .scroll-down-btn,
             #usp-section .layout-maple, #price-section .layout-maple { display: none; }
 
             .tvc-info { width: 350px; height: 196px; margin: auto; top: 0;}
             #tvc-section { height: 50vh; display: flex; align-items: center; justify-content: center; position: relative; }
-            .tvc-mask-bg { display: block; position: absolute; top: -1px; left: 0; width: 100%; height: 60%; background: #8A3420; z-index: 1; }
+            .tvc-mask-bg { display: block; position: absolute; top: -1px; left: 0; width: 100%; height: 60%; background: #701210; z-index: 1; }
             .tvc-skew-bg {
                 display: block;
                 position: absolute;
@@ -1075,7 +1097,6 @@
             .price-skew-bg { height: 30px; }
             .price-top-border { background-size: 1300px auto; top: 10px }
             .price-cta-group { gap: 0px; }
-            .color-dot { width: 30px; height: 30px; }
         }
 
         @media (max-width: 375px) {
@@ -1122,11 +1143,6 @@
         }
     </style>
 
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WT473T"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
     <canvas id="falling-canvas"></canvas>
     
     <!-- Loading Overlay -->
@@ -1154,9 +1170,9 @@
                 </a>
             </div>
             <nav id="web-menu" class="flex items-center gap-x-4 md:order-2">
-                <a href="#usp-kicks" class="px-[2.5rem] py-2 text-base font-normal text-white bg-[#2F1F1526] hover:bg-[#2F1F1580] border border-white rounded-full transition-all duration-300 brightness-125 shadow-[0px_0px_20px_0px_#FFFFFF]">KICKS</a>
-                <a href="#usp-sentra" class="px-[2.5rem] py-2 text-base font-normal text-white bg-[#2F1F1526] hover:bg-[#2F1F1580] border border-white rounded-full transition-all duration-300 brightness-125 shadow-[0px_0px_20px_0px_#FFFFFF]">SENTRA</a>
-                <a href="#price-section" class="px-[2.5rem] py-2 text-base font-normal text-white bg-[#2F1F1526] hover:bg-[#2F1F1580] border border-white rounded-full transition-all duration-300 brightness-125 shadow-[0px_0px_20px_0px_#FFFFFF]">EXPLORE NISSAN</a>
+                <a href="#usp-kicks" class="px-[2.5rem] py-2 text-base font-normal text-white bg-[#2F1F1526] hover:bg-[#2F1F1580] border border-white rounded-full transition-all duration-300 brightness-125 text-center shadow-[0px_0px_20px_0px_#FFFFFF]">KICKS <span class="block text-xs">MOMIJI</span></a>
+                <a href="#usp-sentra" class="px-[2.5rem] py-2 text-base font-normal text-white bg-[#2F1F1526] hover:bg-[#2F1F1580] border border-white rounded-full transition-all duration-300 brightness-125 text-center shadow-[0px_0px_20px_0px_#FFFFFF]">SENTRA <span class="block text-xs">MOMIJI</span></a>
+                <a href="#price-section" class="px-[2.5rem] py-2 text-base font-normal text-white bg-[#2F1F1526] hover:bg-[#2F1F1580] border border-white rounded-full transition-all duration-300 brightness-125 text-center shadow-[0px_0px_20px_0px_#FFFFFF]">MOMIJI <span class="block text-xs">轉變燦爛</span></a>
             </nav>
         </div>
         <div id="mobile-header" class="absolute w-full mx-auto flex flex-row items-center justify-start px-6 py-6 gap-x-4">
@@ -1170,10 +1186,9 @@
             </div>
             <div id="mobile-dropdown-menu" class="hidden absolute top-full left-6 bg-[#0A0A0A]/85 z-[150] px-6 py-8">
                 <nav class="flex flex-col gap-y-6">
-                    <a href="#usp-kicks" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">KICKS</a>
-                    <a href="#usp-sentra" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">SENTRA</a>
-                    <a href="#price-section" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">EXPLORE NISSAN</a>
-                    <a href="https://new.nissan.com.tw/nissan/cars/x-trail" target="_blank" class="mobile-menu-link text-base font-normal transition-colors duration-300 block hover:brightness-125" style="color: #BEA894;">NISSAN 車型網</a>
+                    <a href="#usp-kicks" class="mobile-menu-link text-base font-normal transition-colors duration-300 block text-center hover:brightness-125" style="color: #BEA894;">KICKS <span class="block text-xs">MOMIJI</span></a>
+                    <a href="#usp-sentra" class="mobile-menu-link text-base font-normal transition-colors duration-300 block text-center hover:brightness-125" style="color: #BEA894;">SENTRA <span class="block text-xs">MOMIJI</a>
+                    <a href="#price-section" class="mobile-menu-link text-base font-normal transition-colors duration-300 block text-center hover:brightness-125" style="color: #BEA894;">MOMIJI <span class="block text-xs">轉變燦爛</span></a>
                 </nav>
             </div>
         </div>
@@ -1186,36 +1201,32 @@
             <div class="banner-mask-bg"></div>
             <a href="#usp-sentra" class="textGroup_sentra">
                 <img src="./assets/img/banner/outline_s.png" class="outline-bg">
-                <img src="./assets/img/banner/sentra_name_m.svg" class="text">
             </a>
             <a href="#usp-kicks" class="textGroup_kicks">
                 <img src="./assets/img/banner/outline_k.png" class="outline-bg">
-                <img src="./assets/img/banner/kicks_name_m.svg" class="text">
             </a>
             <img src="./assets/img/banner/title.svg" alt="banner title" class="banner-title">
-            <a class="scroll-down-btn absolute inline-block top-[45%] left-1/2 transform -translate-x-1/2 text-white" href="#tvc-info" aria-label="Scroll Down">
-                <div class="flex flex-col justify-center items-center text-xs">
-                    Scroll Down
-                    <svg class="animate-bounce w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </div>
-            </a>
         </div>
+        <a class="scroll-down-btn absolute inline-block left-1/2 transform -translate-x-1/2 text-white" href="#tvc-info" aria-label="Scroll Down">
+            <div class="flex flex-col justify-center items-center text-xs">
+                Scroll Down
+                <svg class="animate-bounce w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+        </a>
         <!-- mobile -->
         <div class="banner-skew-bg"></div>
         <div class="banner-top-border"></div>
         <div class="banner-mob-title md:hidden absolute top-1/4 left-1/2 transform -translate-x-1/2">
             <img src="./assets/img/banner/title.svg" alt="banner title">
         </div>
-        <div class="banner-btn-group z-[5] flex md:hidden absolute bottom-[10vh] left-1/2 transform -translate-x-1/2 gap-4 flex-col">
-            <a href="#usp-kicks" class="flex" aria-label="kicks">
-                <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks">
-                <img src="./assets/img/banner/arrow_right.svg" alt="arrow right">
-            </a>
+        <div class="banner-btn-group w-full z-[5] flex md:hidden absolute gap-4 flex-row">
             <a href="#usp-sentra" class="flex" aria-label="sentra">
                 <img src="./assets/img/banner/sentra_name_m.svg" alt="sentra">
-                <img src="./assets/img/banner/arrow_right.svg" alt="arrow right">
+            </a>
+            <a href="#usp-kicks" class="flex" aria-label="kicks">
+                <img src="./assets/img/banner/kicks_name_m.svg" alt="kicks">
             </a>
         </div>
     </section>
@@ -1251,12 +1262,25 @@
                     <img src="./assets/img/tvc/tvc-btn2-hover.png" alt="女生篇 Hover" class="btn-hover">
                 </a>
             </div> -->
-            <img src="./assets/img/maple/maple14.png" alt="Maple 1" class="layout-maple maple-1">
-            <img src="./assets/img/maple/maple05.png" alt="Maple 2" class="layout-maple maple-2">
+
+            <!-- left top -->
+            <img src="./assets/img/maple/maple13.png" alt="Maple 1" class="layout-maple maple-1">
+            <img src="./assets/img/maple/maple08.png" alt="Maple 2" class="layout-maple maple-2">
+
+            <!-- right top -->
             <img src="./assets/img/maple/maple04.png" alt="Maple 3" class="layout-maple maple-3">
-            <img src="./assets/img/maple/maple11.png" alt="Maple 4" class="layout-maple maple-4">
-            <img src="./assets/img/maple/maple03.png" alt="Maple 5" class="layout-maple maple-5">
-            <img src="./assets/img/maple/maple07.png" alt="Maple 6" class="layout-maple maple-6">
+            <img src="./assets/img/maple/maple08.png" alt="Maple 7" class="layout-maple maple-7">
+            <img src="./assets/img/maple/maple06.png" alt="Maple 8" class="layout-maple maple-8">
+
+            <!-- left bottom -->
+            <img src="./assets/img/maple/maple10.png" alt="Maple 4" class="layout-maple maple-4">
+            <img src="./assets/img/maple/maple14.png" alt="Maple 9" class="layout-maple maple-9">
+            <img src="./assets/img/maple/maple07.png" alt="Maple 10" class="layout-maple maple-10">
+
+            <!-- right bottom -->
+            <img src="./assets/img/maple/maple01.png" alt="Maple 5" class="layout-maple maple-5">
+            <img src="./assets/img/maple/maple03.png" alt="Maple 6" class="layout-maple maple-6">
+
             <div class="tvc-border-1"></div>
             <div class="tvc-border-2"></div>
             <div class="tvc-border-3"></div>
@@ -1289,9 +1313,10 @@
                 <div id="kicks-slider-wrapper" class="slider-wrapper">
                     <img src="./assets/img/maple/maple06.png" alt="Maple 1" class="layout-maple maple-1">
                     <img src="./assets/img/maple/maple03.png" alt="Maple 2" class="layout-maple maple-2">
-                    <img src="./assets/img/maple/maple08.png" alt="Maple 3" class="layout-maple maple-3">
+                    <img src="./assets/img/maple/maple10.png" alt="Maple 3" class="layout-maple maple-3">
                     <img src="./assets/img/maple/maple11.png" alt="Maple 4" class="layout-maple maple-4">
                     <img src="./assets/img/maple/maple12.png" alt="Maple 5" class="layout-maple maple-5">
+                    <img src="./assets/img/maple/maple09.png" alt="Maple 6" class="layout-maple maple-6">
                     <button class="arrow-btn arrow-left" id="kicksPrevBtn">
                         <img src="./assets/img/icon/angle-left.svg" alt="Previous" class="w-5 h-5">
                     </button>
@@ -1414,11 +1439,12 @@
                     <div class="tab-indicator"></div>
                 </div>
                 <div id="sentra-slider-wrapper" class="slider-wrapper">
-                    <img src="./assets/img/maple/maple17.png" alt="Maple 1" class="layout-maple maple-1">
-                    <img src="./assets/img/maple/maple08.png" alt="Maple 2" class="layout-maple maple-2">
-                    <img src="./assets/img/maple/maple11.png" alt="Maple 3" class="layout-maple maple-3">
-                    <img src="./assets/img/maple/maple18.png" alt="Maple 4" class="layout-maple maple-4">
-                    <img src="./assets/img/maple/maple13.png" alt="Maple 5" class="layout-maple maple-5">
+                    <img src="./assets/img/maple/maple08.png" alt="Maple 1" class="layout-maple maple-1">
+                    <img src="./assets/img/maple/maple13.png" alt="Maple 2" class="layout-maple maple-2">
+                    <img src="./assets/img/maple/maple05.png" alt="Maple 3" class="layout-maple maple-3">
+                    <img src="./assets/img/maple/maple02.png" alt="Maple 4" class="layout-maple maple-4">
+                    <img src="./assets/img/maple/maple03.png" alt="Maple 5" class="layout-maple maple-5">
+                    <img src="./assets/img/maple/maple14.png" alt="Maple 5" class="layout-maple maple-6">
                     <button class="arrow-btn arrow-left" id="sentraPrevBtn">
                         <img src="./assets/img/icon/angle-left.svg" alt="Previous" class="w-5 h-5">
                     </button>
@@ -1533,11 +1559,11 @@
         <div class="price-skew-bg"></div>
         <div class="price-top-border"></div>
         <div class="price-container relative">
-            <img src="./assets/img/maple/maple03.png" alt="Maple" class="layout-maple maple-1">
-            <img src="./assets/img/maple/maple08.png" alt="Maple" class="layout-maple maple-2">
-            <img src="./assets/img/maple/maple04.png" alt="Maple" class="layout-maple maple-3">
-            <img src="./assets/img/maple/maple12.png" alt="Maple" class="layout-maple maple-4">
-            <img src="./assets/img/maple/maple16.png" alt="Maple" class="layout-maple maple-5">
+            <img src="./assets/img/maple/maple08.png" alt="Maple" class="layout-maple maple-1">
+            <img src="./assets/img/maple/maple04.png" alt="Maple" class="layout-maple maple-2">
+            <img src="./assets/img/maple/maple12.png" alt="Maple" class="layout-maple maple-3">
+            <img src="./assets/img/maple/maple03.png" alt="Maple" class="layout-maple maple-4">
+            <img src="./assets/img/maple/maple01.png" alt="Maple" class="layout-maple maple-5">
             <img src="./assets/img/maple/maple06.png" alt="Maple" class="layout-maple maple-6">
             
             <div class="price-cards-wrapper">                
@@ -1569,8 +1595,14 @@
                                 </div>
                             </div>
                             <div class="price-item">
-                                <span>初楓Air版</span>
-                                <span class="price-val">81.9 萬元</span>
+                                <span>初楓Air</span>
+                                <div class="price-val-group">
+                                    <span class="price-val-original">75.9 萬元</span>
+                                    <div class="price-discount-row">
+                                        <span class="price-tag-discount">限時優惠</span>
+                                        <span class="price-val" style="color: #C65B22;">70.9 萬元</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="price-item">
                                 <span>盛楓版</span>
@@ -1620,7 +1652,7 @@
                                 <span>極楓版</span>
                                 <span class="price-val">88.9 萬元</span>
                             </div>
-                            <div style="flex: 1.5;"></div>
+                            <div style="flex: 1.5;" class="hidden ipad"></div>
                         </div>
                         <div class="pdf-download-box">
                             <a href="https://event.nissan.com.tw/momiji_event/assets/files/SENTRA型錄(網頁版).pdf" target="_blank" class="pdf-btn" aria-label="型錄下載">
@@ -1709,7 +1741,7 @@
             // scale vertical speed on smaller viewports (mobile/tablet)
             let speedScale = 1;
             const petalCount = 7;
-            const imageUrls = Array.from({ length: 20 }, (_, i) => `./assets/img/maple/maple${String(i + 1).padStart(2, '0')}.png`);
+            const imageUrls = Array.from({ length: 15 }, (_, i) => `./assets/img/maple/maple${String(i + 1).padStart(2, '0')}.png`);
 
             const petalImages = imageUrls.map(src => {
                 const img = new Image();
