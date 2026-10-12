@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000012</version> -->
+    <!-- <version>20261006000013</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -585,7 +585,7 @@
         .usp-tab-header-title { position: relative; pointer-events: none; display: none; }
 
         .usp-header-title h2, .usp-tab-header-title h2 { position: relative; display: inline-block; }
-        .usp-header-title h2::after, .usp-tab-header-title h2::after {
+        /* .usp-header-title h2::after, .usp-tab-header-title h2::after {
             content: attr(data-reflect);
             position: absolute; left: 0; top: calc(200% - 12px);
             transform: scaleY(-1); transform-origin: top left;
@@ -593,7 +593,7 @@
             -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 0.6) 45%, black 82%, transparent);
             mask-image: linear-gradient(rgb(0 0 0 / 20%) 45%, black 82%, transparent);
             color: inherit; font: inherit;
-        }
+        } */
         .usp-header-title .USP-subtitle {
             width: 50%;
             margin: 6% auto 0;
@@ -1228,32 +1228,24 @@
                         <div class="slider-container swiper">
                             <div class="slider-track swiper-wrapper">
                                 <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS 1.6G HR16DE 鋁合金引擎.jpg" alt="1.6G HR16DE 鋁合金引擎">
+                                    <img src="./assets/img/usp/KICKS GT-R鏡面缸孔熔射技術.jpg" alt="1.6G HR16DE 鋁合金引擎">
                                     <div class="slider-card-content">
                                         <h4>1.6G HR16DE 鋁合金引擎</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>最大馬力 135 ps ; 最大扭力 16.7 kg-m / 4,000 rpm</li>
-                                            <li>採用長衝程設定，加大曲軸連桿的力臂長度，使引擎在中低轉速就能產生充沛扭力。降至 10.4 均衡壓縮比，點火提前角容許範圍更廣，有效降低油品辛烷值導致的高溫爆震。</li>
-                                        </ol>
-                                    </div>
+                                        <p>採用長衝程設定，加大曲軸連桿的力臂長度，使引擎在中低轉速就能產生充沛扭力。降至 10.4 均衡壓縮比，點火提前角容許範圍更廣，有效降低油品辛烷值導致的高溫爆震</p>                                    </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS GT-R鏡面缸孔熔射技術.jpg" alt="GT-R鏡面缸孔熔射技術">
-                                    <div class="slider-card-content">
-                                        <h4>GT-R鏡面缸孔熔射技術</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>取消傳統2.0mm鑄鐵汽缸套，直接在鋁合金汽缸壁上熔射0.2mm極薄的高導熱鋼鐵塗層，大幅降低活塞摩擦係數並提升引擎散熱效率。</li>
-                                        </ol>
-                                    </div>
-                                </div>
-                                <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS 雙氣門正時控制系統.jpg" alt="雙氣門正時控制系統(VTC) 搭配擾流控制閥(TCV)">
+                                    <img src="" alt="">
                                     <div class="slider-card-content">
                                         <h4>雙氣門正時控制系統(VTC)<br>搭配擾流控制閥(TCV) </h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>進氣端改用電子馬達控制汽門正時，比傳統油壓式控制更為精準快速，且不受油溫與油壓高低影響。</li>
-                                            <li>在進氣歧管內加入擾流控制閥門，於低負載或怠速時增強進氣渦流，加強進氣慣性，讓油氣混合更穩定，提升扭力與燃燒效率。</li>
-                                        </ol>
+                                        <p>進氣端改用電子馬達控制汽門正時，比傳統油壓式控制更為精準快速，且不受油溫與油壓高低影響</p>
+                                        <p>在進氣歧管內加入擾流控制閥門，於低負載或怠速時增強進氣渦流，加強進氣慣性，讓油氣混合更穩定，提升扭力與燃燒效率</p>
+                                    </div>
+                                </div>
+                                <div class="slider-card swiper-slide">
+                                    <img src="./assets/img/usp/KICKS 1.6G HR16DE 鋁合金引擎.jpg" alt="GT-R鏡面缸孔熔射技術">
+                                    <div class="slider-card-content">
+                                        <h4>GT-R鏡面缸孔熔射技術</h4>
+                                        <p>取消傳統2.0mm鑄鐵汽缸套，直接在鋁合金汽缸壁上熔射0.2mm極薄的高導熱鋼鐵塗層，大幅降低活塞摩擦係數並提升引擎散熱效率</p>
                                     </div>
                                 </div>
                             </div>
@@ -1266,29 +1258,23 @@
                                     <img src="./assets/img/usp/KICKS TNCAP 5星安全.jpg" alt="TNCAP 5星安全">
                                     <div class="slider-card-content">             
                                         <h4>TNCAP 5星安全</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>UHSS 超高剛性車體結構，車門防撞鋼樑等關鍵部位採用 1,470 MPa 超高剛性鋼材，提升乘員艙剛性，遭受撞擊時盡量維持座艙完整。</li>
-                                            <li>ZONE BODY可潰縮高剛性車體，撞擊時透過前後潰縮區吸收並分散撞擊能量，乘員艙則作為主要防護安全區，降低衝擊直接傳入座艙。</li>
-                                            <li>前/後外座預縮式安全帶，車輛發生撞擊瞬間，能在0.01秒內收緊安全帶，消除身體與安全帶之間的間隙，防止乘員向前衝撞，隨後安全帶會適度微微放鬆，釋放乘員胸腔壓力以防止勒傷。</li>
-                                        </ol>
+                                        <p>UHSS 超高剛性車體結構：車門防撞鋼樑等關鍵部位採用1,470 MPa 超高剛性鋼材，提升乘員艙剛性，遭受撞擊時盡量維持座艙完整</p>
+                                        <p>ZONE BODY可潰縮高剛性車體：撞擊時透過前後潰縮區吸收並分散撞擊能量，乘員艙則作為主要防護安全區，降低衝擊直接傳入座艙</p>
+                                        <p>前/後外座預縮式安全帶：車輛發生撞擊瞬間，能在0.01秒內收緊安全帶，消除身體與安全帶之間的間隙，防止乘員向前衝撞，隨後安全帶會適度微微放鬆，釋放乘員胸腔壓力以防止勒傷</p>
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
                                     <img src="./assets/img/usp/KICKS NISSAN獨家 PFCW 超視距警示.jpg" alt="NISSAN獨家 PFCW 超視距警示">
                                     <div class="slider-card-content">             
                                         <h4>NISSAN獨家 PFCW 超視距警示</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>全球首創能利用77GHz 毫米波雷達穿透前車底盤，提前偵測「前前車」的動態，當前方兩車的車距不足，系統預測有追撞可能，立即發出警示聲及圖示提醒駕駛，爭取反應時間，降低碰撞風險。</li>
-                                        </ol>
+                                        <p>全球首創能利用77GHz 毫米波雷達穿透前車底盤，提前偵測「前前車」的動態，當前方兩車的車距不足，系統預測有追撞可能，立即發出警示聲及圖示提醒駕駛，爭取反應時間，降低碰撞風險</p>
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
                                     <img src="./assets/img/usp/KICKS AVM 360度環景影像+MOD系統.jpg" alt="AVM 360度環景影像+MOD系統">
                                     <div class="slider-card-content">             
                                         <h4>AVM 360度環景影像+MOD系統</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>利用安裝在車身前後左右的四顆超廣角鏡頭，將影像即時演算拼接成車頂俯瞰視角的 2D 或 3D 全景畫面，幫助駕駛消除視線盲區，同時具備移動物體偵測功能，在時速10km/h以下時，能偵測移動物體並發出警示。</li>
-                                        </ol>
+                                        <p>利用安裝在車身前後左右的四顆超廣角鏡頭，將影像即時演算拼接成車頂俯瞰視角的 2D 或 3D 全景畫面，幫助駕駛消除視線盲區，同時具備移動物體偵測功能，在時速10km/h以下時，能偵測移動物體並發出警示</p>
                                     </div>
                                 </div>
                             </div>
@@ -1300,37 +1286,29 @@
                                 <div class="slider-card swiper-slide">
                                     <img src="./assets/img/usp/KICKS 鈦灰雙色切削鋁圈.jpg" alt="鈦灰雙色切削鋁圈">
                                     <div class="slider-card-content">             
-                                        <h4>鈦灰雙色切削鋁圈</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>結合「沉穩鈦灰塗裝」與「高精密金屬 CNC 雙色切削面」，在動靜之間展現極具層次的機械光澤與現代日系工藝質感。</li>
-                                        </ol>                       
+                                        <h4>鈦灰雙色切削式鋁圈</h4>
+                                        <p>結合「沉穩鈦灰塗裝」與「高精密金屬 CNC 雙色切削面」，在動靜之間展現極具層次的機械光澤與現代日系工藝質感</p>
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
                                     <img src="./assets/img/usp/KICKS 雙前座通風座椅.jpg" alt="雙前座通風座椅">
                                     <div class="slider-card-content">             
                                         <h4>雙前座通風座椅</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>運用吸風式循環並提供三段式風量調節，有效將體表熱氣與溼氣快速帶走，提升整體駕乘感受。</li>
-                                        </ol>                              
+                                        <p>運用吸風式循環並提供三段式風量調節，有效將體表熱氣與溼氣快速帶走，提升整體駕乘感受</p>
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
                                     <img src="./assets/img/usp/KICKS TAKUMI 菱格紋匠人皮革座椅.jpg" alt="TAKUMI 菱格紋匠人皮革座椅">
                                     <div class="slider-card-content">             
                                         <h4>TAKUMI 菱格紋匠人皮革座椅</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>運用立體菱格紋與極楓金縫線交織，以匠心工藝勾勒層次美學。</li>
-                                        </ol>                                
+                                        <p>TAKUMI 3D超體感紓壓座椅，以日式幾何菱格紋勾勒椅背與座面輪廓，交織細膩溫潤的「極楓金」縫線，將視覺張力與指尖觸感融為一體，雕琢出如精品般的極致匠人工藝</p>
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
                                     <img src="./assets/img/usp/KICKS D-Shape 極楓金跑格方向盤.jpg" alt="D-Shape 極楓金跑格方向盤">
                                     <div class="slider-card-content">             
                                         <h4>D-Shape 極楓金跑格方向盤</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>人體工學握把樣式，特殊平底式跑格造型，搭配極楓金式條，享受低調奢華</li>
-                                        </ol>
+                                        <p>人體工學勾勒俐落賽道輪廓，點綴專屬「極楓金」精工飾條，在低調奢華與跑格基因間取得完美平衡，以溫潤雅致的視覺氛圍，賦予每一次轉向最細膩的掌心觸感</p>
                                     </div>
                                 </div>
                             </div>
@@ -1382,18 +1360,14 @@
                                     </video>
                                     <div class="slider-card-content">
                                         <h4>第三代 HR16K2 鋁合金引擎</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>整合NISSAN高效率引擎技術，如GT-R 鏡面缸孔熔射、E-VTC 電子式汽門正時控制、TCV 擾流控制閥，及EGR廢氣再循環系統，可降低引擎摩擦、提升燃燒效率，讓駕馭更輕快、更省油。</li>
-                                        </ol>
+                                        <p>整合NISSAN高效率引擎技術，如GT-R 鏡面缸孔熔射、E-VTC 電子式汽門正時控制、TCV 擾流控制閥，及EGR廢氣再循環系統，可降低引擎摩擦、提升燃燒效率，讓駕馭更輕快、更省油</p>
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
                                     <img src="./assets/img/usp/SENTRA CMF-C 底盤.jpg" alt="CMF-C 底盤">
                                     <div class="slider-card-content">
                                         <h4>CMF-C 底盤</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>採用雷諾日產三菱聯盟的 CMF-C 模組化平台，結合歐系底盤工藝與 Alpine F1 的工程思維，透過高剛性結構、懸吊幾何與車底氣流優化，創造GT-R 超跑級 0.26Cd 超低風阻係數，讓車輛在不同路況下都能兼顧舒適與操控。</li>
-                                        </ol>
+                                        <p>採用雷諾日產三菱聯盟的 CMF-C 模組化平台，結合歐系底盤工藝與 Alpine F1 的工程思維，透過高剛性結構、懸吊幾何與車底氣流優化，創造GT-R 超跑級 0.26Cd 超低風阻係數，讓車輛在不同路況下都能兼顧舒適與操控</p>
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
@@ -1401,10 +1375,8 @@
                                     <div class="slider-card-content">
                                         <h4>第五代X-CVT無段自動變速系統</h4>
                                         <p>第五代 X-CVT 有兩個重點技術：</p>
-                                        <ol class="list-disc ms-5">
-                                            <li>加入輔助齒輪機構，讓變速比做到更寬。市區行駛時，能提供較輕快的加速反應；高速巡航時，將引擎轉速壓低，降低聲浪、兼顧油耗。</li>
-                                            <li>強化鋼帶與帶輪的咬合效率，讓動力傳遞更順、更有效率。</li>
-                                        </ol>
+                                        <p>加入輔助齒輪機構，讓變速比做到更寬。市區行駛時，能提供較輕快的加速反應；高速巡航時，將引擎轉速壓低，降低聲浪、兼顧油耗</p>
+                                        <p>強化鋼帶與帶輪的咬合效率，讓動力傳遞更順、更有效率</p>
                                     </div>
                                 </div>
                             </div>
@@ -1417,20 +1389,17 @@
                                     <img src="./assets/img/usp/SENTRA TNCAP 5星安全認證.jpg" alt="TNCAP 5星安全認證">
                                     <div class="slider-card-content">             
                                         <h4>TNCAP 5星安全認證</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>採用最高1,470 MPa 超高剛性鋼材及 ZONE BODY可潰縮高剛性車體，撞擊發生時，前後潰縮區能有效吸收並分散衝擊能量。</li>
-                                            <li>前/後外座標配預縮式安全帶，撞擊發生時迅速將乘員固定在座椅上，搭配 SRS 氣囊保護艙內乘員。</li>
-                                        </ol>
+                                        <p>採用最高1,470 MPa 超高剛性鋼材及 ZONE BODY可潰縮高剛性車體，撞擊發生時，前後潰縮區能有效吸收並分散衝擊能量</p>
+                                        <p>前/後外座標配預縮式安全帶，撞擊發生時迅速將乘員固定在座椅上，搭配 SRS 氣囊保護艙內乘員</p>
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
                                     <img src="./assets/img/usp/SENTRA 智行科技 駕馭安全.jpg" alt="智行科技 駕馭安全">
                                     <div class="slider-card-content">             
                                         <h4>智行科技 駕馭安全</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>ProPILOT 智行安全系統：LKA 車道維持輔助系統 & ICC 智慧型定速控制系統。</li>
-                                            <li>PFCW 超視距車輛追撞警示系統：預判前前車動態提早反應。</li>
-                                            <li>EAPM 油門誤踩緊急輔助系統：當駕駛未踩煞車或誤踩油門時，系統會發出警示，並協助煞車，降低車輛碰撞危險。</li>
+                                        <p>ProPILOT 智行安全系統：LKA 車道維持輔助系統 & ICC 智慧型定速控制系統</p>
+                                        <p>PFCW 超視距車輛追撞警示系統：預判前前車動態提早反應</p>
+                                        <p>EAPM 油門誤踩緊急輔助系統：當駕駛未踩煞車或誤踩油門時，系統會發出警示，並協助煞車，降低車輛碰撞危險</p>
                                         </ol>
                                     </div>
                                 </div>
@@ -1438,12 +1407,10 @@
                                     <img src="./assets/img/usp/SENTRA 情報安全整合系統.jpg" alt="情報安全整合系統">
                                     <div class="slider-card-content">             
                                         <h4>情報安全整合系統</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>3D AVM 360〫環景影像。</li>
-                                            <li>BSW 盲點警示系統。</li>
-                                            <li>RCTA 後方車側警示系統。</li>
-                                            <li>DAA 疲勞駕駛系統。</li>
-                                        </ol>
+                                        <p>3D AVM 360〫環景影像</p>
+                                        <p>BSW 盲點警示系統</p>
+                                        <p>RCTA 後方車側警示系統</p>
+                                        <p>DAA 疲勞駕駛系統</p>
                                     </div>
                                 </div>
                             </div>
@@ -1456,33 +1423,27 @@
                                     <img src="./assets/img/usp/SENTRA 跑格外觀.jpg" alt="跑格外觀">
                                     <div class="slider-card-content">             
                                         <h4>跑格外觀</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>極楓黑套件：將水箱護罩、前保飾條、後保飾板進行黑化處理。</li>
-                                            <li>鈦灰雙色切削式鋁圈：結合「沉穩鈦灰塗裝」與「高精密金屬 CNC 雙色切削面」，在動靜之間展現極具層次的機械光澤與現代日系工藝質感。</li>
-                                            <li>運動化空力套件：升級前下巴左右分離導流片、左右側裙、後尾翼、後下巴空氣導流片。</li>
-                                        </ol>                      
+                                        <p>極楓黑套件：將水箱護罩、前保飾條、後保飾板進行黑化處理</p>
+                                        <p>鈦灰雙色切削式鋁圈：結合「沉穩鈦灰塗裝」與「高精密金屬 CNC 雙色切削面」，在動靜之間展現極具層次的機械光澤與現代日系工藝質感</p>
+                                        <p>運動化空力套件：升級前下巴左右分離導流片、左右側裙、後尾翼、後下巴空氣導流片</p>                      
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
                                     <img src="./assets/img/usp/SENTRA 豪華內裝.jpg" alt="豪華內裝">
                                     <div class="slider-card-content">             
                                         <h4>豪華內裝</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>TAKUMI菱格紋匠人皮革座椅：運用立體菱格紋與極楓金縫線交織，以匠心工藝勾勒層次美學。</li>
-                                            <li>D-Shape極楓金跑格方向盤：人體工學握把樣式，特殊平底式跑格造型，搭配極楓金式條，享受低調奢華。</li>
-                                            <li>雙前座通風座椅：運用吸風式循環並提供三段式風量調節，有效將體表熱氣與溼氣快速帶走，提升整體駕乘感受。</li>
-                                            <li>Bose Premium 音響：8支揚聲器，提供聲歷其境般的聽覺饗宴。</li>
-                                        </ol>                       
+                                        <p>TAKUMI菱格紋匠人皮革座椅：運用立體菱格紋與極楓金縫線交織，以匠心工藝勾勒層次美學</p>
+                                        <p>D-Shape極楓金跑格方向盤：人體工學握把樣式，特殊平底式跑格造型，搭配極楓金式條，享受低調奢華</p>
+                                        <p>雙前座通風座椅：運用吸風式循環並提供三段式風量調節，有效將體表熱氣與溼氣快速帶走，提升整體駕乘感受</p>
+                                        <p>Bose Premium 音響：8支揚聲器，提供聲歷其境般的聽覺饗宴</p>
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
                                     <img src="./assets/img/usp/SENTRA 從容享受.jpg" alt="從容享受">
                                     <div class="slider-card-content">             
                                         <h4>從容享受</h4>
-                                        <ol class="list-disc ms-5">
-                                            <li>Keyless 自動上解鎖：靠近自動解鎖、離開自動上鎖。</li>
-                                            <li>Remote engine start 預先遙控啟動：遠端智能遙控引擎，預先發動車輛(60公尺)調節車室溫度。</li>
-                                        </ol>                     
+                                        <p>Keyless 自動上解鎖：靠近自動解鎖、離開自動上鎖</p>
+                                        <p>Remote engine start 預先遙控啟動：遠端智能遙控引擎，預先發動車輛(60公尺)調節車室溫度</p>
                                     </div>
                                 </div>
                             </div>
