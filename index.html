@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
     <script src="./assets/js/tailwindcss.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <!-- <version>20261006000028</version> -->
+    <!-- <version>20261006000031</version> -->
     <script>
         tailwind.config = {
             theme: {
@@ -1251,9 +1251,17 @@
                 <div id="tvc-cover-img" class="w-full absolute top-0 left-0 p-[1%] z-[1]">
                     <img src="./assets/img/tvc/tvc2.jpg" alt="TVC Cover Image" class="w-full h-full object-cover">
                 </div>
-                <video id="tvc-video" class="absolute top-0 left-0 w-full h-full object-cover p-[1%] z-[1]" muted loop playsinline preload="none">
-                    <source src="./assets/video/video001.mp4" type="video/mp4">
-                </video>
+                <!-- YouTube embed replacing the local video element -->
+                <div class="absolute top-0 left-0 w-full h-full p-[1%] z-[1]">
+                    <iframe id="tvc-iframe"
+                        class="w-full h-full object-cover"
+                        src="https://www.youtube.com/embed/fu7wIkQ95_M?rel=0&modestbranding=1&playsinline=1&enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=fu7wIkQ95_M"
+                        title="TVC Video"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
             </div>
             <a href="javascript:void(0);" class="sound-on-btn" aria-label="聲音開關">
                 <img src="./assets/img/tvc/sound_on.png" alt="聲音開關" class="default-img">
@@ -1297,6 +1305,57 @@
             <div class="tvc-border-3"></div>
         </div>
     </section>
+        <script>
+            // YouTube IFrame API loader and player setup
+            (function(){
+                var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                var player;
+                window.onYouTubeIframeAPIReady = function() {
+                    var iframe = document.getElementById('tvc-iframe');
+                    if (!iframe) return;
+
+                    player = new YT.Player('tvc-iframe', {
+                        events: {
+                            'onReady': function(e) {
+                                // Ensure video is muted by default (we requested &mute=1)
+                                try { e.target.mute(); } catch (err) {}
+                            }
+                        }
+                    });
+                };
+
+                // Sound button logic: show/hide based on player state
+                function setSoundButtons(isMuted) {
+                    var onBtn = document.querySelector('.sound-on-btn');
+                    var offBtn = document.querySelector('.sound-off-btn');
+                    if (onBtn) onBtn.classList.toggle('active', !isMuted);
+                    if (offBtn) offBtn.classList.toggle('active', isMuted);
+                }
+
+                document.addEventListener('click', function(e){
+                    var t = e.target.closest('.sound-on-btn, .sound-off-btn');
+                    if (!t) return;
+                    e.preventDefault();
+                    var isOn = t.classList.contains('sound-on-btn');
+                    if (player && typeof player.isMuted === 'function') {
+                        if (isOn) {
+                            player.unMute();
+                            setSoundButtons(false);
+                        } else {
+                            player.mute();
+                            setSoundButtons(true);
+                        }
+                    } else {
+                        // Fallback: toggle buttons only
+                        setSoundButtons(!t.classList.contains('sound-on-btn'));
+                    }
+                }, false);
+            })();
+        </script>
 
     <!-- USP Section -->
     <section id="usp-section" class="w-full relative">
