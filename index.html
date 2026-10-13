@@ -1249,7 +1249,7 @@
         <div id="tvc-info" class="tvc-info">
             <div class="video-container">
                 <div id="tvc-cover-img" class="w-full absolute top-0 left-0 p-[1%] z-[1]">
-                    <img src="./assets/img/tvc/tvc1.jpg" alt="TVC Cover Image" class="w-full h-full object-cover">
+                    <img src="./assets/img/tvc/tvc2.jpg" alt="TVC Cover Image" class="w-full h-full object-cover">
                 </div>
                 <video id="tvc-video" class="absolute top-0 left-0 w-full h-full object-cover p-[1%] z-[1]" muted loop playsinline preload="none">
                     <source src="./assets/video/video001.mp4" type="video/mp4">
@@ -1381,7 +1381,7 @@
                                     </div>
                                 </div>
                                 <div class="slider-card swiper-slide">
-                                    <img src="./assets/img/usp/KICKS AVM 360度環景影像+MOD系統.jpg" alt="AVM 360度環景影像+MOD移動物體偵測系統">
+                                    <img src="./assets/img/usp/KICKS_AVM_360.jpg" alt="AVM 360度環景影像+MOD移動物體偵測系統">
                                     <div class="slider-card-content">             
                                         <h4 style="line-height: 1.5;">AVM 360度環景影像<br>MOD移動物體偵測系統</h4>
                                         <p>利用安裝在車身前後左右的四顆超廣角鏡頭，將影像即時演算拼接成車頂俯瞰視角的 2D 或 3D 全景畫面，幫助駕駛消除視線盲區，同時具備移動物體偵測功能，在時速10km/h以下時，能偵測移動物體並發出警示  (MOD系統 : 盛楓版以上)</p>
@@ -1747,18 +1747,28 @@
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
 
-            let width, height, dpr;
+            let width = 0;
+            let height = 0;
+            let dpr = 1;
+            let tvcTop = null;
             let petals = [];
-            // scale vertical speed on smaller viewports (mobile/tablet)
+            
+            // 手機/平板縮放飄落速度
             let speedScale = 1;
             const petalCount = 7;
             const imageUrls = Array.from({ length: 15 }, (_, i) => `./assets/img/maple/maple${String(i + 1).padStart(2, '0')}.png`);
-
-            const petalImages = imageUrls.map(src => {
-                const img = new Image();
-                img.src = src;
-                return img;
-            });
+            
+            //(Lazy Loading)
+            const petalImageCache = new Map();
+            function getPetalImage() {
+                const index = Math.floor(Math.random() * imageUrls.length);
+                if (!petalImageCache.has(index)) {
+                    const img = new Image();
+                    img.src = imageUrls[index];
+                    petalImageCache.set(index, img);
+                }
+                return petalImageCache.get(index);
+            }
 
             const mouse = { x: -1000, y: -1000, lastX: -1000, lastY: -1000, vx: 0, vy: 0, speed: 0 };
             let rafId = null;
@@ -1769,24 +1779,23 @@
 
                 init(isInitial = false) {
                     this.x = Math.random() * (width * 1.3) - (width * 0.15);
-                    const tvcEl = document.getElementById('tvc-section');
-                    const tvcTop = tvcEl ? (tvcEl.getBoundingClientRect().top + window.pageYOffset) : null;
-
                     if (isInitial) {
                         this.y = (tvcTop !== null) ? Math.random() * Math.max(0, tvcTop) : Math.random() * height;
                     } else {
                         this.y = (tvcTop !== null) ? (-300 + Math.random() * (Math.max(0, tvcTop) + 300)) : (-Math.random() * 300 - 80);
                     }
 
-                    this.img = petalImages[Math.floor(Math.random() * petalImages.length)];
+                    this.img = getPetalImage();
                     const isGiant = Math.random() < 0.3;
                     this.size = isGiant ? (Math.random() * 20 + 40) : (Math.random() * 15 + 18);
                     this.blur = isGiant ? (Math.random() * 3 + 2) : (Math.random() * 1.2 + 0.3);
-                    // apply speedScale so leaves fall slower on mobile/tablet
+                    
                     this.baseVy = (isGiant ? (Math.random() * 0.5 + 0.4) : (Math.random() * 0.8 + 0.6)) * speedScale;
-
                     this.vy = this.baseVy;
-                    this.opacity = Math.random() * 0.15 + 0.8;
+                    this.baseOpacity = Math.random() * 0.15 + 0.8;
+                    this.opacity = this.baseOpacity;
+                    
+                    this.sprite = null; // 快取 Sprite 圖像
                     this.fading = false;
                     this._fadeStart = 0;
                     this._fadeDuration = 500 + Math.round(Math.random() * 300);
@@ -1796,25 +1805,27 @@
                     this.offset = Math.random() * Math.PI * 2;
                 }
 
-                update() {
-                    this.offset += 0.008;
-                    this.x += this.vx + Math.sin(this.offset) * 0.8;
-                    this.y += this.vy;
+                update(deltaScale = 1) {
+                    this.offset += 0.008 * deltaScale;
+                    this.x += (this.vx + Math.sin(this.offset) * 0.8) * deltaScale;
+                    this.y += this.vy * deltaScale;
 
                     const dx = this.x - mouse.x;
                     const dy = this.y - mouse.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const distSquared = dx * dx + dy * dy;
 
-                    if (dist < 250 && mouse.speed > 0.5) {
+                    if (distSquared < 250 * 250 && mouse.speed > 0.5) {
+                        const dist = Math.sqrt(distSquared);
                         const force = (250 - dist) / 250;
                         const windVx = Math.max(-1.2, Math.min(1.2, mouse.vx * 0.03));
                         const windVy = Math.max(-1.2, Math.min(1.2, mouse.vy * 0.03));
-                        this.vx += windVx * force;
-                        this.vy += windVy * force;
+                        this.vx += windVx * force * deltaScale;
+                        this.vy += windVy * force * deltaScale;
                     }
 
-                    this.vx *= 0.95;
-                    this.vy = this.vy * 0.95 + this.baseVy * 0.05;
+                    const damping = Math.pow(0.95, deltaScale);
+                    this.vx *= damping;
+                    this.vy = this.vy * damping + this.baseVy * (1 - damping);
 
                     const boundX = width * 0.15;
                     const bottomLimit = height;
@@ -1830,14 +1841,32 @@
                     if (this.fading) {
                         const elapsed = performance.now() - this._fadeStart;
                         const t = Math.min(1, elapsed / this._fadeDuration);
-                        this.opacity = (1 - t) * (Math.random() * 0.15 + 0.8);
-                        this.spin *= 0.96;
+                        this.opacity = (1 - t) * this.baseOpacity;
+                        this.spin *= Math.pow(0.96, deltaScale);
                         if (t >= 1 || this.y >= bottomLimit) {
                             this.init(false);
                         }
                     }
 
-                    this.rotation += this.spin;
+                    this.rotation += this.spin * deltaScale;
+                }
+
+                createSprite() {
+                    if (!this.img.complete || this.img.naturalWidth === 0) return null;
+
+                    const padding = Math.ceil(this.blur * 3);
+                    const spriteSize = Math.ceil(this.size + padding * 2);
+                    const sprite = document.createElement('canvas');
+                    sprite.width = spriteSize;
+                    sprite.height = spriteSize;
+                    const spriteCtx = sprite.getContext('2d');
+                    if (!spriteCtx) return null;
+
+                    //spriteCtx.filter = `blur(${this.blur}px)`;
+                    spriteCtx.drawImage(this.img, (spriteSize - this.size) / 2, (spriteSize - this.size) / 2, this.size, this.size);
+                    
+                    this.sprite = sprite;
+                    return sprite;
                 }
 
                 draw() {
@@ -1845,10 +1874,13 @@
                     ctx.translate(this.x, this.y);
                     ctx.rotate(this.rotation);
                     ctx.globalAlpha = this.opacity;
-                    ctx.filter = `blur(${this.blur}px)`;
 
                     if (this.img.complete && this.img.naturalWidth !== 0) {
-                        ctx.drawImage(this.img, -this.size / 2, -this.size / 2, this.size, this.size);
+                        // 若快取不存在則進行建立，之後直接繪製 Sprite
+                        const sprite = this.sprite || this.createSprite();
+                        if (sprite) {
+                            ctx.drawImage(sprite, -sprite.width / 2, -sprite.height / 2);
+                        }
                     } else {
                         ctx.beginPath();
                         ctx.ellipse(0, 0, this.size / 2, this.size / 2.5, 0, 0, Math.PI * 2);
@@ -1860,23 +1892,20 @@
             }
 
             function resize() {
-                dpr = window.devicePixelRatio || 1;
+                // 限制最高 DPR 上限為 1.5
+                dpr = Math.min(window.devicePixelRatio || 1, 1.5);
                 width = window.innerWidth;
-
                 const tvcEl = document.getElementById('tvc-section');
                 const targetHeight = tvcEl ? tvcEl.offsetTop : window.innerHeight;
-
-                width = window.innerWidth;
-                height = targetHeight;
+                tvcTop = tvcEl ? (tvcEl.getBoundingClientRect().top + window.pageYOffset) : null;
+                height = Math.max(1, targetHeight);
 
                 canvas.style.height = `${height}px`;
                 canvas.width = width * dpr;
                 canvas.height = height * dpr;
                 ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-                // reduce fall speed on mobile/tablet (<=1199px)
                 speedScale = (window.innerWidth <= 1199) ? 0.5 : 1;
-
                 petals = Array.from({ length: petalCount }, () => new Petal());
             }
 
@@ -1894,33 +1923,51 @@
                 mouse.speed = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy);
             });
 
-            function loop() {
+            const frameInterval = 1000 / 30;
+            let lastFrameTime = 0;
+
+            function loop(timestamp) {
                 if (!running) return;
-                ctx.clearRect(0, 0, width, height);
-                mouse.speed *= 0.92;
-                petals.forEach(p => { p.update(); p.draw(); });
                 rafId = requestAnimationFrame(loop);
+
+                if (document.hidden || timestamp - lastFrameTime < frameInterval) return;
+
+                const elapsed = lastFrameTime === 0 ? 1000 / 60 : timestamp - lastFrameTime;
+                const deltaScale = Math.min(elapsed / (1000 / 60), 2);
+                lastFrameTime = timestamp;
+
+                ctx.clearRect(0, 0, width, height);
+                mouse.speed *= Math.pow(0.92, deltaScale);
+
+                for (const petal of petals) {
+                    petal.update(deltaScale);
+                    petal.draw();
+                }
             }
 
             function start() {
-                if (running) return;
-                console.log('Starting canvas animation');
+                if (running || document.hidden) return;
                 running = true;
+                lastFrameTime = 0;
                 resize();
-                loop();
+                rafId = requestAnimationFrame(loop);
             }
 
             function stop() {
-                console.log('Stopping canvas animation');
                 running = false;
-                if (rafId) {
+                if (rafId !== null) {
                     cancelAnimationFrame(rafId);
                     rafId = null;
                 }
             }
 
-            // Observe banner-section; start animation when banner is visible, stop otherwise
             const banner = document.getElementById('banner-section');
+            const isBannerVisible = () => {
+                if (!banner) return true;
+                const rect = banner.getBoundingClientRect();
+                return rect.top < window.innerHeight && rect.bottom > 0;
+            };
+
             if (banner && 'IntersectionObserver' in window) {
                 const bannerObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
@@ -1935,6 +1982,11 @@
             } else {
                 start();
             }
+
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) stop();
+                else if (isBannerVisible()) start();
+            });
 
             window.__mapleCanvasController = { start, stop, isRunning: () => running };
         })();
